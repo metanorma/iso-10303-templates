@@ -1,0 +1,25 @@
+{% capture function_thing_prefix %}{{thing_prefix}}.{{thing.id}}{% endcapture %}
+
+{% render "templates/basic_thing", depth: depth, thing_prefix: function_thing_prefix, thing: thing %}
+
+{% assign function_nested_depth = depth | plus: 1%}
+
+{% if thing.parameters.size > 0 %}
+{% render "templates/function_parameters", things: thing.parameters, thing_prefix: function_thing_prefix, depth: function_nested_depth %}
+
+{% endif %}
+
+{% if thing.types.size > 0 %}
+{% render "templates/function_parameters", things: thing.types, thing_prefix: function_thing_prefix, depth: function_nested_depth %}
+
+{% endif %}
+
+{% if thing.constants.size > 0 %}
+{% render "templates/function_constants", things: thing.constants, thing_prefix: function_thing_prefix, depth: function_nested_depth %}
+
+{% endif %}
+
+{% if thing.variables.size > 0 %}
+{% render "templates/function_variables", things: thing.variables, thing_prefix: function_thing_prefix, depth: function_nested_depth %}
+
+{% endif %}

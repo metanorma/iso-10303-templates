@@ -1,0 +1,19 @@
+{% if depth %}
+{% assign xdepth = depth | plus: 1 %}
+{% if xdepth > 5 %}
+{% capture equalsigns %}====={% endcapture %}
+{% else %}
+{% capture equalsigns %}{% for count in (1..xdepth) %}={% endfor %}{% endcapture %}
+{% endif %}
+{% endif %}
+[[{{thing_prefix}}.{{anchor | replace: "\", "-"}}]]
+[level={{xdepth}}]
+{{equalsigns}} {{ title | replace: "\", "-" }}
+
+//equalsigns: {{equalsigns}}
+//
+//title: {{ title }}
+//
+//nested: {{xdepth}}
+//
+//anchor: {{thing_prefix}}.{{anchor}}

@@ -1,0 +1,14 @@
+{% if things.size > 0 %}
+{% assign ea_nested_depth = depth %}
+
+[underline]#Informal propositions:#
+
+{% for thing in things %}
+
+**{{ thing.id }}**:: {{ thing.remarks }}
+
+{% render "templates/body_remarks", remark_items: thing.remark_items %}
+
+{% endfor %}
+
+{% endif %}

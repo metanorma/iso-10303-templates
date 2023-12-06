@@ -1,0 +1,10 @@
+
+{% if thing.remarks %}
+
+{% capture statementid %}{% if thing.id %}{{thing.id}}{% else %}{{forloop.index}}{% endif %}{% endcapture %}
+
+{% render "templates/basic_title", thing_prefix: thing_prefix, anchor: statementid, title: statementid, depth: depth %}
+
+{% render "templates/body", thing: thing %}
+
+{% endif %}
