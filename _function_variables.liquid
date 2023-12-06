@@ -1,0 +1,14 @@
+{% if things.size > 0 %}
+{% assign fv_nested_depth = depth %}
+
+[underline]#Argument definitions:#
+
+{% for thing in things %}
+
+**{{ thing.id }}**:: {{ thing.remarks }}
+
+{% render "templates/body_remarks", remark_items: thing.remark_items %}
+
+{% endfor %}
+
+{% endif %}

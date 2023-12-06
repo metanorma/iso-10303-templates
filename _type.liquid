@@ -1,0 +1,9 @@
+{% assign type_nested_depth = depth %}
+{% render "templates/basic_thing", depth: type_nested_depth, thing_prefix: thing_prefix, thing: thing %}
+
+{% if thing.items.size > 0 %}
+{% capture type_thing_prefix %}{{thing_prefix}}.{{thing.id}}{% endcapture %}
+
+{% render "templates/type_items", things: thing.items, thing_prefix: type_thing_prefix, depth: type_nested_depth | plus: 1 %}
+
+{% endif %}

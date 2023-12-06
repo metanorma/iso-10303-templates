@@ -1,0 +1,34 @@
+{% if depth %}
+{% assign xdepth = depth | plus: 1 %}
+{% if xdepth > 5 %}
+{% capture equalsigns %}====={% endcapture %}
+{% else %}
+{% capture equalsigns %}{% for count in (1..xdepth) %}={% endfor %}{% endcapture %}
+{% endif %}
+{% endif %}
+[[{{thing_prefix}}.{{anchor | replace: "\", "-"}}]]
+[level={{xdepth}}]
+{{equalsigns}} Fundamental concepts and assumptions
+
+// equalsigns: {{equalsigns}}
+
+// title: {{ title }}
+
+// nested: {{xdepth}}
+
+// anchor: {{thing_prefix}}.{{anchor}}
+
+{% if thing.remark_items.size > 0 %}
+{% assign fund_cons_texts = thing.remark_items | where: "id", "__fund_cons" %}
+{% for fund_cons_text in fund_cons_texts %}
+{% if fund_cons_text.remarks.size > 0 %}
+{% for fund_cons_text_content in fund_cons_text.remarks %}
+
+{{fund_cons_text_content}}
+
+{% endfor %}
+{% endif %}
+
+{% endfor %}
+
+{% endif %}

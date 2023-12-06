@@ -1,0 +1,30 @@
+{% assign entity_nested_depth = depth %}
+{% render "templates/basic_thing", depth: entity_nested_depth, thing_prefix: thing_prefix, thing: thing %}
+
+{% if thing.attributes.size > 0 %}
+{% capture entity_thing_prefix %}{{thing_prefix}}.{{thing.id}}{% endcapture %}
+
+{% render "templates/entity_attributes", things: thing.attributes, thing_prefix: entity_thing_prefix, depth: entity_nested_depth %}
+
+{% endif %}
+
+{% if thing.where_rules.size > 0 %}
+{% capture entity_thing_prefix %}{{thing_prefix}}.{{thing.id}}{% endcapture %}
+
+{% render "templates/entity_where_rules", things: thing.where_rules, thing_prefix: entity_thing_prefix, depth: entity_nested_depth %}
+
+{% endif %}
+
+{% if thing.unique_rules.size > 0 %}
+{% capture entity_thing_prefix %}{{thing_prefix}}.{{thing.id}}{% endcapture %}
+
+{% render "templates/entity_unique_rules", things: thing.unique_rules, thing_prefix: entity_thing_prefix, depth: entity_nested_depth %}
+
+{% endif %}
+
+{% if thing.informal_propositions.size > 0 %}
+{% capture entity_thing_prefix %}{{thing_prefix}}.{{thing.id}}{% endcapture %}
+
+{% render "templates/entity_informal_propositions", things: thing.informal_propositions, thing_prefix: entity_thing_prefix, depth: entity_nested_depth %}
+
+{% endif %}

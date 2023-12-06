@@ -1,0 +1,22 @@
+
+{% assign found = false %}
+{% for statement in things %}
+{% if statement.remarks %}
+{% assign found = true %}
+{% endif %}
+{% endfor %}
+
+{% if found %}
+
+{% assign statement_nested_depth = depth %}
+
+{% render "templates/basic_title", thing_prefix: thing_prefix, anchor: "statements", title: "Statements", depth: statement_nested_depth %}
+
+{% for thing in things %}
+{% assign ss_nested_depth = statement_nested_depth | plus: 1 %}
+
+{% render "templates/statement", thing: thing, thing_prefix: thing_prefix, depth: ss_nested_depth %}
+
+{% endfor %}
+
+{% endif %}
