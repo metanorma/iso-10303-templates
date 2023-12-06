@@ -1,3 +1,54 @@
 = ISO 10303 Annotated EXPRESS templates
 
+== Purpose
 
+This repository contains a set of Metanorma liquid templates for rendering
+Annotated EXPRESS schemas, as used in ISO 10303.
+
+== Usage
+
+NOTE: Due to current limitations in the metanorma-plugin-lutaml plugin with
+liquid, a symbolic link needs to be made to this repository's content at the
+same directory level of the file that includes a template.
+
+In a Metanorma document it is used like this:
+
+[source,sh]
+----
+= Integrated generic resource: Fundamentals of product description and support
+:docnumber: 10303
+:tc-docnumber: 10681
+:partnumber: 41
+:copyright-year: 2022
+:language: en
+:publish-date: 2022
+:edition: 7
+:title-intro-en: Industrial automation systems and integration
+:title-intro-fr: Systèmes d'automatisation industrielle et intégration
+:mn-document-class: iso
+:lutaml-express-index: schemas; schemas.yaml;
+
+[lutaml_express, schemas, repo, leveloffset=+1]
+---
+include::templates/_schemas.liquid[]
+---
+----
+
+One of the following directory structures is to be used.
+
+Type 1: `include::` block is at the same level as the including document:
+
+`document.adoc`:: The document that includes the `lutaml_express` block.
+`templates/`:: A check-out of the iso-10303-templates repository.
+
+Type 2: `include::` block in another file (e.g. under `sections/`):
+
+`document.adoc`:: The root document file.
+`sections/xxx.adoc`:: The document that includes the `lutaml_express` block.
+`sections/templates/`:: A check-out of the iso-10303-templates repository.
+
+NOTE: The `templates/` directory can be a symbolic link.
+
+== License
+
+Copyright Ribose.
