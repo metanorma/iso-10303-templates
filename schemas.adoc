@@ -1,0 +1,396 @@
+[lutaml, schemas, context, leveloffset=+1]
+---
+{% assign GIF_DIR = "../../common-files/expg.gif[]" %}
+
+{% capture newLine %}
+
+{% endcapture %}
+
+
+{% for schema in context.schemas %}
+
+{% comment %}
+TODO: schemaname is no longer used as per @TRThurman.
+{% assign schemaname = schema.id | append: "$" | remove: "_schema$" | remove: "$" | replace: "_", " " | capitalize %}
+{% endcomment %}
+
+[[{{ schema.id }}]]
+[type="express"]
+== {{ schema.id }} schema
+
+=== General
+
+{% assign schema_remark = schema.remarks %}
+{% comment %}
+This is purely for the bug at
+https://github.com/lutaml/expressir/issues/108
+
+Once that is fixed the following IF statement should be removed and just use {{schema.remarks}}
+{% endcomment %}
+
+{% if schema_remark.size == 0 %}
+{% assign schema_remark = schema.remark_items | where: "id", schema.id | first %}
+{% endif %}
+
+{{ schema_remark.remarks }}
+
+The following EXPRESS declaration begins the *{{ schema.id }}* and identifies the necessary external references.
+
+[underline]#EXPRESS specification:#
+
+[source%unnumbered]
+--
+{{ schema.source }}
+--
+
+{% for interface in schema.interfaces -%}
+((({{interface.schema.id}},Schema interface)))
+{%- endfor %}
+
+[[{{ schema.id }}.doc_specs]]
+[NOTE]
+====
+The schemas referenced above are specified in the following parts:
+
+{% assign reference_froms = schema.interfaces | where: "kind", :REFERENCE %}
+
+{% for from in reference_froms %}
+{% assign from_schema = context.schemas | where: "id", from.schema.id | first %}
+{% assign version = from_schema.version %}
+{% assign version_number = version.items[2].value %}
+{% assign version_part = version.items[3].value %}
+
+{{ from.schema.id }}:: ISO {{ version_number }}-{{ version_part }}
+{% endfor %}
+====
+
+NOTE: See <<expg.{{ schema.id }}>> for a graphical representation of this schema.
+
+
+
+{% assign remark_items = schema.remark_items | where: "id", "__fund_cons" | first %}
+
+{% if remark_items %}
+[[{{ schema.id }}_funds]]
+=== Fundamental concepts and assumptions
+
+{% for remark in remark_items.remarks %}
+{{ remark }}
+
+{% endfor %}
+{% endif %}
+
+
+{% if schema.constants.size > 0 %}
+
+[type="express"]
+=== {{ schema.id }} constant {% if schema.constants.size == 1 %}definition{% else %}definitions{% endif %}
+
+The following constants are used repeatedly in this document.
+
+NOTE: Implementor information: Since schema constants cannot be referenced from
+ISO 10303-21 files, these constants are only useful within the formal
+specifications. Instantiations of product data models must reproduce these
+constant instances as needed. Only one instance of any constant is ever required
+in a model, although it does no harm if an implementation generates several.
+
+
+{% for constant in schema.constants %}
+
+[[{{schema.id}}.{{constant.id}}]]
+[type="express"]
+==== {{ constant.id }} <<expg.{{ schema.id }},image:{{ GIF_DIR }}>> ((({{ constant.id }},Object definition)))
+
+[underline]#EXPRESS specification:#
+
+[source%unnumbered]
+--
+{{ constant.source }}
+--
+
+{{ constant.remarks | join: newLine }}
+
+{% endfor %}
+{% endif %}
+
+
+
+{% if schema.types.size > 0 %}
+[type="express"]
+=== {{ schema.id }} type {% if schema.types.size == 1 %}definition{% else %}definitions{% endif %}
+
+{% for type in schema.types %}
+[[{{schema.id}}.{{type.id}}]]
+[type="express"]
+==== {{ type.id }} <<expg.{{ schema.id }},image:{{ GIF_DIR }}>> ((({{ type.id }},Object definition)))
+
+[underline]#EXPRESS specification:#
+
+[source%unnumbered]
+--
+{{ type.source }}
+--
+
+{{ type.remarks | join: newLine }}
+
+{% assign found = false %}
+{% for attribute in type.underlying_type.items %}
+{% if attribute.remarks.size > 0 %}
+{% assign found = true %}
+{% endif %}
+{% endfor %}
+
+{% if type.underlying_type.items.size > 0 and found %}
+
+[underline]#Enumerated item definitions:#
+
+{% for item in type.underlying_type.items %}
+*{{ item.id }}*: {{ item.remarks | join: newLine }}
+{% endfor %}
+{% endif %}
+
+{% if type.remark_items.size > 0 %}
+
+{% unless found %}
+[underline]#Enumerated item definitions:#
+{% endunless %}
+
+{% for item in type.remark_items %}
+*{{ item.id }}*: {{ item.remarks | join: newLine }}
+{% endfor %}
+
+{% endif %}
+
+{% assign found = false %}
+{% for where1 in type.where_rules %}
+{% if where1.remarks.size > 0 %}
+{% assign found = true %}
+{% endif %}
+{% endfor %}
+
+{% if found and type.where_rules.size > 0 %}
+[underline]#Formal propositions:#
+
+{% for where1 in type.where_rules %}
+{% if where1.remarks.size > 0 %}
+[[{{schema.id}}.{{type.id}}.{{where1.id}}]]
+*{{ where1.id }}*: {{ where1.remarks | join: newLine }}
+{% endif %}
+
+{% endfor %}
+{% endif %}
+
+
+{% endfor %}
+{% endif %}
+
+
+{% if schema.entities.size > 0 %}
+[type="express"]
+=== {{ schema.id }} entity {% if schema.entities.size == 1 %}definition{% else %}definitions{% endif %}
+
+{% for entity in schema.entities %}
+[[{{schema.id}}.{{entity.id}}]]
+[type="express"]
+==== {{ entity.id }} <<expg.{{ schema.id }},image:{{ GIF_DIR }}>> ((({{ entity.id }},Object definition)))
+
+[underline]#EXPRESS specification:#
+
+[source%unnumbered]
+--
+{{ entity.source }}
+--
+
+{% if schema.subtype_constraints.size > 0 %}
+{% for constraint in schema.subtype_constraints %}
+
+{% if constraint.applies_to.id == entity.id %}
+
+[source%unnumbered]
+--
+{{ constraint.source }}
+--
+{% endif %}
+
+{% endfor %}
+{% endif %}
+
+{{ entity.remarks | join: newLine }}
+
+{% assign found = false %}
+{% for attribute in entity.attributes %}
+{% if attribute.remarks.size > 0 %}
+{% assign found = true %}
+{% endif %}
+{% endfor %}
+
+{% if entity.attributes.size > 0 and found %}
+[underline]#Attribute definitions:#
+
+{% for attribute in entity.attributes %}
+{% if attribute.remarks.size > 0 %}
+[[{{schema.id}}.{{entity.id}}.{{attribute.id}}]]
+*{{ attribute.id }}*: {{ attribute.remarks | join: newLine }}
+{% endif %}
+
+{% endfor %}
+{% endif %}
+
+{% if entity.remark_items.size > 0 %}
+
+{% unless found %}
+[underline]#Attribute definitions:#
+{% endunless %}
+
+{% for attribute in entity.remark_items %}
+{% if attribute.remarks.size > 0 %}
+[[{{schema.id}}.{{entity.id}}.{{attribute.id}}]]
+*{{ attribute.id }}*: {{ attribute.remarks | join: newLine }}
+{% endif %}
+
+{% endfor %}
+{% endif %}
+
+
+{% assign found = false %}
+{% for rule in entity.unique_rules %}
+{% if rule.remarks.size > 0 %}
+{% assign found = true %}
+{% endif %}
+{% endfor %}
+
+{% if found and entity.unique_rules.size > 0 %}
+[underline]#Formal propositions (unique rules):#
+
+{% for rule in entity.unique_rules %}
+{% if rule.remarks.size > 0 %}
+[[{{schema.id}}.{{entity.id}}.{{rule.id}}]]
+*{{ rule.id }}*: {{ rule.remarks | join: newLine }}
+{% endif %}
+
+{% endfor %}
+{% endif %}
+
+{% assign found = false %}
+{% for where1 in entity.where_rules %}
+{% if where1.remarks.size > 0 %}
+{% assign found = true %}
+{% endif %}
+{% endfor %}
+
+{% if found and entity.where_rules.size > 0 %}
+[underline]#Formal propositions:#
+
+{% for where1 in entity.where_rules %}
+{% if where1.remarks.size > 0 %}
+[[{{schema.id}}.{{entity.id}}.{{where1.id}}]]
+*{{ where1.id }}*: {{ where1.remarks | join: newLine }}
+{% endif %}
+
+{% endfor %}
+{% endif %}
+
+
+{% assign found = false %}
+{% for where1 in entity.informal_propositions %}
+{% if where1.remarks.size > 0 %}
+{% assign found = true %}
+{% endif %}
+{% endfor %}
+
+{% if found and entity.informal_propositions.size > 0 %}
+[underline]#Informal propositions:#
+
+{% for where1 in entity.informal_propositions %}
+{% if where1.remarks.size > 0 %}
+[[{{schema.id}}.{{entity.id}}.{{where1.id}}]]
+*{{ where1.id }}*: {{ where1.remarks | join: newLine }}
+{% endif %}
+
+{% endfor %}
+{% endif %}
+
+{% endfor %}
+{% endif %}
+
+{% if schema.subtype_constraints.size > 0 %}
+[type="express"]
+=== {{ schema.id }} subtype constraint {% if schema.subtype_constraints.size == 1 %}definition{% else %}definitions{% endif %}
+
+{% for constraint in schema.subtype_constraints %}
+[[{{schema.id}}.{{constraint.id}}]]
+[type="express"]
+==== {{ constraint.id }} <<expg.{{ schema.id }},image:{{ GIF_DIR }}>> ((({{ constraint.id }},Object definition)))
+
+[underline]#EXPRESS specification:#
+
+[source%unnumbered]
+--
+{{ constraint.source }}
+--
+
+{{ constraint.remarks | join: newLine }}
+
+{% endfor %}
+{% endif %}
+
+{% if schema.functions.size > 0 %}
+[type="express"]
+=== {{ schema.id }} function {% if schema.functions.size == 1 %}definition{% else %}definitions{% endif %}
+
+{% for function in schema.functions %}
+[[{{schema.id}}.{{function.id}}]]
+[type="express"]
+==== {{ function.id }} <<expg.{{ schema.id }},image:{{ GIF_DIR }}>> ((({{ function.id }},Object definition)))
+
+[underline]#EXPRESS specification:#
+
+[source%unnumbered]
+--
+{{ function.source }}
+--
+
+{{ function.remarks | join: newLine }}
+
+{% assign found = false %}
+{% for parameter in function.parameters %}
+{% if parameter.remarks.size > 0 %}
+{% assign found = true %}
+{% endif %}
+{% endfor %}
+
+{% if function.parameters.size > 0 and found %}
+
+[underline]#Argument definitions:#
+
+{% for parameter in function.parameters %}
+{% if parameter.remarks.size > 0 %}
+*{{ parameter.id }}*: {{ parameter.remarks | join: newLine }}
+{% endif %}
+{% endfor %}
+{% endif %}
+
+{% if function.remark_items.size > 0 %}
+
+{% if found == false %}
+[underline]#Argument definitions:#
+{% endif %}
+
+{% for item in function.remark_items %}
+*{{ item.id }}*: {{ item.remarks | join: newLine }}
+{% endfor %}
+{% endif %}
+
+{% endfor %}
+{% endif %}
+
+[underline]#EXPRESS specification:#
+
+[source%unnumbered]
+--
+END_SCHEMA; -- {{ schema.id }}
+--
+
+{% endfor %}
+---
+
