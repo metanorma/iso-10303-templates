@@ -8,8 +8,10 @@ Annotated EXPRESS schemas, as used in ISO 10303.
 == Usage
 
 NOTE: Due to current limitations in the metanorma-plugin-lutaml plugin with
-liquid, a symbolic link needs to be made to this repository's content at the
-same directory level of the file that includes a template.
+liquid, TWO symbolic links need to be made to this repository's content:
++
+* at the directory of the root document;
+* at the directory of the file that includes a template (typically `sections/`)
 
 In a Metanorma document it is used like this:
 
@@ -44,6 +46,7 @@ Type 1: `include::` block is at the same level as the including document:
 Type 2: `include::` block in another file (e.g. under `sections/`):
 
 `document.adoc`:: The root document file.
+`templates/`:: A check-out of the iso-10303-templates repository.
 `sections/xxx.adoc`:: The document that includes the `lutaml_express` block.
 `sections/templates/`:: A check-out of the iso-10303-templates repository.
 
