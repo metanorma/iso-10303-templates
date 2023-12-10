@@ -14,7 +14,7 @@
 
 {% render "templates/types", schema_id: schema.id, things: schema.types, thing_prefix: root_thing_prefix, depth: 2 %}
 
-{% render "templates/entities", schema_id: schema.id, things: schema.entities, thing_prefix: root_thing_prefix, depth: 2 %}
+{% render "templates/entities", schema: schema, schema_id: schema.id, things: schema.entities, thing_prefix: root_thing_prefix, depth: 2 %}
 
 {% render "templates/subtype_constraints", schema_id: schema.id, things: schema.subtype_constraints, thing_prefix: root_thing_prefix, depth: 2 %}
 
