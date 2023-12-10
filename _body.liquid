@@ -1,6 +1,24 @@
 
 {{ thing.remarks }}
 
+{% if schema_description %}
+{% assign schema_remark = thing.remarks %}
+{% comment %}
+This is purely for the bug at
+https://github.com/lutaml/expressir/issues/108
+
+Once that is fixed the following IF statement should be removed and just use {{ thing.remarks }}
+{% endcomment %}
+
+{% if schema_remark.size == 0 %}
+{% assign schema_remark = thing.remark_items | where: "id", thing.id | first %}
+{% endif %}
+
+{{ schema_remark.remarks }}
+
+The following EXPRESS declaration begins the *{{ thing.id }}* and identifies the necessary external references.
+{% endif %}
+
 {% render "templates/body_remarks", remark_items: thing.remark_items %}
 
 {% render "templates/body_source_code", source: thing.source %}
