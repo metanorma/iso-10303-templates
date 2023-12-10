@@ -6,7 +6,7 @@
 {% for thing in things %}
 {% assign entity_nested_depth = depth | plus: 1 %}
 
-{% render "templates/entity", thing: thing, thing_prefix: thing_prefix, depth: entity_nested_depth %}
+{% render "templates/entity", schema: schema, thing: thing, thing_prefix: thing_prefix, depth: entity_nested_depth %}
 
 {% endfor %}
 
