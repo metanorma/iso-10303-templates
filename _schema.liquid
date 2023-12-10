@@ -23,3 +23,10 @@
 {% render "templates/procedures", schema_id: schema.id, things: schema.procedures, thing_prefix: root_thing_prefix, depth: 2 %}
 
 {% render "templates/rules", schema_id: schema.id, things: schema.rules, thing_prefix: root_thing_prefix, depth: 2 %}
+
+[underline]#EXPRESS specification:#
+
+[source%unnumbered]
+--
+END_SCHEMA; -- {{ schema.id }}
+--
