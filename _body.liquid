@@ -22,3 +22,10 @@ The following EXPRESS declaration begins the *{{ thing.id }}* and identifies the
 {% render "templates/body_remarks", remark_items: thing.remark_items %}
 
 {% render "templates/body_source_code", source: thing.source %}
+
+
+{% if schema_description %}
+
+NOTE: See <<expg.{{ thing.id }}>> for a graphical representation of this schema.
+
+{% endif %}
