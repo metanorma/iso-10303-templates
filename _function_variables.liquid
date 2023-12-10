@@ -1,11 +1,15 @@
 {% if things.size > 0 %}
 {% assign fv_nested_depth = depth %}
 
+{% unless found %}
 [underline]#Argument definitions:#
+{% endunless %}
 
 {% for thing in things %}
 
+{% if thing.remarks.size > 0 %}
 **{{ thing.id }}**:: {{ thing.remarks }}
+{% endif %}
 
 {% render "templates/body_remarks", remark_items: thing.remark_items %}
 
