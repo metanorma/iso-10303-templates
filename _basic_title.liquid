@@ -7,8 +7,8 @@
 {% endif %}
 {% endif %}
 [[{{thing_prefix}}.{{anchor | replace: "\", "-"}}]]
-[level={{xdepth}}]
-{{equalsigns}} {{ title | replace: "\", "-" }}
+[level={{xdepth}},type=express]
+{{equalsigns}} {{ title | replace: "\", "-" }} ((({{ anchor }},Object definition)))
 
 //equalsigns: {{equalsigns}}
 //
