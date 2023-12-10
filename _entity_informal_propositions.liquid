@@ -1,4 +1,11 @@
-{% if things.size > 0 %}
+{% assign found = false %}
+{% for thing in things %}
+{% if thing.remarks.size > 0 %}
+{% assign found = true %}
+{% endif %}
+{% endfor %}
+
+{% if things.size > 0 and found %}
 {% assign ea_nested_depth = depth %}
 
 [underline]#Informal propositions:#

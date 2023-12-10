@@ -1,11 +1,20 @@
-{% if things.size > 0 %}
+{% assign found = false %}
+{% for thing in things %}
+{% if thing.remarks.size > 0 %}
+{% assign found = true %}
+{% endif %}
+{% endfor %}
+
+{% if things.size > 0 and found %}
 {% assign ea_nested_depth = depth %}
 
 [underline]#Formal propositions:#
 
 {% for thing in things %}
 
+{% if thing.remarks.size > 0 %}
 **{{ thing.id }}**:: {{ thing.remarks }}
+{% endif %}
 
 {% render "templates/body_remarks", remark_items: thing.remark_items %}
 
