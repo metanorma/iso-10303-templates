@@ -12,7 +12,10 @@
 
 {% for thing in things %}
 
-{% if thing.remarks.size > 0 %}
+{% if thing.remarks.size > 0 and
+      thing.id != "__note" and
+      thing.id != "__example" and
+      thing.id != "__figure" %}
 **{{ thing.id }}**:: {{ thing.remarks }}
 {% endif %}
 
