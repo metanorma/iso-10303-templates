@@ -21,8 +21,20 @@
 
 [example]
 ====
-{{example.remarks}}
+{{remark_example}}
 ====
+
+{% endfor %}
+{% endif %}
+{% endfor %}
+
+
+{% assign figures = remark_items | where: "id", "__figure" %}
+{% for figure in figures %}
+{% if figure.remarks.size > 0 %}
+{% for remark_figure in figure.remarks %}
+
+{{ remark_figure }}
 
 {% endfor %}
 {% endif %}
