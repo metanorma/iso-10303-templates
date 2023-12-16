@@ -1,9 +1,7 @@
 [yaml2text,express-g-diagrams.yaml,diagrams]
 ----
-{% assign split_str = "/schemas/resources/" %}
-
 {% for diagram in diagrams %}
-{% assign current_name = diagram.path | split: split_str | last | split: "/" | first  %}
+{% assign current_name = diagram.path | split: "/schemas/" | last | replace_first: "/", "*" | split: "*" | last | split: "/" | first %}
 
 {% if forloop.index == 1 %}
 {% assign sizes = "" %}
@@ -31,7 +29,7 @@
 
 {% for diagram in diagrams %}
 {% assign figure_id = forloop.index %}
-{% assign current_name = diagram.path | split: split_str | last | split: "/" | first  %}
+{% assign current_name = diagram.path | split: "/schemas/" | last | replace_first: "/", "*" | split: "*" | last | split: "/" | first %}
 
 {% if forloop.index == 1 %}
 {% assign previous_name = current_name %}
