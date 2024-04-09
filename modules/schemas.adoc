@@ -1,4 +1,4 @@
 [lutaml, schemas, repo, leveloffset=+1]
 ---
-include::../../templates/modules/_schemas.liquid[]
+include::../modules/_schemas.liquid[]
 ---
