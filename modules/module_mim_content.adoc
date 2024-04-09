@@ -2,7 +2,7 @@
 [[mim]]
 == Module interpreted model
 
-include::../templates/module_templates/module_mappings.adoc[]
+include::../templates/modules/module_mappings.adoc[]
 
 // TODO: Include mapping YAML via:
 // https://github.com/metanorma/stepmod-utils/issues/239

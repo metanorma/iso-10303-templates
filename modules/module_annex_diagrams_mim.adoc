@@ -26,6 +26,6 @@ The EXPRESS-G graphical notation is defined in ISO 10303-11.
 [yaml2text,express-g-diagrams-mim.yaml,diagrams]
 ----
 {% assign namespace = "mim" %}
-include::diagrams.liquid[]
+include::../common_files/diagrams.liquid[]
 ----
 

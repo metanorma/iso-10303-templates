@@ -19,13 +19,13 @@ specified below.
 This subclause specifies the MIM rules for this module. The MIM rules and definitions are specified below.
 {% endcapture %}
 
-{% render "templates/module_templates/module_mim_content", schema: schema %}
+{% render "templates/modules/module_mim_content", schema: schema %}
 
-{% render "templates/module_templates/definitions", definitions: schema.entities, intro: MIN_ENTITIES_INTRO, depth: 4 %}
+{% render "templates/modules/definitions", definitions: schema.entities, intro: MIN_ENTITIES_INTRO, depth: 4 %}
 
-{% render "templates/module_templates/definitions", definitions: schema.functions, intro: MIN_FUNCTIONS_INTRO, depth: 4 %}
+{% render "templates/modules/definitions", definitions: schema.functions, intro: MIN_FUNCTIONS_INTRO, depth: 4 %}
 
-{% render "templates/module_templates/definitions", definitions: schema.rules, intro: MIN_RULES_INTRO, depth: 4 %}
+{% render "templates/modules/definitions", definitions: schema.rules, intro: MIN_RULES_INTRO, depth: 4 %}
 
 [source%unnumbered]
 --
