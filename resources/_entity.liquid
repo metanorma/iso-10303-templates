@@ -1,7 +1,7 @@
 {% assign entity_nested_depth = depth %}
-{% render "templates/basic_thing", depth: entity_nested_depth, thing_prefix: thing_prefix, thing: thing %}
+{% render "templates/resources/basic_thing", depth: entity_nested_depth, thing_prefix: thing_prefix, thing: thing %}
 
-{% render "templates/entity_subtype_constraints", subtypes: schema.subtype_constraints, entity_id: thing.id %}
+{% render "templates/resources/entity_subtype_constraints", subtypes: schema.subtype_constraints, entity_id: thing.id %}
 
 {% assign found = false %}
 {% for attribute in thing.attributes %}
@@ -13,34 +13,34 @@
 {% if thing.attributes.size > 0 and found %}
 {% capture entity_thing_prefix %}{{thing_prefix}}.{{thing.id}}{% endcapture %}
 
-{% render "templates/entity_attributes", things: thing.attributes, thing_prefix: entity_thing_prefix, depth: entity_nested_depth %}
+{% render "templates/resources/entity_attributes", things: thing.attributes, thing_prefix: entity_thing_prefix, depth: entity_nested_depth %}
 
 {% endif %}
 
 {% if thing.remark_items.size > 0 %}
 {% capture entity_thing_prefix %}{{thing_prefix}}.{{thing.id}}{% endcapture %}
 
-{% render "templates/entity_attributes", things: thing.remark_items, thing_prefix: entity_thing_prefix, depth: entity_nested_depth, found: found %}
+{% render "templates/resources/entity_attributes", things: thing.remark_items, thing_prefix: entity_thing_prefix, depth: entity_nested_depth, found: found %}
 
 {% endif %}
 
 {% if thing.where_rules.size > 0 %}
 {% capture entity_thing_prefix %}{{thing_prefix}}.{{thing.id}}{% endcapture %}
 
-{% render "templates/entity_where_rules", things: thing.where_rules, thing_prefix: entity_thing_prefix, depth: entity_nested_depth %}
+{% render "templates/resources/entity_where_rules", things: thing.where_rules, thing_prefix: entity_thing_prefix, depth: entity_nested_depth %}
 
 {% endif %}
 
 {% if thing.unique_rules.size > 0 %}
 {% capture entity_thing_prefix %}{{thing_prefix}}.{{thing.id}}{% endcapture %}
 
-{% render "templates/entity_unique_rules", things: thing.unique_rules, thing_prefix: entity_thing_prefix, depth: entity_nested_depth %}
+{% render "templates/resources/entity_unique_rules", things: thing.unique_rules, thing_prefix: entity_thing_prefix, depth: entity_nested_depth %}
 
 {% endif %}
 
 {% if thing.informal_propositions.size > 0 %}
 {% capture entity_thing_prefix %}{{thing_prefix}}.{{thing.id}}{% endcapture %}
 
-{% render "templates/entity_informal_propositions", things: thing.informal_propositions, thing_prefix: entity_thing_prefix, depth: entity_nested_depth %}
+{% render "templates/resources/entity_informal_propositions", things: thing.informal_propositions, thing_prefix: entity_thing_prefix, depth: entity_nested_depth %}
 
 {% endif %}
