@@ -1,0 +1,52 @@
+[[arm]]
+== Information requirements
+
+[lutaml,schemas,repo,leveloffset=+1]
+---
+{% assign target_type = 'arm' %}
+{%- liquid
+  assign suffix = schema.id | split: '_' | last
+  if suffix == target_type
+    assign found = true
+  endif
+%}
+
+{% if found %}
+{% assign schemaname = schema.id | append: "$" | remove: "_arm$" | remove: "$" | replace: "_", " " | capitalize %}
+
+This clause specifies the information requirements for the *{{schemaname}}*
+application module. The information requirements are specified as the
+Application Reference Model (ARM) of this application module.
+{% endif %}
+{% endfor %}
+---
+
+NOTE: A graphical representation of the information requirements is given in
+<<AnnexC>>.
+
+NOTE: The mapping specification is specified in <<mapping>>. It shows how the
+information requirements are met by using common resources and constructs
+defined or imported in the MIM schema of this application module.
+
+
+This clause defines the information requirements to which implementations shall
+conform using the EXPRESS language as defined in ISO 10303-11.
+
+[lutaml,schemas,repo,leveloffset=+1]
+---
+{% assign target_type = 'arm' %}
+{%- liquid
+  assign suffix = schema.id | split: '_' | last
+  if suffix == target_type
+    assign found = true
+  endif
+%}
+
+{% if found %}
+The following begins the *{{schema.id}}* schema and identifies the necessary
+external references.
+
+include::../templates/_schemas.liquid[]
+{% endif %}
+{% endfor %}
+---

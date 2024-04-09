@@ -1,0 +1,48 @@
+{% capture ARM_TYPE_INTRO %}
+=== ARM type definitions
+
+This subclause specifies the ARM types for this application module.
+The ARM types and definitions are specified below.
+{% endcapture %}
+
+{% capture ARM_ENTITY_INTRO %}
+=== ARM entity definitions
+
+This subclause specifies the ARM entities for this module. Each ARM application
+entity is an atomic element that embodies a unique application concept and contains
+attributes specifying the data elements of the entity. The ARM entities and definitions
+are specified below.
+{% endcapture %}
+
+{% capture ARM_SUBTYPE_INTRO %}
+=== ARM subtype constraint definitions
+
+This subclause specifies the ARM subtype constraints for this module.
+Each subtype constraint places constraints on the possible super-type / subtype instantiations.
+The ARM subtype constraints and definitions are specified below.
+{% endcapture %}
+
+{% capture ARM_FUNCTION_INTRO %}
+=== ARM function definitions
+
+This subclause specifies the ARM function for this module. The ARM function and definition
+is specified below.
+{% endcapture %}
+
+{% render "templates/module_templates/arm_information_requirements_intro", schema: schema  %}
+
+{% render "templates/module_templates/required_arms", source: schema.source  %}
+
+{% render "templates/module_templates/definitions", definitions: schema.types, intro: ARM_TYPE_INTRO, depth: 3 %}
+
+{% render "templates/module_templates/definitions", definitions: schema.entities, intro: ARM_ENTITY_INTRO, depth: 3 %}
+
+{% render "templates/module_templates/definitions", definitions: schema.subtype_constraints, intro: ARM_SUBTYPE_INTRO, depth: 3 %}
+
+{% render "templates/module_templates/definitions", definitions: schema.functions, intro: ARM_FUNCTION_INTRO, depth: 3 %}
+
+[source%unnumbered]
+--
+END_SCHEMA;  -- {{ schema.id }}
+--
+
