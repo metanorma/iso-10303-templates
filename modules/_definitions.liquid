@@ -1,0 +1,91 @@
+{% if definitions.size > 0%}
+
+{% if depth %}
+{% assign xdepth = depth | plus: 1 %}
+{% if xdepth > 5 %}
+{% capture equalsigns %}====={% endcapture %}
+{% else %}
+{% capture equalsigns %}{% for count in (1..xdepth) %}={% endfor %}{% endcapture %}
+{% endif %}
+{% endif %}
+
+{{ intro }}
+
+{% for definition in definitions %}
+
+{% assign found_type = false %}
+{% if definition.underlying_type.items[0].remarks.size > 0 %}
+{% assign found_type = true %}
+{% endif %}
+
+{% assign found_attribute = false %}
+{% if definition.attributes[0].remarks.size > 0 %}
+{% assign found_attribute = true %}
+{% endif %}
+
+{% assign found_wr = false %}
+{% if definition.where_rules.size > 0 %}
+{% assign found_wr = true %}
+{% endif %}
+
+{% assign found_ip = false %}
+{% if definition.informal_propositions[0].remarks.size > 0 %}
+{% assign found_ip = true %}
+{% endif %}
+
+{{ equalsigns }} {{ definition.id }}
+
+{{ definition.remarks }}
+
+[underline]#EXPRESS specification:#
+
+[source%unnumbered]
+--
+{{ definition.source }}
+--
+
+{% if found_type %}
+[underline]#Enumerated item definitions:#
+
+{% for item in definition.underlying_type.items %}
+*{{ item.id }}*:: {{ item.remarks }}
+
+{% render "templates/module_templates/body_remarks", remark_items: item.remark_items %}
+{% endfor %}
+{% endif %}
+
+
+{% if found_attribute %}
+[underline]#Attribute definitions:#
+
+{% for attr in definition.attributes %}
+
+*{{ attr.id }}*:: {{ attr.remarks }}
+
+{% render "templates/module_templates/body_remarks", remark_items: attr.remark_items %}
+{% endfor %}
+{% endif %}
+
+{% if found_wr %}
+[underline]#Formal propositions:#
+
+{% for wr in definition.where_rules %}
+*{{ wr.id }}*:: {{ wr.remarks }}
+
+{% render "templates/module_templates/body_remarks", remark_items: wr.remark_items  %}
+{% endfor %}
+{% endif %}
+
+{% if found_ip %}
+[underline]#Informal propositions:#
+
+{% for ip in definition.informal_propositions %}
+*{{ ip.id }}*:: {{ ip.remarks }}
+
+{% render "templates/module_templates/body_remarks", remark_items: ip.remark_items  %}
+{% endfor %}
+{% endif %}
+
+{% endfor %}
+
+{% endif %}
