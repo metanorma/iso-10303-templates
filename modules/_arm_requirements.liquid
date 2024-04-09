@@ -29,17 +29,17 @@ This subclause specifies the ARM function for this module. The ARM function and 
 is specified below.
 {% endcapture %}
 
-{% render "templates/module_templates/arm_information_requirements_intro", schema: schema  %}
+{% render "templates/modules/arm_information_requirements_intro", schema: schema  %}
 
-{% render "templates/module_templates/required_arms", source: schema.source  %}
+{% render "templates/modules/required_arms", source: schema.source  %}
 
-{% render "templates/module_templates/definitions", definitions: schema.types, intro: ARM_TYPE_INTRO, depth: 3 %}
+{% render "templates/modules/definitions", definitions: schema.types, intro: ARM_TYPE_INTRO, depth: 3 %}
 
-{% render "templates/module_templates/definitions", definitions: schema.entities, intro: ARM_ENTITY_INTRO, depth: 3 %}
+{% render "templates/modules/definitions", definitions: schema.entities, intro: ARM_ENTITY_INTRO, depth: 3 %}
 
-{% render "templates/module_templates/definitions", definitions: schema.subtype_constraints, intro: ARM_SUBTYPE_INTRO, depth: 3 %}
+{% render "templates/modules/definitions", definitions: schema.subtype_constraints, intro: ARM_SUBTYPE_INTRO, depth: 3 %}
 
-{% render "templates/module_templates/definitions", definitions: schema.functions, intro: ARM_FUNCTION_INTRO, depth: 3 %}
+{% render "templates/modules/definitions", definitions: schema.functions, intro: ARM_FUNCTION_INTRO, depth: 3 %}
 
 [source%unnumbered]
 --
