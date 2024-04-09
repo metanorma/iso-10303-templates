@@ -9,8 +9,8 @@ without comments nor other explanatory text. These listings are available in
 computer-interpretable form in <<table_listing>> and can be found at the
 following URLs:
 
-Short names: http://standards.iso.org/iso/10303/tech/short_names/short-names.txt +
-EXPRESS: http://standards.iso.org/iso/10303/smrl/v11/tech/smrlv11.zip
+Short names: :: http://standards.iso.org/iso/10303/tech/short_names/short-names.txt
+EXPRESS: :: http://standards.iso.org/iso/10303/smrl/v11/tech/smrlv11.zip
 
 [yaml2text,listings.yaml,data]
 ----
