@@ -1,0 +1,60 @@
+[yaml2text,express-g-diagrams.yaml,diagrams]
+----
+{% for diagram in diagrams %}
+{% assign current_name = diagram.path | split: "/schemas/" | last | replace_first: "/", "*" | split: "*" | last | split: "/" | first %}
+
+{% if forloop.index == 1 %}
+{% assign sizes = "" %}
+{% assign accumulator = 1 %}
+{% assign previous_schema = current_name %}
+{% endif %}
+
+{% if previous_schema == current_name and forloop.index != 1 %}
+{% assign accumulator = accumulator | plus: 1 %}
+{% endif %}
+
+{% if previous_schema != current_name  %}
+{% assign sizes = sizes | append: "," | append: accumulator %}
+{% assign accumulator = 1 %}
+{% assign previous_schema = current_name %}
+{% endif %}
+
+{% if forloop.index == diagrams.size %}
+{% assign sizes = sizes | append: "," | append: accumulator %}
+{% assign sizes = sizes | split: "," %}
+{% break %}
+{% endif %}
+
+{% endfor %}
+
+{% for diagram in diagrams %}
+{% assign figure_id = forloop.index %}
+{% assign current_name = diagram.path | split: "/schemas/" | last | replace_first: "/", "*" | split: "*" | last | split: "/" | first %}
+
+{% if forloop.index == 1 %}
+{% assign previous_name = current_name %}
+{% assign first_diagram = true %}
+{% assign diagram_id = 1 %}
+{% assign size_index = 1 %}
+{% endif %}
+
+{% if previous_name != current_name %}
+{% assign size_index = size_index | plus: 1 %}
+{% assign diagram_id = 1 %}
+{% assign previous_name = current_name %}
+{% assign first_diagram = true %}
+{% elsif forloop.index != 1%}
+{% assign diagram_id = diagram_id | plus: 1 %}
+{% endif %}
+
+{% if first_diagram %}
+[[expg.{{ previous_name }}]]&#x200c;
+{% assign first_diagram = false %}
+{% endif %}
+
+[[fig_d{{ figure_id }}]]
+.EXPRESS-G diagram of {{ current_name }} ({{diagram_id}} of {{ sizes[size_index] }})
+image::{{ diagram.path }}[]
+
+{% endfor %}
+----
