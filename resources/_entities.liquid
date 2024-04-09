@@ -1,12 +1,12 @@
 {% if things.size > 0 %}
 {% assign entities_title = schema_id | append: " entity definitions" %}
 
-{% render "templates/basic_title", thing_prefix: thing_prefix, anchor: "entities", title: entities_title, depth: depth %}
+{% render "templates/resources/basic_title", thing_prefix: thing_prefix, anchor: "entities", title: entities_title, depth: depth %}
 
 {% for thing in things %}
 {% assign entity_nested_depth = depth | plus: 1 %}
 
-{% render "templates/entity", schema: schema, thing: thing, thing_prefix: thing_prefix, depth: entity_nested_depth %}
+{% render "templates/resources/entity", schema: schema, thing: thing, thing_prefix: thing_prefix, depth: entity_nested_depth %}
 
 {% endfor %}
 

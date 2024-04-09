@@ -1,10 +1,10 @@
 {% if things.size > 0 %}
 
-{% render "templates/basic_title", thing_prefix: thing_prefix, anchor: "items", title: "Items", depth: depth %}
+{% render "templates/resources/basic_title", thing_prefix: thing_prefix, anchor: "items", title: "Items", depth: depth %}
 
 {% for thing in things %}
 
-{% render "templates/basic_thing", thing: thing, thing_prefix: thing_prefix, depth: depth: depth | plus: 1 %}
+{% render "templates/resources/basic_thing", thing: thing, thing_prefix: thing_prefix, depth: depth: depth | plus: 1 %}
 
 {% endfor %}
 

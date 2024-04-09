@@ -1,11 +1,11 @@
 {% if things.size > 0 %}
 {% assign rw_nested_depth = depth %}
 
-{% render "templates/basic_title", thing_prefix: thing_prefix, anchor: "where", title: "Where", depth: rw_nested_depth %}
+{% render "templates/resources/basic_title", thing_prefix: thing_prefix, anchor: "where", title: "Where", depth: rw_nested_depth %}
 
 {% for thing in things %}
 {% assign rww_nested_depth = rw_nested_depth | plus: 1 %}
-{% render "templates/basic_thing", thing: thing, thing_prefix: thing_prefix, depth: rww_nested_depth %}
+{% render "templates/resources/basic_thing", thing: thing, thing_prefix: thing_prefix, depth: rww_nested_depth %}
 
 {% endfor %}
 
