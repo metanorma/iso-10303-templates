@@ -1,0 +1,13 @@
+[[expg]]
+[appendix,obligation=informative]
+== EXPRESS-G diagrams
+
+The diagrams in this annex correspond to the EXPRESS schemas specified in this
+part of ISO 10303. The diagrams use the EXPRESS-G graphical notation for the
+EXPRESS language. EXPRESS-G is defined in ISO 10303-11.
+
+[yaml2text,express-g-diagrams.yaml,diagrams]
+----
+{% assign namespace = "" %}
+include::../common_files/diagrams.liquid[]
+----
