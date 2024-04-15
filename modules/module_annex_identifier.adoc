@@ -3,7 +3,7 @@
 == Information object registration
 
 
-=== Document Identification
+=== Document identification
 
 To provide for unambiguous identification of an information object in an open
 system, the object identifier
