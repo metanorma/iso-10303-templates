@@ -7,40 +7,86 @@
 === General
 
 This annex documents the history of technical modifications made to
-ISO/TS 10303-1051.
+ISO/TS {docnumber}-{partnumber}.
 
-[yaml2text,changes_paths.yaml,data]
+[yaml2text,changes_paths.yaml,paths]
 ------
-{% assign max_version = 10 %} // This should be the {edition}
+
+{% liquid
+assign path_prefix = "../../"
+for path in paths
+if path contains "mapping.changes.yaml"
+assign mapping_path = path | prepend: path_prefix
+elsif path contains "arm.changes.yaml"
+assign arm_path = path | prepend: path_prefix
+elsif path contains "mim.changes.yaml"
+assign mim_path = path | prepend: path_prefix
+endif
+endfor
+%}
+
+// This should be the {edition} but doesn't work inside yaml2text
+{% assign max_version = 10 %}
 {% for ver in (2..max_version) %}
 
 [[change_{{ver}}]]
 === Changes made in edition {{ver}}
 
-[[summary2]]
+[[summary_{{ver}}]]
 ==== Summary of changes
 
-// TODO: change ordinal counting to depend on number
-The second edition of this part of ISO 10303 incorporated the modifications to
-the first edition listed below.
-
+The edition {{ ver }} of this part of ISO 10303 incorporated the modifications to the edition {{ ver | minus: 1 }} listed below.
 
 // document changes
 [yaml2text,changes.yaml,data]
 ----
+{% assign ver_str = ver | append: "" %}
+
 {% for ed in data.change_edition %}
-{% if ed.version == {{ver}} } // find version
+// find version
+{% if ed.version == ver_str %}
 {{ed.description}}
 {% endif %}
 {% endfor %}
 ----
 
-// ARM schema changes
-// TODO we need to generalize this path
-[yaml2text,schemas/modules/geometric_tolerance/arm.changes.yaml,data]
+// mapping changes
+[yaml2text,{{mapping_path}},data]
 ----
+{% assign ver_str = ver | append: "" %}
+
 {% for ed in data.change_edition %}
-{% if ed.version == {{ver}} } // find version
+
+// find version
+{% if ed.version == ver_str %}
+
+[[mapping.changes{{ver}}]]
+==== Changes made to the mapping
+
+The following changes have been made to the ARM to MIM mapping:
+
+{% for change in ed.changes %}
+
+* {{ change.change }}
+
+{% endfor %}
+
+
+{% endif %}
+{% endfor %}
+----
+
+// ARM schema changes
+
+[yaml2text,{{arm_path}},data]
+----
+{% assign ver_str = ver | append: "" %}
+
+{% for ed in data.change_edition %}
+
+// find version
+{% if ed.version == ver_str %}
+
 [[arm.changes{{ver}}]]
 ==== Changes made to the ARM
 
@@ -55,6 +101,9 @@ The following ARM EXPRESS declarations and interface specifications have been ad
 {{change.description}}
 --
 {% endif %}
+{% endfor %}
+
+{% endif %}
 
 {% if ed.modifications %}
 The following ARM EXPRESS declarations and interface specifications have been modified:
@@ -67,7 +116,6 @@ The following ARM EXPRESS declarations and interface specifications have been mo
 {{change.description}}
 --
 {% endif %}
-
 {% endfor %}
 {% endif %}
 
@@ -86,21 +134,25 @@ The following ARM EXPRESS declarations and interface specifications have been de
 {% endfor %}
 {% endif %}
 
-
-In addition, modifications have been made to the mapping specification, the MIM
-schema and the EXPRESS-G diagrams to reflect and be consistent with the
-modifications of the ARM.
-
 {% endif %}
+
+
 {% endfor %}
+
 ----
+
 
 // MIM schema changes
-// TODO we need to generalize this path
-[yaml2text,schemas/modules/geometric_tolerance/mim.changes.yaml,data]
+
+[yaml2text,{{mim_path}},data]
 ----
+{% assign ver_str = ver | append: "" %}
+
 {% for ed in data.change_edition %}
-{% if ed.version == {{ver}} } // find version
+
+// find version
+{% if ed.version == ver_str %}
+
 [[mim.changes{{ver}}]]
 ==== Changes made to the MIM
 
@@ -115,8 +167,8 @@ The following MIM EXPRESS declarations and interface specifications have been ad
 {{change.description}}
 --
 {% endif %}
-
 {% endfor %}
+
 {% endif %}
 
 {% if ed.modifications %}
@@ -130,14 +182,13 @@ The following MIM EXPRESS declarations and interface specifications have been mo
 {{change.description}}
 --
 {% endif %}
-
 {% endfor %}
 {% endif %}
 
 {% if ed.deletions %}
 The following MIM EXPRESS declarations and interface specifications have been deleted:
 
-{% for change in ed.deletions %}
+{% for change in ed.modifications %}
 * {{change.type}} {{change.name}}; {%- if change.interfaced_item %}(interface from {{change.interfaced_items}}){% endif %}
 {%- if change.description %}
 +
@@ -149,1233 +200,13 @@ The following MIM EXPRESS declarations and interface specifications have been de
 {% endfor %}
 {% endif %}
 
-
 {% endif %}
-{% endfor %}
-----
 
-// mapping changes
-// TODO we need to generalize this path
-[yaml2text,schemas/modules/geometric_tolerance/mapping.changes.yaml,data]
-----
-{% for ed in data.change_edition %}
-{% if ed.version == {{ver}} } // find version
-
-[[mapping.changes{{ver}}]]
-==== Changes made to the mapping
-
-The following changes have been made to the ARM to MIM mapping:
-
-{% for change in ed.changes %}
-
-* {{change}}
 
 {% endfor %}
 
-
-{% endif %}
-{% endfor %}
 ----
+
 
 {% endfor %}
 ------
-
-////
-TODO: Create template for the following changes:
-* document changes
-* schema changes
-* mapping changes
-
-Read from:
-./changes.yaml
-schemas/modules/geometric_tolerance/arm.changes.yaml
-schemas/modules/geometric_tolerance/mim.changes.yaml
-schemas/modules/geometric_tolerance/mapping.changes.yaml
-
-////
-
-// [[change_2]]
-// === Changes made in edition 2
-
-// [[summary2]]
-// ==== Summary of changes
-
-// The second edition of this part of ISO 10303 incorporated the modifications to the first edition listed below.
-
-// Minor editorial changes.
-
-// [[change_3]]
-// === Changes made in edition 3
-
-// [[summary3]]
-// ==== Summary of changes
-
-// The third edition of this part of ISO 10303 incorporated the modifications to the second edition listed below.
-
-// [[arm.changes3]]
-// ==== Changes made to the ARM
-
-// The following ARM EXPRESS declarations and interface specifications have been modified:
-
-// * ENTITY Datum;
-
-// * ENTITY Datum_reference;
-
-// * ENTITY Datum_target;
-
-// * ENTITY Single_datum.
-
-// In addition, modifications have been made to the mapping specification, the MIM schema and the EXPRESS-G diagrams to reflect and be consistent with the modifications of the ARM.
-
-
-
-// [[change_4]]
-// === Changes made in edition 4
-
-// [[summary4]]
-// ==== Summary of changes
-
-// The fourth edition of this part of ISO 10303 incorporated the modifications to the third edition listed below.
-
-// [[arm.changes4]]
-// ==== Changes made to the ARM
-
-// The following ARM EXPRESS declarations and interface specifications have been added:
-
-// * ENTITY Target_circular_curve;
-
-// * ENTITY Target_curve.
-
-// The following ARM EXPRESS declarations and interface specifications have been modified:
-
-// * ENTITY Datum_target;
-
-// * ENTITY Placed_target;
-
-// * ENTITY Target_area.
-
-// The following ARM EXPRESS declarations and interface specifications have been removed:
-
-// * USE_FROM Elemental_geometric_shape_arm;
-
-// * USE_FROM Shape_property_assignment_arm;
-
-// * USE_FROM Value_with_unit_arm.
-
-// In addition, modifications have been made to the mapping specification, the MIM schema and the EXPRESS-G diagrams to reflect and be consistent with the modifications of the ARM.
-
-
-
-// [[change_5]]
-// === Changes made in edition 5
-
-// [[summary5]]
-// ==== Summary of changes
-
-// The fifth edition of this part of ISO 10303 incorporated the modifications to the fourth edition listed below.
-
-// [[arm.changes5]]
-// ==== Changes made to the ARM
-
-// The following ARM EXPRESS declarations and interface specifications have been added:
-
-// * USE_FROM Dimension_tolerance_arm;
-
-// * USE_FROM Feature_and_connection_zone_arm;
-
-// * USE_FROM Shape_composition_arm;
-
-// * USE_FROM Support_resource_arm;
-
-// * TYPE area_unit_type;
-
-// * TYPE collection_plane_orientation;
-
-// * TYPE common_datum_list;
-
-// * TYPE datum_or_common_datum;
-
-// * TYPE datum_reference_modifier;
-
-// * TYPE datum_reference_modifier_type;
-
-// * TYPE directed_tolerance_zone_type;
-
-// * TYPE geometric_tolerance_target;
-
-// * TYPE geometrical_tolerance_modifier;
-
-// * TYPE oriented_tolerance_zone_type;
-
-// * TYPE simple_datum_reference_modifier;
-
-// * TYPE tolerance_zone_target;
-
-// * TYPE tolerance_zone_type;
-
-// * ENTITY All_around_shape_element;
-
-// * ENTITY All_around_shape_element_along_collection_plane;
-
-// * ENTITY Between_shape_element;
-
-// * ENTITY Contacting_feature;
-
-// * ENTITY Continuous_shape_element;
-
-// * ENTITY Datum_feature;
-
-// * ENTITY Datum_reference_compartment;
-
-// * ENTITY Datum_reference_element;
-
-// * ENTITY Datum_system;
-
-// * ENTITY Datum_system_with_associated_model_coordinate_system;
-
-// * ENTITY Dimensional_location_with_datum_feature;
-
-// * ENTITY Dimensional_size_with_datum_feature;
-
-// * ENTITY Directed_or_oriented_tolerance_zone;
-
-// * ENTITY Directed_tolerance_zone;
-
-// * ENTITY General_datum_reference;
-
-// * ENTITY Oriented_tolerance_zone;
-
-// * ENTITY Plane_shape_element;
-
-// * ENTITY Point_shape_element;
-
-// * ENTITY Runout_zone_definition;
-
-// * SUBTYPE_CONSTRAINT composite_shape_element_subtypes;
-
-// * SUBTYPE_CONSTRAINT gl_associated_shape_element_subtypes;
-
-// * SUBTYPE_CONSTRAINT gl_non_definitional_shape_element_subtypes;
-
-// * SUBTYPE_CONSTRAINT gl_shape_element_subtypes;
-
-// * FUNCTION sts_get_general_datum_reference.
-
-// The following ARM EXPRESS declarations and interface specifications have been modified:
-
-// * USE_FROM Value_with_unit_extension_arm;
-
-// * TYPE Affected_plane_geometric_tolerance_select + renamed to directed_or_oriented_geometric_tolerance_select;
-
-// * ENTITY Affected_plane_tolerance_zone;
-
-// * ENTITY Angularity_tolerance;
-
-// * ENTITY Axis_placement_shape_element;
-
-// * ENTITY Circular_runout_tolerance;
-
-// * ENTITY Coaxiality_tolerance;
-
-// * ENTITY Concentricity_tolerance;
-
-// * ENTITY Datum;
-
-// * ENTITY Datum_feature_simulator_constraint + renamed to Datum_reference_modifier_with_value and modified;
-
-// * ENTITY Datum_target;
-
-// * ENTITY Geometric_tolerance;
-
-// * ENTITY Line_profile_tolerance;
-
-// * ENTITY Parallelism_tolerance;
-
-// * ENTITY Perpendicularity_tolerance;
-
-// * ENTITY Position_tolerance;
-
-// * ENTITY Straightness_tolerance;
-
-// * ENTITY Surface_profile_tolerance;
-
-// * ENTITY Symmetry_tolerance;
-
-// * ENTITY Tolerance_zone;
-
-// * ENTITY Tolerance_zone_definition;
-
-// * ENTITY Total_runout_tolerance.
-
-// The following ARM EXPRESS declarations and interface specifications have been removed:
-
-// * ENTITY Common_datum;
-
-// * ENTITY Datum_defined_by_feature;
-
-// * ENTITY Datum_defined_by_targets;
-
-// * ENTITY Datum_reference;
-
-// * ENTITY Single_datum;
-
-// * ENTITY Tolerance_condition.
-
-// In addition, modifications have been made to the mapping specification, the MIM schema and the EXPRESS-G diagrams to reflect and be consistent with the modifications of the ARM.
-
-// [[mim.changes5]]
-// ==== Changes made to the MIM
-
-// The following MIM EXPRESS declarations and interface specifications have been added:
-
-// * USE_FROM Dimension_tolerance_mim;
-
-// * USE_FROM Feature_and_connection_zone_mim;
-
-// * USE_FROM Shape_composition_mim;
-
-// * USE_FROM Support_resource_mim;
-
-// * USE_FROM Value_with_unit_extension_mim;
-
-// * ENTITY feature_for_datum_target_relationship;
-
-// * RULE unique_dimensional_location_constraint;
-
-// * RULE unique_shape_aspect_constraint.
-
-// The following MIM EXPRESS declarations and interface specifications have been modified:
-
-// * USE_FROM shape_aspect_definition_schema.
-
-// The following MIM EXPRESS declarations and interface specifications have been removed:
-
-// * USE_FROM aic_geometric_tolerances;
-
-// * USE_FROM qualified_measure_schema;
-
-// * ENTITY shape_representation_with_parameters.
-
-
-
-// [[change_6]]
-// === Changes made in edition 6
-
-// [[summary6]]
-// ==== Summary of changes
-
-// The sixth edition of this part of ISO 10303 incorporated the modifications to the fifth edition listed below.
-
-// [[mapping.changes6]]
-// ==== Changes made to the mapping
-
-// The following changes have been made to the ARM to MIM mapping:
-
-// * The mappings of Between_shape_element start features and of Between_shape_element end_features were revised.
-
-
-
-// [[change_7]]
-// === Changes made in edition 7
-
-// [[summary7]]
-// ==== Summary of changes
-
-// The seventh edition of this part of ISO 10303 incorporated the modifications to the sixth edition listed below.
-
-// [[arm.changes7]]
-// ==== Changes made to the ARM
-
-// The following ARM EXPRESS declarations and interface specifications have been added:
-
-// * USE_FROM Part_view_definition_arm;
-
-// * TYPE geometric_tolerance_auxiliary_classification_enum;
-
-// * ENTITY Geometric_tolerance_auxiliary_classification.
-
-// The following ARM EXPRESS declarations and interface specifications have been modified:
-
-// * TYPE geometric_tolerance_modifier;
-
-// * TYPE geometric_tolerance_target;
-
-// * ENTITY Axis_placement_shape_element;
-
-// * ENTITY Between_shape_element;
-
-// * ENTITY Contacting_feature;
-
-// * ENTITY Datum_feature;
-
-// * ENTITY Datum_system;
-
-// * ENTITY General_datum_reference;
-
-// * ENTITY Geometric_tolerance + The attribute auxiliary_classification was added;
-
-// * ENTITY Geometric_tolerance_relationship + note added in the attribute relation_type;
-
-// * ENTITY Perpendicularity_tolerance;
-
-// * ENTITY Plane_shape_element;
-
-// * ENTITY Point_shape_element;
-
-// * ENTITY Position_tolerance;
-
-// * SUBTYPE_CONSTRAINT gl_shape_element_subtypes.
-
-// The following ARM EXPRESS declarations and interface specifications have been removed:
-
-// * SUBTYPE_CONSTRAINT gl_associated_shape_element_subtypes;
-
-// * SUBTYPE_CONSTRAINT gl_non_definitional_shape_element_subtypes.
-
-// In addition, modifications have been made to the mapping specification, the MIM schema and the EXPRESS-G diagrams to reflect and be consistent with the modifications of the ARM.
-
-// [[mapping.changes7]]
-// ==== Changes made to the mapping
-
-// The following changes have been made to the ARM to MIM mapping:
-
-// * Affected_plane_tolerance_zone mapping updated;
-
-// * Axis_placement_shape_element mapping updated;
-
-// * Point_shape_element mapping updated;
-
-// * Plane_shape_element mapping updated;
-
-// * Datum_reference_compartment mapping updated;
-
-// * Datum_target mapping updated;
-
-// * Directed_or_oriented_tolerance_zone mapping updated;
-
-// * Geometric_tolerance mapping updated;
-
-// * Line_profile_tolerance mapping updated;
-
-// * Oriented_tolerance_zone mapping updated;
-
-// * Placed_target mapping updated;
-
-// * Position_tolerance mapping updated;
-
-// * Runout_zone_definition mapping updated;
-
-// * Surface_profile_tolerance mapping updated;
-
-// * Geometric_tolerance_auxiliary_classification mapping was added;
-
-// * Geometric_tolerance mapping was modified.
-
-// [[mim.changes7]]
-// ==== Changes made to the MIM
-
-// The following MIM EXPRESS declarations and interface specifications have been added:
-
-// * USE_FROM Part_view_definition_mim;
-
-// * USE_FROM shape_aspect_definition_schema(shape_representation_with_parameters);
-
-// * USE_FROM shape_tolerance_schema(geometric_tolerance_auxiliary_classification);
-
-// * USE_FROM shape_tolerance_schema(directed_tolerance_zone);
-
-// * USE_FROM shape_tolerance_schema(oriented_tolerance_zone);
-
-// * USE_FROM shape_tolerance_schema(tolerance_zone_with_datum);
-
-// * RULE non_uniform_zone_definition_constraint.
-
-
-
-// [[change_8]]
-// === Changes made in edition 8
-
-// [[summary8]]
-// ==== Summary of changes
-
-// The eighth edition of this part of ISO 10303 incorporated the modifications to the seventh edition listed below.
-
-// [[arm.changes8]]
-// ==== Changes made to the ARM
-
-// The following ARM EXPRESS declarations and interface specifications have been added:
-
-// * USE_FROM Part_shape_arm;
-
-// * TYPE gps_filtration_specification_target;
-
-// * TYPE gps_filtration_type;
-
-// * TYPE length_or_angle_data_element_select;
-
-// * ENTITY gps_filter;
-
-// * ENTITY gps_filtration_specification.
-
-// The following ARM EXPRESS declarations and interface specifications have been modified:
-
-// * TYPE area_unit_type*
-// * Add ENUMERATION value 'CYLINDRICAL'
-// ;
-
-// *
-// * Add ENUMERATION value 'SPHERICAL'
-
-// .
-
-
-
-// * TYPE geometric_tolerance_modifier*
-// * Add ENUMERATION value 'ASSOCIATED_LEAST_SQUARE_FEATURE'
-// ;
-
-// *
-// * Add ENUMERATION value 'ASSOCIATED_MAXIMUM_INSCRIBED_FEATURE'
-// ;
-
-// *
-// * Add ENUMERATION value 'ASSOCIATED_MINIMUM_INSCRIBED_FEATURE'
-// ;
-
-// *
-// * Add ENUMERATION value 'ASSOCIATED_MINMAX_FEATURE'
-// ;
-
-// *
-// * Add ENUMERATION value 'ASSOCIATED_TANGENT_FEATURE'
-// ;
-
-// *
-// * Add ENUMERATION value 'CIRCLE_A'
-
-// .
-
-
-
-// * TYPE geometric_tolerance_target*
-// * Add SELECT value 'ENTITY General_part_feature'
-
-// .
-
-
-
-// * TYPE tolerance_zone_type*
-// * Add ENUMERATION value 'BETWEEN_TWO_EQUIDISTANT_COMPLEX_LINES_OR_TWO_PARALLEL_STRAIGHT_LINES'
-// ;
-
-// *
-// * Add ENUMERATION value 'BETWEEN_TWO_EQUIDISTANT_COMPLEX_SURFACES_OR_TWO_PARALLEL_PLANES'
-// ;
-
-// *
-// * Add ENUMERATION value 'BETWEEN_TWO_NON_EQUIDISTANT_COMPLEX_LINES_OR_TWO_NON_PARALLEL_STRAIGHT_LINES'
-// ;
-
-// *
-// * Add ENUMERATION value 'BETWEEN_TWO_NON_EQUIDISTANT_COMPLEX_SURFACES_OR_TWO_NON_PARALLEL_PLANES'
-// ;
-
-// *
-// * Add ENUMERATION value 'BETWEEN_TWO_PARALLEL_CIRCLES_OF_THE_SAME_DIAMETER'
-// ;
-
-// *
-// * Add ENUMERATION value 'BETWEEN_TWO_PARALLEL_CIRCLES_ON_A_CONICAL_SURFACE'
-// ;
-
-// *
-// * Add ENUMERATION value 'WITHIN_A_CONE'
-// ;
-
-// *
-// * Add ENUMERATION value 'WITHIN_A_SINGLE_COMPLEX_SURFACE'
-// ;
-
-// *
-// * Add ENUMERATION value 'WITHIN_A_SPHERE'
-
-// .
-
-
-
-// * ENTITY Dimensional_size_with_datum_feature + Add WHERE 'WR1';
-
-// * ENTITY Geometric_tolerance*
-// * Attribute 'first_unit_size' type changed
-// ;
-
-// *
-// * Attribute 'second_unit_size' type changed
-// ;
-
-// *
-// * Attribute 'unequally_disposed_tolerance_zone_displacement' type changed
-// ;
-
-// *
-// * WHERE 'WR1' expression changed
-// ;
-
-// *
-// * Add WHERE 'WR2'
-// ;
-
-// *
-// * Add WHERE 'WR3'
-// ;
-
-// *
-// * Add WHERE 'WR4'
-// ;
-
-// *
-// * Add WHERE 'WR5'
-// ;
-
-// *
-// * Add WHERE 'WR6'
-// ;
-
-// *
-// * Add WHERE 'WR7'
-// ;
-
-// *
-// * Add WHERE 'WR8'
-
-// .
-
-
-
-// The following ARM EXPRESS declarations and interface specifications have been removed:
-
-// * USE_FROM part_view_definition_arm.
-
-// In addition, modifications have been made to the mapping specification, the MIM schema and the EXPRESS-G diagrams to reflect and be consistent with the modifications of the ARM.
-
-// [[mapping.changes8]]
-// ==== Changes made to the mapping
-
-// The following changes have been made to the ARM to MIM mapping:
-
-// * Geometric_tolerance mapping updated;
-
-// * Gps_filter mapping added;
-
-// * Gps_filtration_specification mapping added;
-
-// * Tolerance_zone mapping updated.
-
-// [[mim.changes8]]
-// ==== Changes made to the MIM
-
-// The following MIM EXPRESS declarations and interface specifications have been added:
-
-// * USE_FROM part_shape_mim.
-
-// The following MIM EXPRESS declarations and interface specifications have been modified:
-
-// * USE_FROM product_property_definition_schema(shape_aspect);
-
-// * USE_FROM shape_tolerance_schema(gps_filtration_specification, gps_filter);
-
-// * RULE tolerance_zone_form_name_constraint.
-
-// The following MIM EXPRESS declarations and interface specifications have been removed:
-
-// * USE_FROM part_view_definition_mim.
-
-
-
-// [[change_9]]
-// === Changes made in edition 9
-
-// [[summary9]]
-// ==== Summary of changes
-
-// The ninth edition of this part of ISO 10303 incorporated the modifications to the eighth edition listed below.
-
-// [[arm.changes9]]
-// ==== Changes made to the ARM
-
-// The following ARM EXPRESS declarations and interface specifications have been added:
-
-// * TYPE direction_feature_application_type;
-
-// * TYPE gps_filtration_enumeration;
-
-// * ENTITY datum_system_for_composite_group_element;
-
-// * ENTITY direction_feature_tolerance_zone;
-
-// * ENTITY group_geometric_tolerance_with_datum_system_reference.
-
-// The following ARM EXPRESS declarations and interface specifications have been modified:
-
-// * TYPE directed_or_oriented_geometric_tolerance_select*
-// * Add SELECT value 'ENTITY Geometric_dimension'
-
-// .
-
-
-
-// * TYPE directed_tolerance_zone_type*
-// * Add ENUMERATION value 'ANGULAR'
-// ;
-
-// *
-// * Add ENUMERATION value 'SYMMETRICAL_TO'
-
-// .
-
-
-
-// * TYPE geometric_tolerance_modifier*
-// * Add ENUMERATION value 'CONTINUOUS_FEATURES'
-// ;
-
-// *
-// * Add ENUMERATION value 'PEAK_HEIGHT'
-// ;
-
-// *
-// * Add ENUMERATION value 'REFERENCE_LEAST_SQUARE_FEATURE_WITH_EXTERNAL_MATERIAL_CONSTRAINT'
-// ;
-
-// *
-// * Add ENUMERATION value 'REFERENCE_LEAST_SQUARE_FEATURE_WITH_INTERNAL_MATERIAL_CONSTRAINT'
-// ;
-
-// *
-// * Add ENUMERATION value 'REFERENCE_LEAST_SQUARE_FEATURE_WITHOUT_CONSTRAINT'
-// ;
-
-// *
-// * Add ENUMERATION value 'REFERENCE_MAXIMUM_INSCRIBED_FEATURE'
-// ;
-
-// *
-// * Add ENUMERATION value 'REFERENCE_MINIMAX_FEATURE_WITH_EXTERNAL_MATERIAL_CONSTRAINT'
-// ;
-
-// *
-// * Add ENUMERATION value 'REFERENCE_MINIMAX_FEATURE_WITH_INTERNAL_MATERIAL_CONSTRAINT'
-// ;
-
-// *
-// * Add ENUMERATION value 'REFERENCE_MINIMAX_FEATURE_WITHOUT_CONSTRAINT'
-// ;
-
-// *
-// * Add ENUMERATION value 'REFERENCE_MINIMUM_CIRCUMSCRIBED_FEATURE'
-// ;
-
-// *
-// * Add ENUMERATION value 'STANDARD_DEVIATION'
-// ;
-
-// *
-// * Add ENUMERATION value 'TOTAL_RANGE_DEVIATIONS'
-// ;
-
-// *
-// * Add ENUMERATION value 'UNSPECIFIED_ANGULAR_TOLERANCE_ZONE_OFFSET'
-// ;
-
-// *
-// * Add ENUMERATION value 'UNSPECIFIED_LINEAR_TOLERANCE_ZONE_OFFSET'
-// ;
-
-// *
-// * Add ENUMERATION value 'VALLEY_DEPTH'
-
-// .
-
-
-
-// * TYPE geometric_tolerance_target*
-// * Add SELECT value 'ENTITY Composite_shape_element'
-// ;
-
-// *
-// * Add SELECT value 'ENTITY Derived_shape_element'
-// ;
-
-// *
-// * Remove SELECT value 'ENTITY General_part_feature'
-// ;
-
-// *
-// * Add SELECT value 'ENTITY Part_shape_element'
-
-// .
-
-
-
-// * TYPE gps_filtration_type*
-// * TYPE gps_filtration_type: Underlying Type changed
-// ;
-
-// *
-// * Add SELECT value 'TYPE gps_filtration_enumeration'
-
-// .
-
-
-
-// * TYPE tolerance_zone_target*
-// * Remove SELECT value 'ENTITY Dimensional_location'
-// ;
-
-// *
-// * Remove SELECT value 'ENTITY Dimensional_size'
-// ;
-
-// *
-// * Add SELECT value 'ENTITY Geometric_dimension'
-
-// .
-
-
-
-// * ENTITY Oriented_tolerance_zone + Add WHERE 'WR2'.
-
-// The following ARM EXPRESS declarations and interface specifications have been removed:
-
-// * TYPE common_datum_list;
-
-// * TYPE datum_or_common_datum;
-
-// * TYPE datum_reference_modifier;
-
-// * TYPE datum_reference_modifier_type;
-
-// * TYPE simple_datum_reference_modifier;
-
-// * ENTITY axis_placement_shape_element;
-
-// * ENTITY contacting_feature;
-
-// * ENTITY datum;
-
-// * ENTITY datum_feature;
-
-// * ENTITY datum_reference_compartment;
-
-// * ENTITY datum_reference_element;
-
-// * ENTITY datum_reference_modifier_with_value;
-
-// * ENTITY datum_system;
-
-// * ENTITY datum_system_with_associated_model_coordinate_system;
-
-// * ENTITY datum_target;
-
-// * ENTITY dimensional_location_with_datum_feature;
-
-// * ENTITY dimensional_size_with_datum_feature;
-
-// * ENTITY general_datum_reference;
-
-// * ENTITY placed_target;
-
-// * ENTITY plane_shape_element;
-
-// * ENTITY point_shape_element;
-
-// * ENTITY target_area;
-
-// * ENTITY target_circle;
-
-// * ENTITY target_circular_curve;
-
-// * ENTITY target_curve;
-
-// * ENTITY target_point;
-
-// * ENTITY target_rectangle;
-
-// * ENTITY target_straight_line;
-
-// * FUNCTION sts_get_general_datum_reference.
-
-// In addition, modifications have been made to the mapping specification, the MIM schema and the EXPRESS-G diagrams to reflect and be consistent with the modifications of the ARM.
-
-// [[mapping.changes9]]
-// ==== Changes made to the mapping
-
-// The following changes have been made to the ARM to MIM mapping:
-
-// * Datum_system_with_associated_model_coordinate_system mapping updated;
-
-// * Datum_target mapping updated;
-
-// * Angularity_tolerance mapping updated;
-
-// * Circular_runout_tolerance mapping updated;
-
-// * Coaxiality_tolerance mapping updated;
-
-// * Concentricity_tolerance mapping updated;
-
-// * Cylindricity_tolerance mapping updated;
-
-// * Datum_reference_element mapping updated;
-
-// * Datum_system mapping updated;
-
-// * Datum_target mapping updated;
-
-// * Flatness_tolerance mapping updated;
-
-// * Geometric_tolerance_auxiliary_classification mapping updated;
-
-// * Geometric_tolerance_relationship mapping updated;
-
-// * Line_profile_tolerance mapping updated;
-
-// * Parallelism_tolerance mapping updated;
-
-// * Perpendicularity_tolerance mapping updated;
-
-// * Position_tolerance mapping updated;
-
-// * Roundness_tolerance mapping updated;
-
-// * Symmetry_tolerance mapping updated;
-
-// * Total_runout_tolerance mapping updated.
-
-// [[mim.changes9]]
-// ==== Changes made to the MIM
-
-// The following MIM EXPRESS declarations and interface specifications have been added:
-
-// * USE_FROM shape_tolerance_schema(datum_system_for_composite_group_element);
-
-// * USE_FROM shape_tolerance_schema(direction_feature_tolerance_zone);
-
-// * USE_FROM shape_tolerance_schema(gps_filtration_enumeration);
-
-// * USE_FROM shape_tolerance_schema(group_geometric_tolerance_with_datum_system_reference).
-
-// The following MIM EXPRESS declarations and interface specifications have been modified:
-
-// * RULE unique_gdt_element_id_constraint*
-// * Add ENTITY Reference 'Geometric_Tolerance'
-// ;
-
-// *
-// * Add LOCAL 'cum_bss'
-// ;
-
-// *
-// * Remove LOCAL 'ds'
-// ;
-
-// *
-// * Add LOCAL 'dssa'
-// ;
-
-// *
-// * Add LOCAL 'dssai'
-// ;
-
-// *
-// * Add LOCAL 'gtsi'
-// ;
-
-// *
-// * Remove LOCAL 'sa'
-// ;
-
-// *
-// * Remove LOCAL 'sar'
-// ;
-
-// *
-// * Add LOCAL 'sarsa'
-// ;
-
-// *
-// * Add LOCAL 'sarsai'
-// ;
-
-// *
-// * Add LOCAL 'ssai'
-// ;
-
-// *
-// * RULE 'unique_gdt_element_id_constraint': Statements changed
-
-// .
-
-
-
-// The following MIM EXPRESS declarations and interface specifications have been removed:
-
-// * USE_FROM product_property_definition_schema;
-
-// * USE_FROM product_property_representation_schema;
-
-// * USE_FROM shape_aspect_definition_schema(common_datum);
-
-// * USE_FROM shape_aspect_definition_schema(common_datum_list);
-
-// * USE_FROM shape_aspect_definition_schema(contacting_feature);
-
-// * USE_FROM shape_aspect_definition_schema(datum);
-
-// * USE_FROM shape_aspect_definition_schema(datum_feature);
-
-// * USE_FROM shape_aspect_definition_schema(datum_reference);
-
-// * USE_FROM shape_aspect_definition_schema(datum_reference_compartment);
-
-// * USE_FROM shape_aspect_definition_schema(datum_reference_element);
-
-// * USE_FROM shape_aspect_definition_schema(datum_reference_modifier_with_value);
-
-// * USE_FROM shape_aspect_definition_schema(datum_system);
-
-// * USE_FROM shape_aspect_definition_schema(datum_target);
-
-// * USE_FROM shape_aspect_definition_schema(derived_shape_aspect);
-
-// * USE_FROM shape_aspect_definition_schema(general_datum_reference);
-
-// * USE_FROM shape_aspect_definition_schema(referenced_modified_datum);
-
-// * USE_FROM shape_aspect_definition_schema(shape_aspect_deriving_relationship);
-
-// * USE_FROM shape_aspect_definition_schema(simple_datum_reference_modifier);
-
-// * ENTITY feature_for_datum_target_relationship;
-
-// * ENTITY placed_datum_target_feature;
-
-// * FUNCTION get_shape_aspect_property_definition_representations;
-
-// * FUNCTION valid_datum_target_parameters.
-
-
-
-// [[change_10]]
-// === Changes made in edition 10
-
-// [[summary10]]
-// ==== Summary of changes
-
-// This tenth edition of this part of ISO 10303 incorporates the modifications to the ninth edition listed below.
-
-// [[arm.changes10]]
-// ==== Changes made to the ARM
-
-// The following ARM EXPRESS declarations and interface specifications have been added:
-
-// * TYPE direction_feature_application_type;
-
-// * TYPE gps_filtration_enumeration;
-
-// * ENTITY datum_system_for_composite_group_element;
-
-// * ENTITY direction_feature_tolerance_zone;
-
-// * ENTITY group_geometric_tolerance_with_datum_system_reference.
-
-// The following ARM EXPRESS declarations and interface specifications have been modified:
-
-// * TYPE directed_or_oriented_geometric_tolerance_select;
-
-// * TYPE directed_tolerance_zone_type;
-
-// * TYPE geometric_tolerance_modifier;
-
-// * TYPE geometric_tolerance_target;
-
-// * TYPE gps_filtration_type;
-
-// * TYPE tolerance_zone_target;
-
-// * ENTITY Oriented_tolerance_zone.
-
-// The following ARM EXPRESS declarations and interface specifications have been removed:
-
-// * TYPE common_datum_list;
-
-// * TYPE datum_or_common_datum;
-
-// * TYPE datum_reference_modifier;
-
-// * TYPE datum_reference_modifier_type;
-
-// * TYPE simple_datum_reference_modifier;
-
-// * ENTITY axis_placement_shape_element;
-
-// * ENTITY contacting_feature;
-
-// * ENTITY datum;
-
-// * ENTITY datum_feature;
-
-// * ENTITY datum_reference_compartment;
-
-// * ENTITY datum_reference_element;
-
-// * ENTITY datum_reference_modifier_with_value;
-
-// * ENTITY datum_system;
-
-// * ENTITY datum_system_with_associated_model_coordinate_system;
-
-// * ENTITY datum_target;
-
-// * ENTITY dimensional_location_with_datum_feature;
-
-// * ENTITY dimensional_size_with_datum_feature;
-
-// * ENTITY general_datum_reference;
-
-// * ENTITY placed_target;
-
-// * ENTITY plane_shape_element;
-
-// * ENTITY point_shape_element;
-
-// * ENTITY target_area;
-
-// * ENTITY target_circle;
-
-// * ENTITY target_circular_curve;
-
-// * ENTITY target_curve;
-
-// * ENTITY target_point;
-
-// * ENTITY target_rectangle;
-
-// * ENTITY target_straight_line;
-
-// * FUNCTION sts_get_general_datum_reference.
-
-// In addition, modifications have been made to the mapping specification, the MIM schema and the EXPRESS-G diagrams to reflect and be consistent with the modifications of the ARM.
-
-// [[mim.changes10]]
-// ==== Changes made to the MIM
-
-// The following MIM EXPRESS declarations and interface specifications have been added:
-
-// * USE_FROM shape_tolerance_schema(datum_system_for_composite_group_element);
-
-// * USE_FROM shape_tolerance_schema(direction_feature_tolerance_zone);
-
-// * USE_FROM shape_tolerance_schema(gps_filtration_enumeration);
-
-// * USE_FROM shape_tolerance_schema(group_geometric_tolerance_with_datum_system_reference).
-
-// The following MIM EXPRESS declarations and interface specifications have been modified:
-
-// * RULE unique_gdt_element_id_constraint*
-// * Add ENTITY Reference 'Geometric_Tolerance'
-// ;
-
-// *
-// * Add LOCAL 'cum_bss'
-// ;
-
-// *
-// * Remove LOCAL 'ds'
-// ;
-
-// *
-// * Add LOCAL 'dssa'
-// ;
-
-// *
-// * Add LOCAL 'dssai'
-// ;
-
-// *
-// * Add LOCAL 'gtsi'
-// ;
-
-// *
-// * Remove LOCAL 'sa'
-// ;
-
-// *
-// * Remove LOCAL 'sar'
-// ;
-
-// *
-// * Add LOCAL 'sarsa'
-// ;
-
-// *
-// * Add LOCAL 'sarsai'
-// ;
-
-// *
-// * Add LOCAL 'ssai'
-// ;
-
-// *
-// * RULE 'unique_gdt_element_id_constraint': Statements changed
-
-// .
-
-
-
-// The following MIM EXPRESS declarations and interface specifications have been removed:
-
-// * USE_FROM product_property_definition_schema;
-
-// * USE_FROM product_property_representation_schema;
-
-// * USE_FROM shape_aspect_definition_schema(common_datum);
-
-// * USE_FROM shape_aspect_definition_schema(common_datum_list);
-
-// * USE_FROM shape_aspect_definition_schema(contacting_feature);
-
-// * USE_FROM shape_aspect_definition_schema(datum);
-
-// * USE_FROM shape_aspect_definition_schema(datum_feature);
-
-// * USE_FROM shape_aspect_definition_schema(datum_reference);
-
-// * USE_FROM shape_aspect_definition_schema(datum_reference_compartment);
-
-// * USE_FROM shape_aspect_definition_schema(datum_reference_element);
-
-// * USE_FROM shape_aspect_definition_schema(datum_reference_modifier_with_value);
-
-// * USE_FROM shape_aspect_definition_schema(datum_system);
-
-// * USE_FROM shape_aspect_definition_schema(datum_target);
-
-// * USE_FROM shape_aspect_definition_schema(derived_shape_aspect);
-
-// * USE_FROM shape_aspect_definition_schema(general_datum_reference);
-
-// * USE_FROM shape_aspect_definition_schema(referenced_modified_datum);
-
-// * USE_FROM shape_aspect_definition_schema(shape_aspect_deriving_relationship);
-
-// * USE_FROM shape_aspect_definition_schema(simple_datum_reference_modifier);
-
-// * ENTITY feature_for_datum_target_relationship;
-
-// * ENTITY placed_datum_target_feature;
-
-// * FUNCTION get_shape_aspect_property_definition_representations;
-
-// * FUNCTION valid_datum_target_parameters.
-
