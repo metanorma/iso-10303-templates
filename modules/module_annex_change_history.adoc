@@ -1,5 +1,5 @@
 
-[[AnnexG]]
+[[change_history]]
 [appendix,obligation=informative]
 == Change history
 
