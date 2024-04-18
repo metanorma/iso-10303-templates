@@ -9,20 +9,16 @@
 This annex documents the history of technical modifications made to
 ISO/TS {docnumber}-{partnumber}.
 
-[yaml2text,changes_paths.yaml,paths]
+
+[yaml2text,changes.yaml,context]
 ------
 
 {% liquid
-assign path_prefix = "../../"
-for path in paths
-if path contains "mapping.changes.yaml"
-assign mapping_path = path | prepend: path_prefix
-elsif path contains "arm.changes.yaml"
-assign arm_path = path | prepend: path_prefix
-elsif path contains "mim.changes.yaml"
-assign mim_path = path | prepend: path_prefix
-endif
-endfor
+assign schema       = context.schema
+assign path_prefix  = "../../schemas/modules/"
+assign mapping_path = schema | prepend: path_prefix | append: "/mapping.changes.yaml"
+assign arm_path     = schema | prepend: path_prefix | append: "/arm.changes.yaml"
+assign mim_path     = schema | prepend: path_prefix | append: "/mim.changes.yaml"
 %}
 
 // This should be the {edition} but doesn't work inside yaml2text
@@ -37,18 +33,14 @@ endfor
 
 The edition {{ ver }} of this part of ISO 10303 incorporated the modifications to the edition {{ ver | minus: 1 }} listed below.
 
-// document changes
-[yaml2text,changes.yaml,data]
-----
 {% assign ver_str = ver | append: "" %}
 
-{% for ed in data.change_edition %}
+{% for ed in context.change_edition %}
 // find version
 {% if ed.version == ver_str %}
 {{ed.description}}
 {% endif %}
 {% endfor %}
-----
 
 // mapping changes
 [yaml2text,{{mapping_path}},data]
@@ -70,7 +62,6 @@ The following changes have been made to the ARM to MIM mapping:
 * {{ change.change }}
 
 {% endfor %}
-
 
 {% endif %}
 {% endfor %}
@@ -136,11 +127,9 @@ The following ARM EXPRESS declarations and interface specifications have been de
 
 {% endif %}
 
-
 {% endfor %}
 
 ----
-
 
 // MIM schema changes
 
@@ -202,11 +191,9 @@ The following MIM EXPRESS declarations and interface specifications have been de
 
 {% endif %}
 
-
 {% endfor %}
 
 ----
-
 
 {% endfor %}
 ------
