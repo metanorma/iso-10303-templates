@@ -51,7 +51,6 @@ endif
 %}
 ---
 
-// This should be the {edition} but doesn't work inside yaml2text
 {% for ver in (2..max_version) %}
 
 [[change_{{ver}}]]
@@ -71,7 +70,10 @@ The edition {{ ver }} of this part of ISO 10303 incorporated the modifications t
 {% endif %}
 {% endfor %}
 
+
 // mapping changes
+
+{% if max_mapping_ver %}
 [yaml2text,{{mapping_path}},data]
 ----
 {% assign ver_str = ver | append: "" %}
@@ -95,9 +97,12 @@ The following changes have been made to the ARM to MIM mapping:
 {% endif %}
 {% endfor %}
 ----
+{% endif %}
+
 
 // ARM schema changes
 
+{% if max_arm_ver %}
 [yaml2text,{{arm_path}},data]
 ----
 {% assign ver_str = ver | append: "" %}
@@ -159,9 +164,12 @@ The following ARM EXPRESS declarations and interface specifications have been de
 {% endfor %}
 
 ----
+{% endif %}
+
 
 // MIM schema changes
 
+{% if max_mim_ver %}
 [yaml2text,{{mim_path}},data]
 ----
 {% assign ver_str = ver | append: "" %}
@@ -221,8 +229,8 @@ The following MIM EXPRESS declarations and interface specifications have been de
 {% endif %}
 
 {% endfor %}
-
 ----
+{% endif %}
 
 {% endfor %}
 ------
