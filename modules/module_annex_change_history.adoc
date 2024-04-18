@@ -9,10 +9,8 @@
 This annex documents the history of technical modifications made to
 ISO/TS {docnumber}-{partnumber}.
 
-
 [yaml2text,changes.yaml,context]
 ------
-
 {% liquid
 assign schema       = context.schema
 assign path_prefix  = "../../schemas/modules/"
@@ -21,8 +19,39 @@ assign arm_path     = schema | prepend: path_prefix | append: "/arm.changes.yaml
 assign mim_path     = schema | prepend: path_prefix | append: "/mim.changes.yaml"
 %}
 
+{% assign max_version = context.change_edition.last.version | plus: 0 %}
+
+[yaml2text,{{mapping_path}},data]
+---
+{% liquid
+assign max_mapping_ver = data.change_edition.last.version | plus: 0
+if max_mapping_ver > max_version
+assign max_version = max_mapping_ver
+endif
+%}
+---
+
+[yaml2text,{{arm_path}},data]
+---
+{% liquid
+assign max_arm_ver = data.change_edition.last.version | plus: 0
+if max_arm_ver > max_version
+assign max_version = max_arm_ver
+endif
+%}
+---
+
+[yaml2text,{{mim_path}},data]
+---
+{% liquid
+assign max_mim_ver = data.change_edition.last.version | plus: 0
+if max_mim_ver > max_version
+assign max_version = max_mim_ver
+endif
+%}
+---
+
 // This should be the {edition} but doesn't work inside yaml2text
-{% assign max_version = 10 %}
 {% for ver in (2..max_version) %}
 
 [[change_{{ver}}]]
