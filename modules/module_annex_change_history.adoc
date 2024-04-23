@@ -3,7 +3,7 @@
 [appendix,obligation=informative]
 == Change history
 
-[[general]]
+[[change_history_general]]
 === General
 
 This annex documents the history of technical modifications made to
