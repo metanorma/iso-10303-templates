@@ -15,11 +15,6 @@ ISO/IEC 8824-1, and is described in ISO 10303-1.
 
 === Schema identification
 
-TODO: Schema identification doesn't work yet due to `modules/*/{arm,mim}.exp`
-all missing the EXPRESS version string. See
-https://github.com/metanorma/stepmod-utils/issues/241
-
-
 [lutaml_express, schemas, context, leveloffset=+1]
 ---
 {% for schema in context.schemas %}
