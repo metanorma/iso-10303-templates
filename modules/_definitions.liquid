@@ -72,7 +72,7 @@
 {% for wr in definition.where_rules %}
 *{{ wr.id }}*:: {{ wr.remarks }}
 
-{% render "templates/common_files/body_remarks", remark_items: wr.remark_items  %}
+{% render "templates/common_files/body_remarks", remark_items: wr.remark_items %}
 {% endfor %}
 {% endif %}
 
@@ -82,7 +82,7 @@
 {% for ip in definition.informal_propositions %}
 *{{ ip.id }}*:: {{ ip.remarks }}
 
-{% render "templates/common_files/body_remarks", remark_items: ip.remark_items  %}
+{% render "templates/common_files/body_remarks", remark_items: ip.remark_items %}
 {% endfor %}
 {% endif %}
 
