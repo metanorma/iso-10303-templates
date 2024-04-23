@@ -30,17 +30,23 @@ assign changes_paths = changes_paths | split: ", "
 assign max_version = 2
 %}
 
+{% assign existing_paths = "" %}
+
 {% for path in changes_paths %}
 [yaml2text,{{path}},data]
 ---
 {% liquid
-assign max_mapping_ver = data.change_edition.last.version | plus: 0
-if max_mapping_ver > max_version
-assign max_version = max_mapping_ver
+assign max_change_ver = data.change_edition.last.version | plus: 0
+if max_change_ver > max_version
+assign max_version = max_change_ver
 endif
+
+assign existing_paths = existing_paths | append: " " | append: path
 %}
 ---
 {% endfor %}
+
+{% assign existing_paths = existing_paths | split: " " %}
 
 {% for ver in (2..max_version) %}
 
@@ -52,7 +58,7 @@ endif
 
 The edition {{ ver }} of this part of ISO 10303 incorporated the modifications to the edition {{ ver | minus: 1 }} listed below.
 
-{% for path in changes_paths %}
+{% for path in existing_paths %}
 
 [yaml2text,{{path}},data]
 ----
@@ -102,7 +108,7 @@ The following EXPRESS declarations and interface specifications have been modifi
 {% if ed.deletions %}
 The following EXPRESS declarations and interface specifications have been deleted:
 
-{% for change in ed.modifications %}
+{% for change in ed.deletions %}
 * {{change.type}} {{change.name}}; {%- if change.interfaced_item %}(interface from {{change.interfaced_items}}){% endif %}
 {%- if change.description %}
 +
