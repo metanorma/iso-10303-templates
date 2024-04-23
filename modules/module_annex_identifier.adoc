@@ -23,7 +23,7 @@ https://github.com/metanorma/stepmod-utils/issues/241
 [lutaml_express, schemas, context, leveloffset=+1]
 ---
 {% for schema in context.schemas %}
-{% assign schemaname = schema.id | replace: "_", "-" | downcase %}
+{% assign schemaname = schema.id %}
 ==== {{ schemaname }} schema identification
 
 To provide for unambiguous identification of the schema specifications given in
