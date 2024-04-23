@@ -9,17 +9,28 @@
 This annex documents the history of technical modifications made to
 ISO/TS {docnumber}-{partnumber}.
 
-[yaml2text,changes.yaml,context]
+[yaml2text,schemas.yaml,context]
 ------
 {% liquid
-assign schema       = context.schema
 assign path_prefix  = "../../schemas/modules/"
-assign mapping_path = schema | prepend: path_prefix | append: "/mapping.changes.yaml"
-assign arm_path     = schema | prepend: path_prefix | append: "/arm.changes.yaml"
-assign mim_path     = schema | prepend: path_prefix | append: "/mim.changes.yaml"
+assign schema_name  = context.schemas.first[1].path | remove: path_prefix | split: "/" | first
+assign changes_path = "changes.yaml"
+assign mapping_path = schema_name | prepend: path_prefix | append: "/mapping.changes.yaml"
+assign arm_path     = schema_name | prepend: path_prefix | append: "/arm.changes.yaml"
+assign mim_path     = schema_name | prepend: path_prefix | append: "/mim.changes.yaml"
 %}
 
-{% assign max_version = context.change_edition.last.version | plus: 0 %}
+{% assign max_version = 2 %}
+
+[yaml2text,{{changes_path}},data]
+---
+{% liquid
+assign max_changes_ver = data.change_edition.last.version | plus: 0
+if max_changes_ver > max_version
+assign max_version = max_changes_ver
+endif
+%}
+---
 
 [yaml2text,{{mapping_path}},data]
 ---
@@ -61,14 +72,21 @@ endif
 
 The edition {{ ver }} of this part of ISO 10303 incorporated the modifications to the edition {{ ver | minus: 1 }} listed below.
 
+// changes from changes.yaml
+
+{% if max_changes_ver %}
+[yaml2text,{{changes_path}},data]
+---
 {% assign ver_str = ver | append: "" %}
 
-{% for ed in context.change_edition %}
 // find version
+{% for ed in data.change_edition %}
 {% if ed.version == ver_str %}
-{{ed.description}}
+{{ ed.description }}
 {% endif %}
 {% endfor %}
+---
+{% endif %}
 
 
 // mapping changes
@@ -147,7 +165,7 @@ The following ARM EXPRESS declarations and interface specifications have been mo
 {% if ed.deletions %}
 The following ARM EXPRESS declarations and interface specifications have been deleted:
 
-{% for change in ed.modifications %}
+{% for change in ed.deletions %}
 * {{change.type}} {{change.name}}; {%- if change.interfaced_item %}(interface from {{change.interfaced_items}}){% endif %}
 {%- if change.description %}
 +
@@ -214,7 +232,7 @@ The following MIM EXPRESS declarations and interface specifications have been mo
 {% if ed.deletions %}
 The following MIM EXPRESS declarations and interface specifications have been deleted:
 
-{% for change in ed.modifications %}
+{% for change in ed.deletions %}
 * {{change.type}} {{change.name}}; {%- if change.interfaced_item %}(interface from {{change.interfaced_items}}){% endif %}
 {%- if change.description %}
 +
