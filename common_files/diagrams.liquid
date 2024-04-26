@@ -46,13 +46,32 @@
 {% assign diagram_id = diagram_id | plus: 1 %}
 {% endif %}
 
+{% if namespace == "arm" or namespace == "mim"%}
+
+{% if first_diagram  %}
+{% capture caption %}
+{{- namespace | upcase}} schema level EXPRESS-G diagram ({{diagram_id}} of {{ sizes[size_index] }})
+{% endcapture %}
+{% else %}
+{% capture caption %}
+{{- namespace | upcase}} entity level EXPRESS-G diagram ({{diagram_id}} of {{ sizes[size_index] }})
+{% endcapture %}
+{% endif %}
+
+{% else  %}
+
+{% capture caption -%}
+EXPRESS-G diagram of {{ current_name }} ({{diagram_id}} of {{ sizes[size_index] }})
+{%- endcapture %}
+{% endif %}
+
 {% if first_diagram %}
-[[expg.{{ namespace }}{{ previous_name }}]]&#x200c;
+[[expg.{{ previous_name }}{%- if namespace -%} {{ namespace |  | prepend: '_' }} {%- endif -%}]]&#x200c;
 {% assign first_diagram = false %}
 {% endif %}
 
-[[fig_d{{namespace}}{{ figure_id }}]]
-.EXPRESS-G diagram of {{ current_name }} ({{diagram_id}} of {{ sizes[size_index] }})
+[[fig_expg_{{ figure_id }}{{ namespace }}]]
+.{{ caption }}
 image::{{ diagram.path }}[]
 
 {% endfor %}
