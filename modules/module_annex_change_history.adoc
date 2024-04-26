@@ -18,7 +18,15 @@ assign changes_path = "changes.yaml"
 assign mapping_path = schema_name | prepend: path_prefix | append: "/mapping.changes.yaml"
 assign arm_path     = schema_name | prepend: path_prefix | append: "/arm.changes.yaml"
 assign mim_path     = schema_name | prepend: path_prefix | append: "/mim.changes.yaml"
+
+assign ordinal_numbers = "zero, " | append: "first, " | append: "second, " | append: "third, " | append: "fourth, " | append: "fifth, " | append: "sixth, " | append: "seventh, " | append: "eighth, " | append: "ninth, " | append: "tenth, " | append: "eleventh, " | append: "twelfth, " | append: "thirteenth, " | append: "fourteenth, " | append: "fifteenth, " | append: "sixteenth, " | append: "sixteenth, " | append: "seventeenth, " | append: "eighteenth, " | append: "nineteenth, " | append: "twentieth"
+
+assign ordinal_numbers = ordinal_numbers | split: ", "
 %}
+
+{% capture arm_end_par %}
+In addition, modifications have been made to the mapping specification, the MIM schema and the EXPRESS-G diagrams to reflect and be consistent with the modifications of the ARM.
+{% endcapture %}
 
 {% assign max_version = 2 %}
 
@@ -70,7 +78,9 @@ endif
 [[summary_{{ver}}]]
 ==== Summary of changes
 
-The edition {{ ver }} of this part of ISO 10303 incorporated the modifications to the edition {{ ver | minus: 1 }} listed below.
+{% assign ver_before = ver | minus: 1 %}
+
+The {{ ordinal_numbers[ver] }} edition of this part of ISO 10303 incorporated the modifications to the {{ ordinal_numbers[ver_before] }} edition listed below.
 
 // changes from changes.yaml
 
@@ -87,36 +97,6 @@ The edition {{ ver }} of this part of ISO 10303 incorporated the modifications t
 {% endfor %}
 ---
 {% endif %}
-
-
-// mapping changes
-
-{% if max_mapping_ver %}
-[yaml2text,{{mapping_path}},data]
-----
-{% assign ver_str = ver | append: "" %}
-
-{% for ed in data.change_edition %}
-
-// find version
-{% if ed.version == ver_str %}
-
-[[mapping.changes{{ver}}]]
-==== Changes made to the mapping
-
-The following changes have been made to the ARM to MIM mapping:
-
-{% for change in ed.changes %}
-
-* {{ change.change }}
-
-{% endfor %}
-
-{% endif %}
-{% endfor %}
-----
-{% endif %}
-
 
 // ARM schema changes
 
@@ -182,8 +162,39 @@ The following ARM EXPRESS declarations and interface specifications have been de
 {% endfor %}
 
 ----
+
+{{ arm_end_par }}
+
 {% endif %}
 
+
+// mapping changes
+
+{% if max_mapping_ver %}
+[yaml2text,{{mapping_path}},data]
+----
+{% assign ver_str = ver | append: "" %}
+
+{% for ed in data.change_edition %}
+
+// find version
+{% if ed.version == ver_str %}
+
+[[mapping.changes{{ver}}]]
+==== Changes made to the mapping
+
+The following changes have been made to the ARM to MIM mapping:
+
+{% for change in ed.changes %}
+
+* {{ change.change }}
+
+{% endfor %}
+
+{% endif %}
+{% endfor %}
+----
+{% endif %}
 
 // MIM schema changes
 
