@@ -21,11 +21,11 @@ This subclause specifies the MIM rules for this module. The MIM rules and defini
 
 {% render "templates/modules/module_mim_content", schema: schema %}
 
-{% render "templates/modules/definitions", definitions: schema.entities, intro: MIN_ENTITIES_INTRO, depth: 4 %}
+{% render "templates/modules/definitions", definitions: schema.entities, intro: MIN_ENTITIES_INTRO, schema_id: schema.id, depth: 4 %}
 
-{% render "templates/modules/definitions", definitions: schema.functions, intro: MIN_FUNCTIONS_INTRO, depth: 4 %}
+{% render "templates/modules/definitions", definitions: schema.functions, intro: MIN_FUNCTIONS_INTRO, schema_id: schema.id, depth: 4 %}
 
-{% render "templates/modules/definitions", definitions: schema.rules, intro: MIN_RULES_INTRO, depth: 4 %}
+{% render "templates/modules/definitions", definitions: schema.rules, intro: MIN_RULES_INTRO, schema_id: schema.id, depth: 4 %}
 
 [source%unnumbered]
 --

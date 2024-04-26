@@ -33,13 +33,13 @@ is specified below.
 
 {% render "templates/modules/required_arms", source: schema.source  %}
 
-{% render "templates/modules/definitions", definitions: schema.types, intro: ARM_TYPE_INTRO, depth: 3 %}
+{% render "templates/modules/definitions", definitions: schema.types, intro: ARM_TYPE_INTRO, schema_id: schema.id, depth: 3 %}
 
-{% render "templates/modules/definitions", definitions: schema.entities, intro: ARM_ENTITY_INTRO, depth: 3 %}
+{% render "templates/modules/definitions", definitions: schema.entities, intro: ARM_ENTITY_INTRO, schema_id: schema.id, depth: 3 %}
 
-{% render "templates/modules/definitions", definitions: schema.subtype_constraints, intro: ARM_SUBTYPE_INTRO, depth: 3 %}
+{% render "templates/modules/definitions", definitions: schema.subtype_constraints, intro: ARM_SUBTYPE_INTRO, schema_id: schema.id, depth: 3 %}
 
-{% render "templates/modules/definitions", definitions: schema.functions, intro: ARM_FUNCTION_INTRO, depth: 3 %}
+{% render "templates/modules/definitions", definitions: schema.functions, intro: ARM_FUNCTION_INTRO, schema_id: schema.id, depth: 3 %}
 
 [source%unnumbered]
 --
