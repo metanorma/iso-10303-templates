@@ -13,29 +13,33 @@
 
 {% for definition in definitions %}
 
-{% assign found_type = false %}
-{% if definition.underlying_type.items[0].remarks.size > 0 %}
-{% assign found_type = true %}
-{% endif %}
+{% liquid
+assign found_type = false
+if definition.underlying_type.items[0].remarks.size > 0
+assign found_type = true
+endif
 
-{% assign found_attribute = false %}
-{% if definition.attributes[0].remarks.size > 0 %}
-{% assign found_attribute = true %}
-{% endif %}
+assign found_attribute = false
+if definition.attributes[0].remarks.size > 0
+assign found_attribute = true
+endif
 
-{% assign found_wr = false %}
-{% if definition.where_rules.size > 0 %}
-{% assign found_wr = true %}
-{% endif %}
+assign found_wr = false
+if definition.where_rules.size > 0
+assign found_wr = true
+endif
 
-{% assign found_ip = false %}
-{% if definition.informal_propositions[0].remarks.size > 0 %}
-{% assign found_ip = true %}
-{% endif %}
+assign found_ip = false
+if definition.informal_propositions[0].remarks.size > 0
+assign found_ip = true
+endif
+%}
 
 {{ equalsigns }} {{ definition.id }} <<expg.{{ schema_id | downcase }},image:../templates/common_files/expg.gif[]>>
 
 {{ definition.remarks }}
+
+{% render "templates/common_files/body_remarks", remark_items: definition.remark_items %}
 
 [underline]#EXPRESS specification:#
 
