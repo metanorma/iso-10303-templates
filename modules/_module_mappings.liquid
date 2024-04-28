@@ -122,13 +122,13 @@ enclosed section constrains at one or more required reference path;
 `||`::
 enclosed section constrains the supertype entity;
 
-`->`::
-the attribute, whose name precedes the `->` symbol, references the entity or
-select type whose name follows the `->` symbol;
+`\->`::
+the attribute, whose name precedes the `\->` symbol, references the entity or
+select type whose name follows the `\->` symbol;
 
-`<-`::
-the entity or select type, whose name precedes the `<-` symbol, is referenced by
-the entity attribute whose name follows the `<-` symbol;
+`<&#x200c;-`::
+the entity or select type, whose name precedes the `<&#x200c;-` symbol, is referenced by
+the entity attribute whose name follows the `<&#x200c;-` symbol;
 
 `[i]`::
 the attribute, whose name precedes the `[i]` symbol, is an aggregate; any element
@@ -138,13 +138,13 @@ of that aggregate is referred to;
 the attribute, whose name precedes the `[n]` symbol, is an ordered aggregate;
 member n of that aggregate is referred to;
 
-`=>`::
-the entity, whose name precedes the `=>` symbol, is a supertype of the entity
-whose name follows the `=>` symbol;
+`\=>`::
+the entity, whose name precedes the `\=>` symbol, is a supertype of the entity
+whose name follows the `\=>` symbol;
 
-`<=`::
-the entity, whose name precedes the `<=` symbol, is a subtype of the entity whose
-name follows the `<=` symbol;
+`<&#x200c;=`::
+the entity, whose name precedes the `<&#x200c;=` symbol, is a subtype of the entity whose
+name follows the `<&#x200c;=` symbol;
 
 `=`::
 the string, select, or enumeration type is constrained to a choice or value;
@@ -161,7 +161,7 @@ the related entities, is enclosed with braces;
 the text following is a comment or introduces a clause reference;
 
 `*>`::
-the select or enumeration type, whose name precedes the `*>` symbol, is
+the select or enumeration type, whose name precedes the `\*>` symbol, is
 extended into the select or enumeration type whose name follows the `*>` symbol;
 
 `<*`::
@@ -174,7 +174,3 @@ section enclosed by `{}` indicates a negative constraint placed on the mapping.
 The definition and use of mapping templates are not supported in the present
 version of the application modules. However, use of predefined templates
 /MAPPING_OF/, /SUBTYPE/, and /SUPERTYPE/ is supported.
-
-
-// TODO: Include mapping YAML via:
-// https://github.com/metanorma/stepmod-utils/issues/239
