@@ -33,9 +33,15 @@ assign found_ip = false
 if definition.informal_propositions[0].remarks.size > 0
 assign found_ip = true
 endif
+
+if intro contains "ARM"
+assign index_term_type = "ARM object definition"
+elsif intro contains "MIM"
+assign index_term_type = "MIM object definition"
+endif
 %}
 
-{{ equalsigns }} {{ definition.id }} <<expg.{{ schema_id | downcase }},image:../templates/common_files/expg.gif[]>>
+{{ equalsigns }} {{ definition.id }} <<expg.{{ schema_id | downcase }},image:../templates/common_files/expg.gif[]>>((({{ definition.id }},{{ index_term_type }})))
 
 {{ definition.remarks }}
 
