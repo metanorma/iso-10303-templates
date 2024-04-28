@@ -41,8 +41,8 @@ assign schemaname = schema.id | replace: "_", "-" | downcase
 %}
 
 | {{ schema_type }}
-| <<{{schemaname}}.html>>
-| <<{{schemaname}}.exp>>
+| <<{{schemaname}}.html,HTML>>
+| <<{{schemaname}}.exp,EXPRESS>>
 |
 
 {% if schema.remark_items.size > 0 %}
