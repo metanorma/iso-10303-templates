@@ -170,3 +170,62 @@ section enclosed by `{}` indicates a negative constraint placed on the mapping.
 The definition and use of mapping templates are not supported in the present
 version of the application modules. However, use of predefined templates
 /MAPPING_OF/, /SUBTYPE/, and /SUPERTYPE/ is supported.
+
+{% raw %}
+
+[yaml2text,mapping.yaml,data]
+-----
+
+[yaml2text,schemas.yaml,context]
+---
+{% for schema in context.schemas %}
+{% assign schema_name = schema[0] %}
+{% break %}
+{% endfor %}
+---
+
+{% for item in data.ae %}
+
+{% capture item_entity -%}
+<<{{ schema_name }}.{{ item.entity }},{{ item.entity }}>>
+{%- endcapture %}
+
+==== {{ item_entity }}
+
+MIM element:: {{ item.aimelt.content }}
+
+Source:: {{ item.source.content }}
+
+{% for subitem in item.aa %}
+
+{% capture subitem_attr -%}
+<<{{ schema_name }}.{{ item.entity }}.{{ subitem.attribute }},{{ subitem.attribute }}>>
+{%- endcapture %}
+
+{% capture subitem_assert -%}
+<<{{ schema_name }}.{{ item.entity }}.{{ subitem.assertion_to }},{{ subitem.assertion_to }}>>
+{%- endcapture %}
+
+===== {% unless subitem.assertion_to %} {{ subitem_attr }}{% else %}{{ item_entity }} to {{ subitem_assert }} (as {{ subitem_attr }}){% endunless %}
+
+MIM element:: {{ subitem.aimelt.content }}
+
+{% unless subitem.assertion_to %}
+Source:: {{ subitem.source.content }}
+{% else %}
+
+Reference path::
++
+[source%unnumbered]
+--
+{{ subitem.refpath.content }}
+--
+
+{% endunless %}
+
+{% endfor %}
+
+{% endfor %}
+
+-----
+{% endraw %}
