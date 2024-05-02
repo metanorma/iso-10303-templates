@@ -41,6 +41,7 @@ assign index_term_type = "MIM object definition"
 endif
 %}
 
+[[{{ schema_id }}.{{ definition.id }}]]
 {{ equalsigns }} {{ definition.id }} <<expg.{{ schema_id | downcase }},image:../templates/common_files/expg.gif[]>>((({{ definition.id }},{{ index_term_type }})))
 
 {{ definition.remarks }}
@@ -58,6 +59,7 @@ endif
 [underline]#Enumerated item definitions:#
 
 {% for item in definition.underlying_type.items %}
+[[{{ schema_id }}.{{ definition.id }}.{{ item.id }}]]
 *{{ item.id }}*:: {{ item.remarks }}
 
 {% render "templates/common_files/body_remarks", remark_items: item.remark_items %}
@@ -69,7 +71,7 @@ endif
 [underline]#Attribute definitions:#
 
 {% for attr in definition.attributes %}
-
+[[{{ schema_id }}.{{ definition.id }}.{{ attr.id }}]]
 *{{ attr.id }}*:: {{ attr.remarks }}
 
 {% render "templates/common_files/body_remarks", remark_items: attr.remark_items %}
@@ -80,6 +82,7 @@ endif
 [underline]#Formal propositions:#
 
 {% for wr in definition.where_rules %}
+[[{{ schema_id }}.{{ definition.id }}.{{ wr.id }}]]
 *{{ wr.id }}*:: {{ wr.remarks }}
 
 {% render "templates/common_files/body_remarks", remark_items: wr.remark_items %}
@@ -90,6 +93,7 @@ endif
 [underline]#Informal propositions:#
 
 {% for ip in definition.informal_propositions %}
+[[{{ schema_id }}.{{ definition.id }}.{{ ip.id }}]]
 *{{ ip.id }}*:: {{ ip.remarks }}
 
 {% render "templates/common_files/body_remarks", remark_items: ip.remark_items %}
