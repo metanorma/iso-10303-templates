@@ -179,7 +179,7 @@ version of the application modules. However, use of predefined templates
 [yaml2text,schemas.yaml,context]
 ---
 {% for schema in context.schemas %}
-{% assign schema_name = schema[0] %}
+{% assign schema = schema[0] %}
 {% break %}
 {% endfor %}
 ---
@@ -187,7 +187,7 @@ version of the application modules. However, use of predefined templates
 {% for item in data.ae %}
 
 {% capture item_entity -%}
-<<{{ schema_name }}.{{ item.entity }},{{ item.entity }}>>
+<<{{ schema }}.{{ item.entity }},{{ item.entity }}>>
 {%- endcapture %}
 
 ==== {{ item_entity }}
@@ -199,11 +199,11 @@ Source:: {{ item.source.content }}
 {% for subitem in item.aa %}
 
 {% capture subitem_attr -%}
-<<{{ schema_name }}.{{ item.entity }}.{{ subitem.attribute }},{{ subitem.attribute }}>>
+<<{{ schema }}.{{ item.entity }}.{{ subitem.attribute }},{{ subitem.attribute }}>>
 {%- endcapture %}
 
 {% capture subitem_assert -%}
-<<{{ schema_name }}.{{ item.entity }}.{{ subitem.assertion_to }},{{ subitem.assertion_to }}>>
+<<{{ schema }}.{{ item.entity }}.{{ subitem.assertion_to }},{{ subitem.assertion_to }}>>
 {%- endcapture %}
 
 ===== {% unless subitem.assertion_to %} {{ subitem_attr }}{% else %}{{ item_entity }} to {{ subitem_assert }} (as {{ subitem_attr }}){% endunless %}
