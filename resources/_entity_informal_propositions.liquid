@@ -12,7 +12,7 @@
 
 {% for thing in things %}
 
-**{{ thing.id }}**:: {{ thing.remarks }}
+**{{ thing.id }}**: {{ thing.remarks }}
 
 {% render "templates/common_files/body_remarks", remark_items: thing.remark_items %}
 

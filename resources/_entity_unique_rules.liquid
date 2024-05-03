@@ -16,7 +16,7 @@
       thing.id != "__note" and
       thing.id != "__example" and
       thing.id != "__figure" %}
-**{{ thing.id }}**:: {{ thing.remarks }}
+**{{ thing.id }}**: {{ thing.remarks }}
 {% endif %}
 
 {% render "templates/common_files/body_remarks", remark_items: thing.remark_items %}
