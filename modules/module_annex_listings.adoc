@@ -12,15 +12,16 @@ following URLs:
 Short names: :: http://standards.iso.org/iso/10303/tech/short_names/short-names.txt
 EXPRESS: :: http://standards.iso.org/iso/10303/smrl/v11/tech/smrlv11.zip
 
-[lutaml_express, schemas, context]
----
+[lutaml_express, schemas, context, leveloffset=+1,config_yaml=select.yaml]
+----
 [[table_listing]]
 [cols="a,a,a,a",options="header"]
 .ARM and MIM EXPRESS listings
 |===
 | Description | HTML file | ASCII file | Identifier
 
-{% for schema in context.schemas %}
+{% assign selected = context.schemas | where: "selected" %}
+{% for schema in selected %}
 
 {% liquid
 assign schema_filename = schema.file | split: "/" | last
@@ -61,7 +62,7 @@ assign schemaname = schema.id | replace: "_", "-" | downcase
 {% endfor %}
 
 |===
----
+----
 
 
 NOTE: The information provided in computer-interpretable form at the above URLs
