@@ -15,9 +15,10 @@ ISO/IEC 8824-1, and is described in ISO 10303-1.
 
 === Schema identification
 
-[lutaml_express, schemas, context, leveloffset=+1]
----
-{% for schema in context.schemas %}
+[lutaml_express, schemas, context, leveloffset=+1,config_yaml=select.yaml]
+----
+{% assign selected = context.schemas | where: "selected" %}
+{% for schema in selected %}
 {% assign schemaname = schema.id %}
 ==== {{ schemaname }} schema identification
 
