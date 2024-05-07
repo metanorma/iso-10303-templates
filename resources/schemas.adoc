@@ -1,4 +1,4 @@
-[lutaml, schemas, repo, leveloffset=+1]
+[lutaml_express, schemas, repo, leveloffset=+1,config_yaml=select.yaml]
 ---
 include::../resources/_schemas.liquid[]
 ---
