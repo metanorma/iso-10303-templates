@@ -1,0 +1,7 @@
+[lutaml_express, schemas, context, leveloffset=+1,config_yaml=select.yaml]
+----
+{% assign selected = context.schemas | where: "selected" %}
+{% for schema in selected %}
+* {{ schema.id }}{% if forloop.last == true %}.{% else %};{% endif %}
+{% endfor %}
+----
