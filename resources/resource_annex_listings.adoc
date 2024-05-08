@@ -21,9 +21,9 @@ EXPRESS: http://standards.iso.org/iso/10303/smrl/v11/tech/smrlv11.zip
 |===
 | HTML file | ASCII file
 
-{% for item in data.schemas %}
-| <<{{item[0]}}.html>>
-| <<{{item[0]}}.exp>>
+{% for schema_name in data.schemas %}
+| <<{{schema_name}}.html>>
+| <<{{schema_name}}.exp>>
 {% endfor %}
 
 |===
