@@ -12,7 +12,7 @@ following URLs:
 Short names: :: http://standards.iso.org/iso/10303/tech/short_names/short-names.txt
 EXPRESS: :: http://standards.iso.org/iso/10303/smrl/v11/tech/smrlv11.zip
 
-[lutaml_express, schemas, context, leveloffset=+1,config_yaml=select.yaml]
+[lutaml_express, schemas, context, leveloffset=+1,config_yaml=schemas.yaml]
 ----
 [[table_listing]]
 [cols="a,a,a,a",options="header"]
