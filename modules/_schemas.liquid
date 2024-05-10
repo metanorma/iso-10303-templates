@@ -1,1 +1,2 @@
-{% render "templates/modules/schema" for repo.schemas as schema %}
+{% assign selected = repo.schemas | where: "selected" %}
+{% render "templates/modules/schema" for selected as schema %}
