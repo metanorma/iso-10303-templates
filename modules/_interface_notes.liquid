@@ -7,7 +7,14 @@ The schemas referenced above are specified in the following part of ISO 10303:
 
 {% assign schema_name   = interface.schema.id %}
 {% assign ref_schemas   = all_schemas | where: "id", schema_name %}
+{% assign status        = ref_schemas[0].remark_items | where: "id", "__status" %}
+{% assign status        = status[0].remarks[0] %}
 {% assign reference     = ref_schemas[0].remark_items[0].remarks[0] | replace_regex: ":.+$", "" %}
+
+{% if status == "TS" %}
+{% assign status        = status | prepend: "/" | append: " " %}
+{% assign reference     = reference | replace: " ", status %}
+{% endif %}
 
 *{{ schema_name }}*:: {{ reference }}
 
