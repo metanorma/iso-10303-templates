@@ -29,7 +29,7 @@ This subclause specifies the MIM types for this application module. The MIM type
 This subclause specifies the MIM rules for this module. The MIM rules and definitions are specified below.
 {% endcapture %}
 
-{% render "templates/modules/module_mim_content", schema: schema %}
+{% render "templates/modules/module_mim_content", schema: schema, all_schemas: all_schemas %}
 
 {% render "templates/modules/definitions", definitions: schema.entities, intro: MIN_ENTITIES_INTRO, schema_id: schema.id, depth: 4 %}
 

@@ -35,7 +35,7 @@ is specified below.
 
 {% render "templates/modules/arm_information_requirements_intro", schema: schema  %}
 
-{% render "templates/modules/required_arms", source: schema.source  %}
+{% render "templates/modules/required_arms", schema: schema, all_schemas: all_schemas  %}
 
 {% render "templates/modules/definitions", definitions: schema.types, intro: ARM_TYPE_INTRO, schema_id: schema.id, depth: 3 %}
 
