@@ -23,22 +23,7 @@ The following EXPRESS declaration begins the *{{ thing.id }}* and identifies the
 
 {% render "templates/resources/body_source_code", source: thing.source %}
 
-{% if thing.interfaces %}
-[NOTE]
-====
-The schemas referenced above are specified in the following part of ISO 10303:
-
-{% for interface in thing.interfaces %}
-
-{% assign schema_name   = interface.schema.id %}
-{% assign ref_schemas   = all_schemas | where: "id", schema_name %}
-{% assign reference     = ref_schemas[0].remark_items[0].remarks[0] | replace_regex: ":.+$", "" %}
-
-*{{ schema_name }}*:: {{ reference }}
-
-{% endfor %}
-====
-{% endif %}
+{% render "templates/common_files/referenced_schemas_note", schema: thing, all_schemas: all_schemas %}
 
 {% if schema_description %}
 
