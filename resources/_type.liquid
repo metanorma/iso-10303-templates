@@ -3,6 +3,8 @@
 
 {% render "templates/resources/enumerated_items_definitions", definition: thing %}
 
+{% render "templates/resources/where_rules", things: thing.where_rules %}
+
 {% if thing.items.size > 0 %}
 {% capture type_thing_prefix %}{{thing_prefix}}.{{thing.id}}{% endcapture %}
 
