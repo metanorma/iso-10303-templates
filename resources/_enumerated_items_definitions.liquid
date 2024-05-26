@@ -1,0 +1,22 @@
+
+{% if definition.underlying_type.items.size > 0 %}
+
+{% assign found = false %}
+
+{% for attribute in definition.underlying_type.items %}
+{% if attribute.remarks.size > 0 %}
+{% assign found = true %}
+{% break %}
+{% endif %}
+{% endfor %}
+
+{% if found %}
+[underline]#Enumerated item definitions:#
+
+{% for item in definition.underlying_type.items %}
+*{{ item.id }}:* {{ item.remarks }}
+{% endfor %}
+
+{% endif %}
+
+{% endif %}
