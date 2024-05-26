@@ -1,0 +1,15 @@
+
+{% assign id = definition.id %}
+{% assign simple_ref = definition.underlying_type.items | where: "_class", "Expressir::Model::References::SimpleReference" %}
+
+{% if definition.underlying_type.extensible == true %}
+
+The *{{ id }}* type is an extensible list of alternate data types. It provides a mechanism to refer to instances of the data types included in the *{{ id }}* type or in its extensions.
+
+NOTE: The list of entity data types will be extended in application resources that use the constructs of this resource.
+
+{% elsif simple_ref.size > 0 %}
+
+The *{{ id }}* type is a list of alternate data types. It provides a mechanism to refer to an instance of one of these data types.
+
+{% endif %}
