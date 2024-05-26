@@ -27,7 +27,7 @@
 {% if thing.where_rules.size > 0 %}
 {% capture entity_thing_prefix %}{{thing_prefix}}.{{thing.id}}{% endcapture %}
 
-{% render "templates/resources/entity_where_rules", things: thing.where_rules, thing_prefix: entity_thing_prefix, depth: entity_nested_depth %}
+{% render "templates/resources/where_rules", things: thing.where_rules, thing_prefix: entity_thing_prefix, depth: entity_nested_depth %}
 
 {% endif %}
 
