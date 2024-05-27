@@ -1,7 +1,17 @@
 {% if things.size > 0 %}
 {% assign ea_nested_depth = depth %}
 
-{% unless found %}
+{% liquid
+assign no_attributes = false
+for thing in things
+if thing.remarks.size > 0 and thing.id == "__note" or thing.id == "__example" or thing.id == "__figure"
+assign no_attributes = true
+break
+endif
+endfor
+%}
+
+{% unless found or no_attributes %}
 [underline]#Attribute definitions:#
 {% endunless %}
 
