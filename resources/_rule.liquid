@@ -5,22 +5,22 @@
 {% render "templates/resources/basic_thing", depth: rule_nested_depth, thing_prefix: rule_thing_prefix, thing: thing %}
 
 {% if thing.types.size > 0 %}
-{% render "templates/resources/entity_attributes", things: thing.types, thing_prefix: rule_thing_prefix, depth: rule_nested_depth %}
+{% render "templates/resources/attribute_definitions", things: thing.types, thing_prefix: rule_thing_prefix, depth: rule_nested_depth %}
 
 {% endif %}
 
 {% if thing.constants.size > 0 %}
-{% render "templates/resources/entity_attributes", things: thing.constants, thing_prefix: rule_thing_prefix, depth: rule_nested_depth %}
+{% render "templates/resources/attribute_definitions", things: thing.constants, thing_prefix: rule_thing_prefix, depth: rule_nested_depth %}
 
 {% endif %}
 
 {% if thing.variables.size > 0 %}
-{% render "templates/resources/entity_attributes", things: thing.variables, thing_prefix: rule_thing_prefix, depth: rule_nested_depth %}
+{% render "templates/resources/attribute_definitions", things: thing.variables, thing_prefix: rule_thing_prefix, depth: rule_nested_depth %}
 
 {% endif %}
 
 {% if thing.parameters.size > 0 %}
-{% render "templates/resources/entity_attributes", things: thing.parameters, thing_prefix: rule_thing_prefix, depth: rule_nested_depth %}
+{% render "templates/resources/attribute_definitions", things: thing.parameters, thing_prefix: rule_thing_prefix, depth: rule_nested_depth %}
 
 {% endif %}
 
