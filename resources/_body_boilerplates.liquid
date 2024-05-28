@@ -10,7 +10,9 @@ The *{{ id }}* type is an extensible list of alternate data types. It provides a
 
 NOTE: The list of entity data types will be extended in application resources that use the constructs of this resource.
 
-{% elsif simple_ref.size > 0 %}
+{% elsif simple_ref.size > 0 and id != "point_cloud_set_or_superset" %}
+// This is an ad-hoc solution that should be removed after ISO
+// apply some corrections to part 42
 
 The *{{ id }}* type is a list of alternate data types. It provides a mechanism to refer to an instance of one of these data types.
 
