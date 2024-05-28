@@ -17,7 +17,7 @@ Once that is fixed the following IF statement should be removed and just use {{ 
 
 {{ schema_remark.remarks }}
 
-The following EXPRESS declaration begins the *{{ thing.id }}* and identifies the necessary external references.
+{% render "templates/resources/schema_boilerplate", id: thing.id %}
 {% endif %}
 
 {% render "templates/common_files/body_remarks", remark_items: thing.remark_items %}
