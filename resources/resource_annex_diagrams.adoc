@@ -7,7 +7,35 @@ specified in this document. The diagrams use the EXPRESS-G
 graphical notation for the EXPRESS language. EXPRESS-G is
 defined in ISO 10303-11.
 
-[yaml2text,express-g-diagrams.yaml,diagrams]
-----
-include::../common_files/diagrams.liquid[]
-----
+
+[lutaml_express, schemas, repo,config_yaml=schemas.yaml]
+---
+{% assign all_schemas = repo.schemas  %}
+{% assign selected    = all_schemas | where: "selected" %}
+
+{% for schema in selected %}
+
+{% assign schema_id = schema.id %}
+{% assign diagrams = schema.remark_items | where: "id", "__expressg" %}
+{% assign diagrams = diagrams[0].remarks %}
+{% assign number_of_diagrams = diagrams.size %}
+
+[[expg.{{ schema_id }}]]&#x200c;
+
+{% for diagram in diagrams %}
+
+{% capture caption -%}
+EXPRESS-G diagram of {{ schema_id }} ({{ forloop.index }} of {{ number_of_diagrams }})
+{% endcapture %}
+
+[source]
+--
+.{{ caption }}
+{{ diagram }}
+--
+
+{% endfor %}
+
+
+{% endfor %}
+---
