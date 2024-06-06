@@ -28,11 +28,8 @@ defined in ISO 10303-11.
 EXPRESS-G diagram of {{ schema_id }} ({{ forloop.index }} of {{ number_of_diagrams }})
 {% endcapture %}
 
-[source]
---
 .{{ caption }}
 {{ diagram }}
---
 
 {% endfor %}
 
