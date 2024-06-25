@@ -14,9 +14,18 @@ assign no_attributes = true
 break
 endif
 endfor
+
+assign remark_not_found = true
+for thing in things
+if thing.remarks.size > 0
+assign remark_not_found = false
+break
+endif
+endfor
+
 %}
 
-{% unless found or no_attributes %}
+{% unless found or no_attributes or remark_not_found %}
 [underline]#{{ subtitle }}:#
 {% endunless %}
 
