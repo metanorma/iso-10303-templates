@@ -1,4 +1,4 @@
-[[AnnexB]]
+[[annex_object_registration]]
 [appendix,obligation=normative]
 == Information object registration
 

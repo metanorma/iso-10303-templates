@@ -1,5 +1,5 @@
 
-[[short_entity_names]]
+[[annex_entity_names]]
 [appendix,obligation=normative]
 == Short names of entities
 
