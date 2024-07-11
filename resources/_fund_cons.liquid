@@ -1,3 +1,7 @@
+{% comment %}
+Calculate section level (i.e. number of equal signs)
+based on `depth` parameter
+{% endcomment %}
 {% if depth %}
 {% assign xdepth = depth | plus: 1 %}
 {% if xdepth > 5 %}
@@ -6,6 +10,10 @@
 {% capture equalsigns %}{% for count in (1..xdepth) %}={% endfor %}{% endcapture %}
 {% endif %}
 {% endif %}
+
+{% comment %}
+Encode section title, containing: anchor and `level` attribute
+{% endcomment %}
 [[{{thing_prefix}}_funds]]
 [level={{xdepth}}]
 {{equalsigns}} Fundamental concepts and assumptions
