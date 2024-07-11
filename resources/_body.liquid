@@ -19,7 +19,7 @@ Once that is fixed the following IF statement should be removed and just use {{ 
 
 {% render "templates/common_files/body_remarks", remark_items: thing.remark_items %}
 
-{% render "templates/resources/body_source_code", source: thing.source %}
+{% render "templates/resources/source_code", source: thing.source %}
 
 {% comment %} Render NOTE 1 and NOTE 2 {% endcomment %}
 {% render "templates/common_files/referenced_schemas_note", schema: thing, all_schemas: all_schemas %}
