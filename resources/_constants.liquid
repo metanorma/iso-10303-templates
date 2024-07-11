@@ -1,7 +1,7 @@
 {% if things.size > 0 %}
 
-{% assign constants_title = schema_id | append: " constant definitions" %}
-{% render "templates/resources/basic_title", thing_prefix: thing_prefix, anchor: "constants", title: constants_title, depth: depth %}
+{% assign section_title = schema_id | append: " constant definitions" %}
+{% render "templates/resources/basic_title", thing_prefix: thing_prefix, anchor: "constants", title: section_title, depth: depth %}
 
 {% render "templates/resources/source_code", source: "CONSTANT;"%}
 
