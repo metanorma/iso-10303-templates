@@ -41,11 +41,13 @@ assign index_term_type = "MIM object definition"
 endif
 %}
 
+{% comment %} Render heading, with xref to EXPRESS diagram {% endcomment %}
 [[{{ schema_id }}.{{ definition.id }}]]
 {{ equalsigns }} {{ definition.id }} <<expg.{{ schema_id | downcase }},image:../templates/common_files/expg.gif[]>>((({{ definition.id }},{{ index_term_type }})))
 
 {{ definition.remarks }}
 
+{% comment %} Render body remarks, i.e. NOTEs, EXAMPLEs, and figures  {% endcomment %}
 {% render "templates/common_files/body_remarks", remark_items: definition.remark_items %}
 
 [underline]#EXPRESS specification:#
