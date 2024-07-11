@@ -7,34 +7,34 @@
 {% assign found = false %}
 
 {% if thing.parameters.size > 0 %}
-{% render "templates/resources/attribute_definitions", things: thing.parameters, definition_type: "function" %}
+{% render "templates/resources/attribute_definitions", things: thing.parameters, object_type: "function" %}
 
 {% assign found = true %}
 
 {% endif %}
 
 {% if thing.types.size > 0 %}
-{% render "templates/resources/attribute_definitions", things: thing.types, definition_type: "function", found: found %}
+{% render "templates/resources/attribute_definitions", things: thing.types, object_type: "function", found: found %}
 
 {% assign found = true %}
 
 {% endif %}
 
 {% if thing.constants.size > 0 %}
-{% render "templates/resources/attribute_definitions", things: thing.constants, definition_type: "function", found: found %}
+{% render "templates/resources/attribute_definitions", things: thing.constants, object_type: "function", found: found %}
 
 {% assign found = true %}
 
 {% endif %}
 
 {% if thing.variables.size > 0 %}
-{% render "templates/resources/attribute_definitions", things: thing.variables, definition_type: "function", found: found %}
+{% render "templates/resources/attribute_definitions", things: thing.variables, object_type: "function", found: found %}
 
 {% assign found = true %}
 
 {% endif %}
 
 {% if thing.remark_items.size > 0 %}
-{% render "templates/resources/attribute_definitions", things: thing.remark_items, definition_type: "function", found: found %}
+{% render "templates/resources/attribute_definitions", things: thing.remark_items, object_type: "function", found: found %}
 
 {% endif %}

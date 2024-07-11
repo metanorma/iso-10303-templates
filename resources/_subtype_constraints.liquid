@@ -6,7 +6,7 @@
 {% assign sc_nested_depth = depth | plus: 1 %}
 {% for thing in things %}
 
-{% render "templates/resources/basic_thing", thing: thing, thing_prefix: thing_prefix, depth: sc_nested_depth, definition_type: "subtype_constraint" %}
+{% render "templates/resources/basic_thing", thing: thing, thing_prefix: thing_prefix, depth: sc_nested_depth, object_type: "subtype_constraint" %}
 
 {% endfor %}
 

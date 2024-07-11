@@ -3,7 +3,7 @@
 
 {{ thing.remarks }}
 
-{% render "templates/resources/definition_boilerplates", definition: thing, definition_type: definition_type %}
+{% render "templates/resources/boilerplates", definition: thing, object_type: object_type %}
 
 {% render "templates/common_files/body_remarks", remark_items: thing.remark_items %}
 
