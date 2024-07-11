@@ -1,7 +1,7 @@
 {% assign type_nested_depth = depth %}
 {% render "templates/resources/basic_thing", depth: type_nested_depth, thing_prefix: thing_prefix, thing: thing, definition_type: "type" %}
 
-{% render "templates/resources/enumerated_items_definitions", definition: thing %}
+{% render "templates/resources/enumerated_item_definitions", definition: thing %}
 
 {% render "templates/resources/where_rules", things: thing.where_rules %}
 
