@@ -1,12 +1,10 @@
 
-{% comment %} Rendering definition title {% endcomment %}
 {% render "templates/resources/basic_title", thing_prefix: thing_prefix, anchor: thing.id, title: thing.id, depth: depth %}
 
-{% comment %} Render boilerplate according definition type {% endcomment %}
+{{ thing.remarks }}
+
 {% render "templates/resources/definition_boilerplates", definition: thing, definition_type: definition_type %}
 
-{% comment %} Render body remarks, i.e. NOTEs, EXAMPLEs, and figures {% endcomment %}
 {% render "templates/common_files/body_remarks", remark_items: thing.remark_items %}
 
-{% comment %} Render EXPRESS code {% endcomment %}
 {% render "templates/resources/body_source_code", source: thing.source %}
