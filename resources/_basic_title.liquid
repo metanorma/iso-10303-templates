@@ -1,3 +1,8 @@
+
+{% comment %}
+Calculate section level (i.e. number of equal signs)
+based on `depth` parameter
+{% endcomment %}
 {% if depth %}
 {% assign xdepth = depth | plus: 1 %}
 {% if xdepth > 5 %}
@@ -6,6 +11,11 @@
 {% capture equalsigns %}{% for count in (1..xdepth) %}={% endfor %}{% endcapture %}
 {% endif %}
 {% endif %}
+
+{% comment %}
+Title markup containing:
+Anchor, `level` and `type` attributes, xref to expg diagrams, and index tag
+{% endcomment %}
 [[{{thing_prefix}}.{{anchor | replace: "\", "-"}}]]
 [level={{xdepth}},type=express]
 {{equalsigns}} {{ title | replace: "\", "-" }} {% if xdepth == 4 %} <<expg.{{ thing_prefix }},image:../templates/common_files/expg.gif[]>> {% endif %} ((({{ anchor }},Object definition)))
