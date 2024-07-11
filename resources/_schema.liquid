@@ -4,11 +4,18 @@
 [type="express"]
 == {{ schema.id }}
 
-=== General
+{% comment %}
+Encode schema introductory content
+{% endcomment %}
 
-{% render "templates/resources/body", thing: schema, schema_description: true, all_schemas: all_schemas %}
+{% render "templates/resources/intro", thing: schema, schema_description: true, all_schemas: all_schemas %}
 
 {% render "templates/resources/fund_cons", thing: schema, thing_prefix: root_thing_prefix, depth: 2 %}
+
+
+{% comment %}
+Endode schema definitions
+{% endcomment %}
 
 {% render "templates/resources/constants", schema_id: schema.id, things: schema.constants, thing_prefix: root_thing_prefix, depth: 2 %}
 
