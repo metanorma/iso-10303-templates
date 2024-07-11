@@ -2,8 +2,6 @@
 
 {% render "templates/resources/basic_thing", depth: depth, thing_prefix: function_thing_prefix, thing: thing %}
 
-{% assign function_nested_depth = depth | plus: 1%}
-
 {% assign found = false %}
 
 {% if thing.parameters.size > 0 %}
