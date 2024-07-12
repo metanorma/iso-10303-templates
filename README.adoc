@@ -26,7 +26,7 @@ In a Metanorma document it is used like this:
 :publish-date: 2022
 :edition: 7
 :title-intro-en: Industrial automation systems and integration
-:title-intro-fr: Systèmes d'automatisation industrielle et intégration
+:title-intro-fr: Systèmes d’automatisation industrielle et intégration
 :mn-document-class: iso
 :lutaml-express-index: schemas; schemas.yaml;
 
@@ -51,6 +51,161 @@ Type 2: `include::` block in another file (e.g. under `sections/`):
 `sections/templates/`:: A check-out of the iso-10303-templates repository.
 
 NOTE: The `templates/` directory can be a symbolic link.
+
+== Structure explanation
+
+=== General structure
+
+The templates for ISO 10303 are conformed by three folders: `resources/`, `modules/`, and `common_files/`
+
+`resources/` contains file templates to encode content related to resource documents.
+
+`modules/` contains file templates to encode content related to module documents.
+
+`common_files/` contains file templates to encode content related to both resource and module documents. In other words, these files are referenced somewhere in the code of the `resources/` and `modules/` or directly in the document to build.
+
+All templates are written in https://shopify.github.io/liquid/[Liquid]. An open-source template language written in Ruby.
+
+The `render` tag is used extensively to organize and reuse code. See https://shopify.dev/docs/api/liquid/tags/render[render] for detailed information.
+
+Almost all `.liquid` files are reserved to generate schema-related sections. In this regard, the encoding begins with a `lutaml_express` block from a `schema.adoc` file:
+
+[source,asciidoc]
+----
+  [lutaml_express, schemas, repo, leveloffset=+1,config_yaml=schemas.yaml]
+  ---
+  include::../modules/_schemas.liquid[]
+  ---
+----
+
+In this block, the attribute:
+
+`schemas`:: refers to a YAML file containing a list of EXPRESS schemas, established by the `:lutaml-express-index:` attribute.
++
+--
+For example, the line:
+
+`:lutaml-express-index: schemas; ../../schemas-srl.yml;`
+
+Makes the `schemas` parameter equal to `schemas-srl.yml`
+--
+
+`repo`:: is the name of the variable that contains all the LutaML objects of the EXPRESS files (`.exp`) that `schemas` points to.
+
+`leveloffset`:: pushes down the hierarchy level of the headings inside the `lutaml_express` block.
+
+`config_yaml`:: receives a YAML file that is supposed to be a selection of the schemas covered by the current document. For example, `config_yaml=schemas.yaml` means that `schema.yaml` is the file to contain only the schemas covered by the current document, located in the same folder as the document.
+
+The following sections describe the file structure of each folder.
+
+=== `resources/` folder
+
+Resource templates are meant to generate part of the content of resource documents. Starting from the schema sections, to almost all annex sections. Following table lists the templates of this folder along with the section each one encodes.
+
+.List of templates from `resources/` and the corresponding section to encode
+|===
+| File template                         | Encodes
+| `schema.adoc` and `.liquid` files     | Schema sections
+| `resource_annex_short_names.adoc`     | Annex A, "Short names of entities"
+| `resource_annex_identifier.adoc`      | Annex B, "Information object registration"
+| `resource_annex_listings.adoc`        | Annex C, "Computer interpretable listings"
+| `resource_annex_diagrams.adoc`        | Annex D, "EXPRESS-G diagrams"
+| `resource_annex_change_history.adoc`  | Annex E, "Change history"
+|===
+
+==== Schema sections
+
+Execution begins with a `lutaml_express` block from `schema.adoc`, as explained before. From there, we pass to `_schemas.liquid` file where we iterate over a selected list of schemas.
+
+`_schema.liquid`:: handles the encoding of each schema. The code is divided into multiple `render` tags that import the liquid files described below.
+
+`_intro.liquid`:: encodes the first subsection, "General", conformed by an introductory explanation of the schema, the EXPRESS code, and two NOTE blocks.
+
+`_fund_cons.liquid`:: encodes "Fundamental concepts and assumptions" subsection.
+
+Next part is the schema definitions, conformed by: constants, types, entities, subtype constraints, functions, procedures, and rules:
+
+`_constant.liquid`:: encodes constant definitions.
+
+`_types.liquid`:: encodes type definitions.
+
+`_entities.liquid`:: encodes entity definitions.
+
+`_subtype_constraints.liquid`:: encodes subtype constraint definitions.
+
+`_functions.liquid`:: encodes function definitions.
+
+`_procedures.liquid`:: encodes procedure definitions. Which are very similar to function definitions.
+
+`_rules.liquid`:: encodes rule definitions.
+
+These following two files are recurrent among the definition templates:
+
+`_basic_thing.liquid`:: corresponds to the basic rendering of any definition. It provides the title, description, boilerplate (if required), body remarks (i.e. NOTEs, EXAMPLEs, figures), and EXPRESS code.
+
+`_basic_title.liquid`:: allows to encode the heading of any definition given the title, depth, namespace (`thing_prefix`), and anchor.
+
+After this, follows the encoding of attributes: where rules, informal propositions, etc.
+
+Every schema section ends with an `END_SCHEMA;` code line.
+
+=== `modules` folder
+
+Module templates are meant to generate ARM and MIM sections, and almost all annex sections. Following table lists the templates of this folder along with the section each one encodes.
+
+.List of templates from `modules/` and the corresponding section to encode
+|===
+| File template                      | Encodes
+| `schema.adoc` and `.liquid` files. | "Information requirements" and "Module interpreted model" sections
+| `module_annex_short_names.adoc`    | Annex A, "MIM short names"
+| `module_annex_identifier.adoc`     | Annex B, "Information object registration"
+| `module_annex_diagrams_arm.adoc`   | Annex C, "ARM EXPRESS-G"
+| `module_annex_diagrams_mim.adoc`   | Annex D, "MIN EXPRESS-G"
+| `module_annex_listings.adoc`       | Annex E, "Computer interpretable listings"
+| `module_annex_change_history.adoc` | Annex G, "Change history"
+
+|===
+
+NOTE: Section numbering may vary according the document.
+
+==== Schema sections
+
+Like in resource templates, execution begins with a `lutaml_express` block from `schema.adoc`, as explained before. From there, we pass to `_schemas.liquid` where we iterate over a selected list of schemas.
+
+Relevant templates are described below:
+
+`_schemas.liquid`:: iterates over a selected list of schemas via `for` loop.
+
+`_schema.liquid`:: determines if the schema is ARM type or MIM type and applies the code accordingly.
+
+`_arm_requirements.liquid`:: handles the encoding of the "Information requirements" section. This file defines the encoding of each definition. Basically, three `render` blocks are used in this file: `arm_information_requirements_intro`, `required_arms`, and `definitions`. Described below.
+
+`_arm_information_requirements_intro.liquid`::: contains the introductory text of the ARM section.
+
+`_required_arms.liquid`::: encodes "Required AM ARMs" subsection.
+
+`_definitions.liquid`::: encodes ARM/MIM type, entity, subtype constraint, and function definitions.
+
+`_mim_requirements.liquid`::: handles the encoding of "Module interpreted model" section.
+
+`_module_mim_content.liquid`::: encodes "Mapping specification" subsection, and the introductory part of "MIM EXPRESS short listing" subsection.
+
+=== `common_files` folder
+
+`common_files/` contains templates used by both resource and module templates. These are:
+
+`_body_remarks.liquid`:: to encode remark items like NOTEs, EXAMPLES, and figures.
+
+`_referenced_schemas_note.liquid`:: to specifically encode NOTE 1 from the schema introductory content, which is a list of referenced schemas.
+
+`diagrams.liquid`:: to encode "EXPRESS-G diagrams" annex section for both resource and module documents.
+
+`expg.gif`:: a gif image used as an icon for the EXPRESS-G diagrams cross-references.
+
+`schema_identifers.adoc`:: contains a lutaml block to encode part of the "Information object registration" annex section (typically, Annex B).
+
+`usage_guide_annex.adoc`:: contains a boilerplate for "Application module implementation and usage guide" annex section (typically, Annex F) to be used directly in the document when applies.
+
 
 == License
 
