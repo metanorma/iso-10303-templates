@@ -7,11 +7,14 @@ Annotated EXPRESS schemas, as used in ISO 10303.
 
 == Usage
 
-NOTE: Due to current limitations in the metanorma-plugin-lutaml plugin with
+[NOTE]
+====
+Due to current limitations in the metanorma-plugin-lutaml plugin with
 liquid, TWO symbolic links need to be made to this repository's content:
-+
+
 * at the directory of the root document;
 * at the directory of the file that includes a template (typically `sections/`)
+====
 
 In a Metanorma document it is used like this:
 
