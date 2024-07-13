@@ -11,10 +11,10 @@ elsif suffix == 'mim'
 endif
 
 if found_arm
-render "templates/modules/arm_requirements", schema: schema, all_schemas: all_schemas
+render "templates/modules/arm", schema: schema, all_schemas: all_schemas
 endif
 
 if found_mim
-render "templates/modules/mim_requirements", schema: schema, all_schemas: all_schemas
+render "templates/modules/mim", schema: schema, all_schemas: all_schemas
 endif
 %}

@@ -1,3 +1,4 @@
+
 {% if definitions.size > 0%}
 
 {% if depth %}
@@ -9,98 +10,26 @@
 {% endif %}
 {% endif %}
 
-{{ intro }}
+{% assign index_term_type = definition_type | split: " " | first | append: " object definition" %}
+
+[type=express]
+{{ equalsigns }} {{ definition_type }} definitions
+
+{% render "templates/modules/boilerplates", fetch: definition_type %}
 
 {% for definition in definitions %}
 
-{% liquid
-assign found_type = false
-if definition.underlying_type.items[0].remarks.size > 0
-assign found_type = true
-endif
-
-assign found_attribute = false
-if definition.attributes[0].remarks.size > 0
-assign found_attribute = true
-endif
-
-assign found_wr = false
-if definition.where_rules.size > 0
-assign found_wr = true
-endif
-
-assign found_ip = false
-if definition.informal_propositions[0].remarks.size > 0
-assign found_ip = true
-endif
-
-if intro contains "ARM"
-assign index_term_type = "ARM object definition"
-elsif intro contains "MIM"
-assign index_term_type = "MIM object definition"
-endif
-%}
-
-{% comment %} Render heading, with xref to EXPRESS diagram {% endcomment %}
+{% comment %} Encode heading, with xref to EXPRESS diagram {% endcomment %}
 [[{{ schema_id }}.{{ definition.id }}]]
-{{ equalsigns }} {{ definition.id }} <<expg.{{ schema_id | downcase }},image:../templates/common_files/expg.gif[]>>((({{ definition.id }},{{ index_term_type }})))
+{{ equalsigns | append: "="}} {{ definition.id }} <<expg.{{ schema_id | downcase }},image:../templates/common_files/expg.gif[]>>((({{ definition.id }},{{ index_term_type }})))
 
 {{ definition.remarks }}
 
-{% comment %} Render body remarks, i.e. NOTEs, EXAMPLEs, and figures  {% endcomment %}
 {% render "templates/common_files/body_remarks", remark_items: definition.remark_items %}
 
-[underline]#EXPRESS specification:#
+{% render "templates/common_files/source_code", source: definition.source %}
 
-[source%unnumbered]
---
-{{ definition.source }}
---
-
-{% if found_type %}
-[underline]#Enumerated item definitions:#
-
-{% for item in definition.underlying_type.items %}
-[[{{ schema_id }}.{{ definition.id }}.{{ item.id }}]]
-*{{ item.id }}*: {{ item.remarks }}
-
-{% render "templates/common_files/body_remarks", remark_items: item.remark_items %}
-{% endfor %}
-{% endif %}
-
-
-{% if found_attribute %}
-[underline]#Attribute definitions:#
-
-{% for attr in definition.attributes %}
-[[{{ schema_id }}.{{ definition.id }}.{{ attr.id }}]]
-*{{ attr.id }}*: {{ attr.remarks }}
-
-{% render "templates/common_files/body_remarks", remark_items: attr.remark_items %}
-{% endfor %}
-{% endif %}
-
-{% if found_wr %}
-[underline]#Formal propositions:#
-
-{% for wr in definition.where_rules %}
-[[{{ schema_id }}.{{ definition.id }}.{{ wr.id }}]]
-*{{ wr.id }}*: {{ wr.remarks }}
-
-{% render "templates/common_files/body_remarks", remark_items: wr.remark_items %}
-{% endfor %}
-{% endif %}
-
-{% if found_ip %}
-[underline]#Informal propositions:#
-
-{% for ip in definition.informal_propositions %}
-[[{{ schema_id }}.{{ definition.id }}.{{ ip.id }}]]
-*{{ ip.id }}*: {{ ip.remarks }}
-
-{% render "templates/common_files/body_remarks", remark_items: ip.remark_items %}
-{% endfor %}
-{% endif %}
+{% render "templates/modules/attributes", definition: definition, schema_id: schema_id %}
 
 {% endfor %}
 
