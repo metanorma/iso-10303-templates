@@ -19,6 +19,11 @@ assign found_ip = false
 if definition.informal_propositions[0].remarks.size > 0
 assign found_ip = true
 endif
+
+assign found_p = false
+if definition.parameters.size > 0
+assign found_p = true
+endif
 %}
 
 {% if found_type %}
@@ -62,5 +67,16 @@ endif
 *{{ ip.id }}*: {{ ip.remarks }}
 
 {% render "templates/common_files/body_remarks", remark_items: ip.remark_items %}
+{% endfor %}
+{% endif %}
+
+{% if found_p %}
+[underline]#Argument definitions:#
+
+{% for p in definition.parameters %}
+[[{{ schema_id }}.{{ definition.id }}.{{ p.id }}]]
+*{{ p.id }}*: {{ p.remarks }}
+
+{% render "templates/common_files/body_remarks", remark_items: p.remark_items %}
 {% endfor %}
 {% endif %}
