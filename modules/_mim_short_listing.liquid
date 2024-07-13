@@ -1,0 +1,22 @@
+
+[[mim_express]]
+=== MIM EXPRESS short listing
+
+{% render "templates/modules/boilerplates", fetch: "short_listing_intro" %}
+
+{% render "templates/common_files/source_code", source: schema.source %}
+
+{% render "templates/modules/interface_notes", schema: schema, all_schemas: all_schemas %}
+
+{% render "templates/modules/definitions", definition_type: "MIM type", definitions: schema.types, schema_id: schema.id, depth: 4 %}
+
+{% render "templates/modules/definitions", definition_type: "MIM entity", definitions: schema.entities, schema_id: schema.id, depth: 4 %}
+
+{% render "templates/modules/definitions", definition_type: "MIM function", definitions: schema.functions, schema_id: schema.id, depth: 4 %}
+
+{% render "templates/modules/definitions", definition_type: "MIM rule", definitions: schema.rules, schema_id: schema.id, depth: 4 %}
+
+[source%unnumbered]
+--
+END_SCHEMA;  -- {{ schema.id }}
+--
