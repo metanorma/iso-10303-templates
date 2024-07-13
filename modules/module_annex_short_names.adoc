@@ -1,5 +1,5 @@
 
-[[AnnexA]]
+[[annex_short_names]]
 [appendix,obligation=normative]
 == MIM short names
 

@@ -6,7 +6,7 @@
 
 {% render "templates/common_files/source_code", source: schema.source %}
 
-{% render "templates/modules/interface_notes", schema: schema, all_schemas: all_schemas %}
+{% render "templates/modules/interface_notes", schema: schema, all_schemas: all_schemas, xref: "annex_mim_expg" %}
 
 {% render "templates/modules/definitions", definition_type: "MIM type", definitions: schema.types, schema_id: schema.id, depth: 4 %}
 

@@ -1,7 +1,6 @@
-[[AnnexB]]
+[[annex_identifiers]]
 [appendix,obligation=normative]
 == Information object registration
-
 
 === Document identification
 
