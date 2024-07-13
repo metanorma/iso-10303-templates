@@ -178,17 +178,23 @@ Relevant templates are described below:
 
 `_schema.liquid`:: determines if the schema is ARM type or MIM type and applies the code accordingly.
 
-`_arm_requirements.liquid`:: handles the encoding of the "Information requirements" section. This file defines the encoding of each definition. Basically, three `render` blocks are used in this file: `arm_information_requirements_intro`, `required_arms`, and `definitions`. Described below.
+`_arm.liquid`:: handles the encoding of the "Information requirements" section. This file defines the encoding of each definition. It is composed by multiple `render` blocks, described below.
 
-`_arm_information_requirements_intro.liquid`::: contains the introductory text of the ARM section.
+`_arm_intro.liquid`::: contains the introductory text of the section.
 
-`_required_arms.liquid`::: encodes "Required AM ARMs" subsection.
+`_arm_required_am_arms.liquid`::: encodes "Required AM ARMs" subsection.
 
-`_definitions.liquid`::: encodes ARM/MIM type, entity, subtype constraint, and function definitions.
+`_definitions.liquid`::: encodes ARM/MIM type, entity, subtype constraint, function definitions, etc.
 
-`_mim_requirements.liquid`::: handles the encoding of "Module interpreted model" section.
+`_mim.liquid`:: handles the encoding of the "Module interpreted model" section.
 
-`_module_mim_content.liquid`::: encodes "Mapping specification" subsection, and the introductory part of "MIM EXPRESS short listing" subsection.
+`_mim_mapping_specification.liquid`:: encodes the "Mapping specification" subsection.
+
+`_mim_short_listing.liquid`:: encodes the "MIM EXPRESS short listing" subsection. It is composed by multiple `render` blocks, most of them already described above.
+
+`_bolilerplates`:: contains all the boilerplate content present in a module document.
+
+`_interface_notes`:: encodes the first two NOTEs of a schema section. The first being a list of referenced schemas, and the second, a reference to the EXPRESS diagrams.
 
 === `common_files` folder
 
@@ -197,6 +203,8 @@ Relevant templates are described below:
 `_body_remarks.liquid`:: to encode remark items like NOTEs, EXAMPLES, and figures.
 
 `_referenced_schemas_note.liquid`:: to specifically encode NOTE 1 from the schema introductory content, which is a list of referenced schemas.
+
+`_source_code.liquid`:: to place source code in EXPRESS format.
 
 `diagrams.liquid`:: to encode "EXPRESS-G diagrams" annex section for both resource and module documents.
 
