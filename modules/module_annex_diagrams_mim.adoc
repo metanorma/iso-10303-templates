@@ -1,4 +1,4 @@
-[[AnnexD]]
+[[annex_mim_expg]]
 [appendix,obligation=informative]
 == MIM EXPRESS-G
 
