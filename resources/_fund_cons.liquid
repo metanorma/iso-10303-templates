@@ -1,30 +1,15 @@
-{% comment %}
-Calculate section level (i.e. number of equal signs)
-based on `depth` parameter
-{% endcomment %}
-{% if depth %}
-{% assign xdepth = depth | plus: 1 %}
-{% if xdepth > 5 %}
-{% capture equalsigns %}====={% endcapture %}
-{% else %}
-{% capture equalsigns %}{% for count in (1..xdepth) %}={% endfor %}{% endcapture %}
-{% endif %}
-{% endif %}
 
-{% comment %}
-Encode section title, containing: anchor and `level` attribute
-{% endcomment %}
+{% assign fund_cons_items = schema.remark_items | where: "id", "__fund_cons" %}
+
+{% if fund_cons_items.size > 0 %}
 [[{{thing_prefix}}_funds]]
-[level={{xdepth}}]
-{{equalsigns}} Fundamental concepts and assumptions
+=== Fundamental concepts and assumptions
 
-{% if thing.remark_items.size > 0 %}
-{% assign fund_cons_texts = thing.remark_items | where: "id", "__fund_cons" %}
-{% for fund_cons_text in fund_cons_texts %}
-{% if fund_cons_text.remarks.size > 0 %}
-{% for fund_cons_text_content in fund_cons_text.remarks %}
+{% for item in fund_cons_items %}
+{% if item.remarks.size > 0 %}
+{% for remark in item.remarks %}
 
-{{fund_cons_text_content}}
+{{remark}}
 
 {% endfor %}
 {% endif %}
