@@ -1,8 +1,8 @@
-{% render "templates/resources/body_boilerplates", definition: thing, definition_type: definition_type %}
+
+=== General
 
 {{ thing.remarks }}
 
-{% if schema_description %}
 {% assign schema_remark = thing.remarks %}
 {% comment %}
 This is purely for the bug at
@@ -17,17 +17,14 @@ Once that is fixed the following IF statement should be removed and just use {{ 
 
 {{ schema_remark.remarks }}
 
-{% render "templates/resources/schema_boilerplate", id: thing.id %}
-{% endif %}
+{% render "templates/resources/boilerplates", object_type: "schema", id: thing.id %}
 
 {% render "templates/common_files/body_remarks", remark_items: thing.remark_items %}
 
-{% render "templates/resources/body_source_code", source: thing.source %}
+{% render "templates/common_files/source_code", source: thing.source %}
 
+{% comment %} Encode NOTE 1 {% endcomment %}
 {% render "templates/common_files/referenced_schemas_note", schema: thing, all_schemas: all_schemas %}
 
-{% if schema_description %}
-
+{% comment %} Encode NOTE 2 {% endcomment %}
 NOTE: See <<expg.{{ thing.id }}>> for a graphical representation of this schema.
-
-{% endif %}

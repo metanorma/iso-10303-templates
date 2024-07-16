@@ -1,0 +1,20 @@
+
+[[arm]]
+== Information requirements
+
+{% render "templates/modules/arm_intro", schema: schema  %}
+
+{% render "templates/modules/arm_required_am_arms", schema: schema, all_schemas: all_schemas  %}
+
+{% render "templates/modules/definitions", definition_type: "ARM type", definitions: schema.types, schema_id: schema.id, depth: 2 %}
+
+{% render "templates/modules/definitions", definition_type: "ARM entity", definitions: schema.entities, schema_id: schema.id, depth: 2 %}
+
+{% render "templates/modules/definitions", definition_type: "ARM subtype constraint", definitions: schema.subtype_constraints, schema_id: schema.id, depth: 2 %}
+
+{% render "templates/modules/definitions", definition_type: "ARM function", definitions: schema.functions, schema_id: schema.id, depth: 2 %}
+
+[source%unnumbered]
+--
+END_SCHEMA;  -- {{ schema.id }}
+--

@@ -1,4 +1,4 @@
-[[AnnexC]]
+[[annex_arm_expg]]
 [appendix,obligation=informative]
 == ARM EXPRESS-G
 
