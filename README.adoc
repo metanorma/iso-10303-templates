@@ -59,7 +59,7 @@ NOTE: The `templates/` directory can be a symbolic link.
 
 === General structure
 
-The templates for ISO 10303 are conformed by three folders: `resources/`, `modules/`, and `common_files/`
+The templates for ISO 10303 are consist of three folders: `resources/`, `modules/`, and `common_files/`
 
 `resources/` contains file templates to encode content related to resource documents.
 
@@ -67,7 +67,7 @@ The templates for ISO 10303 are conformed by three folders: `resources/`, `modul
 
 `common_files/` contains file templates to encode content related to both resource and module documents. In other words, these files are referenced somewhere in the code of the `resources/` and `modules/` or directly in the document to build.
 
-All templates are written in https://shopify.github.io/liquid/[Liquid]. An open-source template language written in Ruby.
+All templates are written in https://shopify.github.io/liquid/[Liquid], an open-source template language written in Ruby.
 
 The `render` tag is used extensively to organize and reuse code. See https://shopify.dev/docs/api/liquid/tags/render[render] for detailed information.
 
@@ -90,20 +90,20 @@ For example, the line:
 
 `:lutaml-express-index: schemas; ../../schemas-srl.yml;`
 
-Makes the `schemas` parameter equal to `schemas-srl.yml`
+Makes the `schemas` parameter equal to `../../schemas-srl.yml`
 --
 
 `repo`:: is the name of the variable that contains all the LutaML objects of the EXPRESS files (`.exp`) that `schemas` points to.
 
 `leveloffset`:: pushes down the hierarchy level of the headings inside the `lutaml_express` block.
 
-`config_yaml`:: receives a YAML file that is supposed to be a selection of the schemas covered by the current document. For example, `config_yaml=schemas.yaml` means that `schema.yaml` is the file to contain only the schemas covered by the current document, located in the same folder as the document.
+`config_yaml`:: receives a YAML file that is supposed to be a selection of the schemas covered by the current document. For example, `config_yaml=schemas.yaml` means that `schema.yaml` is the file to contain only the schemas covered by the current document, located in the same folder as the document. The distinction is made between `schemas` and `config_yaml`, so that schemas in other documents in a collection can still be referenced by the current document, even if they are not expanded out within it.
 
 The following sections describe the file structure of each folder.
 
 === `resources/` folder
 
-Resource templates are meant to generate part of the content of resource documents. Starting from the schema sections, to almost all annex sections. Following table lists the templates of this folder along with the section each one encodes.
+Resource templates are meant to generate part of the content of resource documents, starting from the schema sections, to almost all annex sections. The following table lists the templates of this folder along with the section each one encodes.
 
 .List of templates from `resources/` and the corresponding section to encode
 |===
@@ -122,11 +122,11 @@ Execution begins with a `lutaml_express` block from `schema.adoc`, as explained 
 
 `_schema.liquid`:: handles the encoding of each schema. The code is divided into multiple `render` tags that import the liquid files described below.
 
-`_intro.liquid`:: encodes the first subsection, "General", conformed by an introductory explanation of the schema, the EXPRESS code, and two NOTE blocks.
+`_intro.liquid`:: encodes the first subsection, "General", consisting of an introductory explanation of the schema, the EXPRESS code, and two NOTE blocks.
 
-`_fund_cons.liquid`:: encodes "Fundamental concepts and assumptions" subsection.
+`_fund_cons.liquid`:: encodes the "Fundamental concepts and assumptions" subsection.
 
-Next part is the schema definitions, conformed by: constants, types, entities, subtype constraints, functions, procedures, and rules:
+The next part is the schema definitions, consisting of: constants, types, entities, subtype constraints, functions, procedures, and rules:
 
 `_constant.liquid`:: encodes constant definitions.
 
@@ -138,15 +138,15 @@ Next part is the schema definitions, conformed by: constants, types, entities, s
 
 `_functions.liquid`:: encodes function definitions.
 
-`_procedures.liquid`:: encodes procedure definitions. Which are very similar to function definitions.
+`_procedures.liquid`:: encodes procedure definitions. These are very similar to function definitions.
 
 `_rules.liquid`:: encodes rule definitions.
 
-These following two files are recurrent among the definition templates:
+The following two files recur among the definition templates:
 
 `_basic_thing.liquid`:: corresponds to the basic rendering of any definition. It provides the title, description, boilerplate (if required), body remarks (i.e. NOTEs, EXAMPLEs, figures), and EXPRESS code.
 
-`_basic_title.liquid`:: allows to encode the heading of any definition given the title, depth, namespace (`thing_prefix`), and anchor.
+`_basic_title.liquid`:: allows encoding the heading of any definition given the title, depth, namespace (`thing_prefix`), and anchor.
 
 After this, follows the encoding of attributes: where rules, informal propositions, etc.
 
@@ -154,7 +154,7 @@ Every schema section ends with an `END_SCHEMA;` code line.
 
 === `modules` folder
 
-Module templates are meant to generate ARM and MIM sections, and almost all annex sections. Following table lists the templates of this folder along with the section each one encodes.
+Module templates are meant to generate ARM and MIM sections, and almost all annex sections. The following table lists the templates of this folder along with the section each one encodes.
 
 .List of templates from `modules/` and the corresponding section to encode
 |===
@@ -181,7 +181,7 @@ Relevant templates are described below:
 
 `_schema.liquid`:: determines if the schema is ARM type or MIM type and applies the code accordingly.
 
-`_arm.liquid`:: handles the encoding of the "Information requirements" section. This file defines the encoding of each definition. It is composed by multiple `render` blocks, described below.
+`_arm.liquid`:: handles the encoding of the "Information requirements" section. This file defines the encoding of each definition. It is composed of multiple `render` blocks, described below.
 
 `_arm_intro.liquid`::: contains the introductory text of the section.
 
@@ -193,11 +193,11 @@ Relevant templates are described below:
 
 `_mim_mapping_specification.liquid`:: encodes the "Mapping specification" subsection.
 
-`_mim_short_listing.liquid`:: encodes the "MIM EXPRESS short listing" subsection. It is composed by multiple `render` blocks, most of them already described above.
+`_mim_short_listing.liquid`:: encodes the "MIM EXPRESS short listing" subsection. It is composed of multiple `render` blocks, most of them already described above.
 
 `_bolilerplates`:: contains all the boilerplate content present in a module document.
 
-`_interface_notes`:: encodes the first two NOTEs of a schema section. The first being a list of referenced schemas, and the second, a reference to the EXPRESS diagrams.
+`_interface_notes`:: encodes the first two NOTEs of a schema section. The first is a list of referenced schemas, and the second, a reference to the EXPRESS diagrams.
 
 === `common_files` folder
 
@@ -209,7 +209,7 @@ Relevant templates are described below:
 
 `_source_code.liquid`:: to place source code in EXPRESS format.
 
-`diagrams.liquid`:: to encode "EXPRESS-G diagrams" annex section for both resource and module documents.
+`diagrams.liquid`:: to encode the "EXPRESS-G diagrams" annex section for both resource and module documents.
 
 `expg.gif`:: a gif image used as an icon for the EXPRESS-G diagrams cross-references.
 
