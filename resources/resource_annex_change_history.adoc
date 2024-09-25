@@ -22,7 +22,7 @@ assign path_prefix = "../../schemas/resources/"
 assign path_suffix = ".changes.yaml"
 
 for schema in context.schemas
-assign change_path = schema[0] | prepend: path_prefix | append: "/" | append: schema[0] | append: path_suffix 
+assign change_path = schema[0] | prepend: path_prefix | append: "/" | append: schema[0] | append: path_suffix
 assign changes_paths = changes_paths | append: change_path | append: ", "
 endfor
 
