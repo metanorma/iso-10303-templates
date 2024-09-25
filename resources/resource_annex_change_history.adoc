@@ -9,11 +9,11 @@ This annex documents the history of technical modifications made to ISO/TS 10303
 
 Unless otherwise specified all modifications are upwardly compatible to the previous edition. Modifications to EXPRESS specifications are upwardly compatible if:
 
-* instances encoded according to ISO 10303-21, and that conform to an ISO 10303 application protocol based on the previous edition of this part of ISO 10303, also conform to a revision of that application protocol based on this edition of this part of ISO 10303;
+* instances encoded according to ISO 10303-21, and that conform to an ISO 10303 application protocol based on the previous edition of this document, also conform to a revision of that application protocol based on this edition of this document;
 
-* interfaces that conform to ISO 10303-22 and to an ISO 10303 application protocol based on the previous edition of this part of ISO 10303, also conform to a revision of that application protocol based on this edition of this part of ISO 10303;
+* interfaces that conform to ISO 10303-22 and to an ISO 10303 application protocol based on the previous edition of this document, also conform to a revision of that application protocol based on this edition of this document;
 
-* the mapping tables of ISO 10303 application protocols based on the previous edition of this part of ISO 10303 remain valid in a revision of that application protocol based on this edition of this part of ISO 10303.
+* the mapping tables of ISO 10303 application protocols based on the previous edition of this document remain valid in a revision of that application protocol based on this edition of this document.
 
 [yaml2text,schemas.yaml,context]
 ------
@@ -56,7 +56,7 @@ assign existing_paths = existing_paths | append: " " | append: path
 [[changes_summary_{{ver}}]]
 ==== Summary of changes
 
-The edition {{ ver }} of this part of ISO 10303 incorporated the modifications to the edition {{ ver | minus: 1 }} listed below.
+The edition {{ ver }} of this document incorporated the modifications to the edition {{ ver | minus: 1 }} listed below.
 
 {% for path in existing_paths %}
 

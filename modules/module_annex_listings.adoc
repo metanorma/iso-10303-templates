@@ -3,8 +3,8 @@
 == Computer interpretable listings
 
 This annex references a listing of the EXPRESS entity names and corresponding
-short names as specified or referenced in this part of ISO 10303. It also
-provides a listing of each EXPRESS schema specified in this part of ISO 10303
+short names as specified or referenced in this document. It also
+provides a listing of each EXPRESS schema specified in this document
 without comments nor other explanatory text. These listings are available in
 computer-interpretable form in <<table_listing>> and can be found at the
 following URLs:

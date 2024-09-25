@@ -10,7 +10,7 @@ system, the object identifier
 
 { iso standard {docnumber} part({partnumber}) version({edition}) }
 
-is assigned to this part of ISO 10303. The meaning of this value is defined in
+is assigned to this document. The meaning of this value is defined in
 ISO/IEC 8824-1, and is described in ISO 10303-1.
 
 
