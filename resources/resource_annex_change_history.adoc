@@ -5,7 +5,7 @@
 [[general]]
 === General
 
-This annex documents the history of technical modifications made to ISO/TS 10303-42.
+This annex documents the history of technical modifications made to this document.
 
 Unless otherwise specified all modifications are upwardly compatible to the previous edition. Modifications to EXPRESS specifications are upwardly compatible if:
 
