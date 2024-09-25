@@ -80,7 +80,7 @@ endif
 
 {% assign ver_before = ver | minus: 1 %}
 
-The {{ ordinal_numbers[ver] }} edition of this part of ISO 10303 incorporated the modifications to the {{ ordinal_numbers[ver_before] }} edition listed below.
+The {{ ordinal_numbers[ver] }} edition of this document incorporated the modifications to the {{ ordinal_numbers[ver_before] }} edition listed below.
 
 // changes from changes.yaml
 
