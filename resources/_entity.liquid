@@ -13,34 +13,34 @@
 {% if thing.attributes.size > 0 and found %}
 {% capture entity_thing_prefix %}{{thing_prefix}}.{{thing.id}}{% endcapture %}
 
-{% render "templates/resources/attribute_definitions", things: thing.attributes %}
+{% render "templates/resources/attribute_definitions", things: thing.attributes, thing_prefix: entity_thing_prefix %}
 
 {% endif %}
 
 {% if thing.remark_items.size > 0 %}
 {% capture entity_thing_prefix %}{{thing_prefix}}.{{thing.id}}{% endcapture %}
 
-{% render "templates/resources/attribute_definitions", things: thing.remark_items, found: found %}
+{% render "templates/resources/attribute_definitions", things: thing.remark_items, found: found, thing_prefix: entity_thing_prefix %}
 
 {% endif %}
 
 {% if thing.where_rules.size > 0 %}
 {% capture entity_thing_prefix %}{{thing_prefix}}.{{thing.id}}{% endcapture %}
 
-{% render "templates/resources/where_rules", things: thing.where_rules %}
+{% render "templates/resources/where_rules", things: thing.where_rules, thing_prefix: entity_thing_prefix %}
 
 {% endif %}
 
 {% if thing.unique_rules.size > 0 %}
 {% capture entity_thing_prefix %}{{thing_prefix}}.{{thing.id}}{% endcapture %}
 
-{% render "templates/resources/entity_unique_rules", things: thing.unique_rules %}
+{% render "templates/resources/entity_unique_rules", things: thing.unique_rules, thing_prefix: entity_thing_prefix %}
 
 {% endif %}
 
 {% if thing.informal_propositions.size > 0 %}
 {% capture entity_thing_prefix %}{{thing_prefix}}.{{thing.id}}{% endcapture %}
 
-{% render "templates/resources/entity_informal_propositions", things: thing.informal_propositions %}
+{% render "templates/resources/entity_informal_propositions", things: thing.informal_propositions, thing_prefix: entity_thing_prefix %}
 
 {% endif %}

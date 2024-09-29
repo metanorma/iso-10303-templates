@@ -36,7 +36,11 @@ endfor
       thing.id != "__example" and
       thing.id != "__figure" %}
 {% unless thing.remarks[0] contains "(output)" %}
+
+[[{{thing_prefix}}.{{thing.id}}]]
+[type=express]
 **{{ thing.id }}**: {{ thing.remarks }}
+
 {% endunless %}
 {% endif %}
 

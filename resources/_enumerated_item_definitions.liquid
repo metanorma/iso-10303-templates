@@ -14,6 +14,9 @@
 [underline]#Enumerated item definitions:#
 
 {% for item in definition.underlying_type.items %}
+
+[[{{thing_prefix}}.{{item.id}}]]
+[type=express]
 *{{ item.id }}:* {{ item.remarks }}
 {% endfor %}
 

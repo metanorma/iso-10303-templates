@@ -15,6 +15,9 @@
       thing.id != "__note" and
       thing.id != "__example" and
       thing.id != "__figure" %}
+
+[[{{thing_prefix}}.{{thing.id}}]]
+[type=express]
 **{{ thing.id }}**: {{ thing.remarks }}
 {% endif %}
 
