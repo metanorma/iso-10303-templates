@@ -11,6 +11,8 @@
 
 {% for thing in things %}
 
+[[{{thing_prefix}}.{{thing.id}}]]
+[type=express]
 **{{ thing.id }}**: {{ thing.remarks }}
 
 {% render "templates/common_files/body_remarks", remark_items: thing.remark_items %}
