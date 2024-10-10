@@ -9,8 +9,8 @@
 ----
 {% for schema in context.schemas %}
 
-* [[[{{schema[0]}}.exp,repo:(current-metanorma-collection/{{schema[0]}}.exp)]]]
-* [[[{{schema[0]}}.html,repo:(current-metanorma-collection/{{schema[0]}}.html)]]]
+* [[[{{schema[0]}}.exp,attachment:(current-metanorma-collection/{{schema[0]}}.exp)]]]
+* [[[{{schema[0]}}.html,attachment:(current-metanorma-collection/{{schema[0]}}.html)]]]
 
 {% endfor %}
 ----
