@@ -30,10 +30,12 @@ endif
 [underline]#Enumerated item definitions:#
 
 {% for item in definition.underlying_type.items %}
+{% if item.id %}
 [[{{ schema_id }}.{{ definition.id }}.{{ item.id }}]]
 *{{ item.id }}*: {{ item.remarks }}
 
 {% render "templates/common_files/body_remarks", remark_items: item.remark_items %}
+{% endif %}
 {% endfor %}
 {% endif %}
 
@@ -41,10 +43,12 @@ endif
 [underline]#Attribute definitions:#
 
 {% for attr in definition.attributes %}
+{% if attr.id %}
 [[{{ schema_id }}.{{ definition.id }}.{{ attr.id }}]]
 *{{ attr.id }}*: {{ attr.remarks }}
 
 {% render "templates/common_files/body_remarks", remark_items: attr.remark_items %}
+{% endif %}
 {% endfor %}
 {% endif %}
 
@@ -52,10 +56,12 @@ endif
 [underline]#Formal propositions:#
 
 {% for wr in definition.where_rules %}
+{% if wr.id %}
 [[{{ schema_id }}.{{ definition.id }}.{{ wr.id }}]]
 *{{ wr.id }}*: {{ wr.remarks }}
 
 {% render "templates/common_files/body_remarks", remark_items: wr.remark_items %}
+{% endif %}
 {% endfor %}
 {% endif %}
 
@@ -63,10 +69,12 @@ endif
 [underline]#Informal propositions:#
 
 {% for ip in definition.informal_propositions %}
-[[{{ schema_id }}.{{ definition.id }}.{{ ip.id }}]]
+{% if wr.id %}
+[[{{ schema_id }}.{{ definition.id }}.{{ wr.id }}]]
 *{{ ip.id }}*: {{ ip.remarks }}
 
 {% render "templates/common_files/body_remarks", remark_items: ip.remark_items %}
+{% endif %}
 {% endfor %}
 {% endif %}
 
@@ -74,9 +82,11 @@ endif
 [underline]#Argument definitions:#
 
 {% for p in definition.parameters %}
+{% if p.id %}
 [[{{ schema_id }}.{{ definition.id }}.{{ p.id }}]]
 *{{ p.id }}*: {{ p.remarks }}
 
 {% render "templates/common_files/body_remarks", remark_items: p.remark_items %}
+{% endif %}
 {% endfor %}
 {% endif %}
