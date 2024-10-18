@@ -20,13 +20,13 @@ ISO/IEC 8824-1, and is described in ISO 10303-1.
 ----
 {% assign selected = context.schemas | where: "selected" %}
 {% for schema in selected %}
-{% assign schemaname = schema.id | replace: "_", "-" | downcase %}
+{% assign schemaname = schema.id | downcase %}
 
-{% if context.schemas.size > 1 %}
+{% if selected.size > 1 %}
 ==== {{ schemaname }} schema identification
 {% endif %}
 
-To provide for unambiguous identification of the **{{ schemaname }}** schema in
+To provide for unambiguous identification of the **{{ schemaname  | replace: "_", "-" }}** schema in
 an open information system, the object identifier
 
 {{ schema.version.value }}
