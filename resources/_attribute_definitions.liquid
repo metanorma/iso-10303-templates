@@ -35,7 +35,9 @@ endfor
       thing.id != "__note" and
       thing.id != "__example" and
       thing.id != "__figure" %}
-{% unless thing.remarks[0] contains "(output)" %}
+{% unless thing.id == "return" or
+          thing.id == "RETURN" or
+          thing.id == "RETURNS" %}
 
 [[{{thing_prefix}}.{{thing.id}}]]
 [type=express]
