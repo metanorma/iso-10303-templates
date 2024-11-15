@@ -13,11 +13,10 @@
 {% if found %}
 [underline]#Enumerated item definitions:#
 
+[type=express]
 {% for item in definition.underlying_type.items %}
 
-[[{{thing_prefix}}.{{item.id}}]]
-[type=express]
-*{{ item.id }}:* {{ item.remarks }}
+[[{{thing_prefix}}.{{item.id}}]]**{{ item.id }}**:: {{ item.remarks }}
 {% endfor %}
 
 {% endif %}
