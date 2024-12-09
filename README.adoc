@@ -33,7 +33,7 @@ In a Metanorma document it is used like this:
 :mn-document-class: iso
 :lutaml-express-index: schemas; schemas.yaml;
 
-[lutaml_express, schemas, repo, leveloffset=+1]
+[lutaml_express, schemas, repo]
 ----
  include::templates/_schemas.liquid[]
 ----
@@ -75,7 +75,7 @@ Almost all `.liquid` files are reserved to generate schema-related sections. In 
 
 [source,asciidoc]
 ----
-  [lutaml_express, schemas, repo, leveloffset=+1,config_yaml=schemas.yaml]
+  [lutaml_express, schemas, repo, config_yaml=schemas.yaml]
   ---
   include::../modules/_schemas.liquid[]
   ---
@@ -94,8 +94,6 @@ Makes the `schemas` parameter equal to `../../schemas-srl.yml`
 --
 
 `repo`:: is the name of the variable that contains all the LutaML objects of the EXPRESS files (`.exp`) that `schemas` points to.
-
-`leveloffset`:: pushes down the hierarchy level of the headings inside the `lutaml_express` block.
 
 `config_yaml`:: receives a YAML file that is supposed to be a selection of the schemas covered by the current document. For example, `config_yaml=schemas.yaml` means that `schema.yaml` is the file to contain only the schemas covered by the current document, located in the same folder as the document. The distinction is made between `schemas` and `config_yaml`, so that schemas in other documents in a collection can still be referenced by the current document, even if they are not expanded out within it.
 
