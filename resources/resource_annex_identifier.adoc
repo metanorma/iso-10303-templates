@@ -8,7 +8,7 @@
 To provide for unambiguous identification of an information object in an open
 system, the object identifier
 
-{ iso standard {docnumber} part({partnumber}) version({edition}) }
+{ iso standard {docnumber} part({partnumber}) version({iso-10303-doc-version}) }
 
 is assigned to this document. The meaning of this value is defined in
 ISO/IEC 8824-1, and is described in ISO 10303-1.
