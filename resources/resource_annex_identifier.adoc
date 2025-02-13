@@ -11,7 +11,7 @@ system, the object identifier
 { iso standard {docnumber} part({partnumber}) version({iso-10303-doc-version}) }
 
 is assigned to this document. The meaning of this value is defined in
-ISO/IEC 8824-1, and is described in ISO 10303-1.
+ISO/IEC 8824-1, and shall be as described in ISO 10303-1.
 
 
 === Schema identification
@@ -32,7 +32,7 @@ an open information system, the object identifier
 {{ schema.version.value }}
 
 is assigned to the **{{ schemaname }}** schema (see <<{{ schema.id }}>>).
-The meaning of this value is defined in ISO/IEC 8824-1, and is described in ISO
+The meaning of this value is defined in ISO/IEC 8824-1, and shall be as described in ISO
 10303-1.
 
 {% endfor %}
