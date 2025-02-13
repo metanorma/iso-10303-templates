@@ -10,7 +10,7 @@ system, the object identifier
 { iso standard {docnumber} part({partnumber}) version({edition}) }
 
 is assigned to this document. The meaning of this value is defined in
-ISO/IEC 8824-1, and is described in ISO 10303-1.
+ISO/IEC 8824-1, and shall be as described in ISO 10303-1.
 
 === Schema identification
 
@@ -28,7 +28,7 @@ are assigned as follows:
 {{ schema.version.value }}
 
 is assigned to the {{ schemaname }} schema. The meaning of this value is defined
-in ISO/IEC 8824-1, and is described in ISO 10303-1.
+in ISO/IEC 8824-1, and shall be as described in ISO 10303-1.
 
 {% endfor %}
 ----

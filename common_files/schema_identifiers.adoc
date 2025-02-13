@@ -14,7 +14,7 @@ To provide for unambiguous identification of the {{ schema.id | replace: "_", "-
 {{ schema.version.value }}
 ----
 
-is assigned to the *{{ schema.id }}* (see <<{{ schema.id }}>>). The meaning of this value is defined in ISO/IEC 8824-1, and is described in ISO 10303-1.
+is assigned to the *{{ schema.id }}* (see <<{{ schema.id }}>>). The meaning of this value is defined in ISO/IEC 8824-1, and shall be as described in ISO 10303-1.
 
 {% endfor %}
 ---
