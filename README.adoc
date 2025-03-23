@@ -7,18 +7,9 @@ Annotated EXPRESS schemas, as used in ISO 10303.
 
 == Usage
 
-[NOTE]
-====
-Due to current limitations in the metanorma-plugin-lutaml plugin with
-liquid, TWO symbolic links need to be made to this repository's content:
-
-* at the directory of the root document;
-* at the directory of the file that includes a template (typically `sections/`)
-====
-
 In a Metanorma document it is used like this:
 
-[source,sh]
+[source,adoc]
 ------
 = Integrated generic resource: Fundamentals of product description and support
 :docnumber: 10303
@@ -35,25 +26,24 @@ In a Metanorma document it is used like this:
 
 [lutaml_express, schemas, repo]
 ----
- include::templates/_schemas.liquid[]
+ include::../../templates/_schemas.liquid[]
 ----
 ------
+
+NOTE: The `templates/` directory is located at repository root, so in the
+current repository structure we need to `../../` to get to the root.
 
 One of the following directory structures is to be used.
 
 Type 1: `include::` block is at the same level as the including document:
 
 `document.adoc`:: The document that includes the `lutaml_express` block.
-`templates/`:: A check-out of the iso-10303-templates repository.
 
 Type 2: `include::` block in another file (e.g. under `sections/`):
 
 `document.adoc`:: The root document file.
-`templates/`:: A check-out of the iso-10303-templates repository.
-`sections/xxx.adoc`:: The document that includes the `lutaml_express` block.
-`sections/templates/`:: A check-out of the iso-10303-templates repository.
 
-NOTE: The `templates/` directory can be a symbolic link.
+`sections/xxx.adoc`:: The document that includes the `lutaml_express` block.
 
 == Structure explanation
 
