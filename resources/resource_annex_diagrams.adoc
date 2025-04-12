@@ -20,7 +20,7 @@ defined in ISO 10303-11.
 {% assign diagrams = diagrams[0].remarks %}
 {% assign number_of_diagrams = diagrams.size %}
 
-[[expg.{{ schema_id }}]]&#x200c;
+[[expg.{{ schema_id }}]]
 
 {% for diagram in diagrams %}
 
