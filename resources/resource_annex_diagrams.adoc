@@ -20,6 +20,8 @@ defined in ISO 10303-11.
 {% assign diagrams = diagrams[0].remarks %}
 {% assign number_of_diagrams = diagrams.size %}
 
+// &#x200c; character represents an invisible element
+// given that anchors cannot work without an element attached.
 [[expg.{{ schema_id }}]]&#x200c;
 
 {% for diagram in diagrams %}
