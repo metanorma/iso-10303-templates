@@ -1,3 +1,12 @@
 {% assign all_schemas = repo.schemas  %}
 {% assign selected    = all_schemas | where: "selected" %}
-{% render "templates/resources/schema" for selected as schema, all_schemas: all_schemas %}
+{% assign ordered_selected_schemas = null | sort %}
+{% for ordered_schema in schemas_order %}
+  {% for selected_schema in selected %}
+    {% if selected_schema.id == ordered_schema %}
+      {% assign ordered_selected_schema = selected_schema | sort %}
+      {% assign ordered_selected_schemas = ordered_selected_schemas | concat: ordered_selected_schema %}
+    {% endif %}
+  {% endfor %}
+{% endfor %}
+{% render "templates/resources/schema" for ordered_selected_schemas as schema, all_schemas: all_schemas %}
