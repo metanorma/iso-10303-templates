@@ -20,7 +20,12 @@ EXPRESS: :: http://standards.iso.org/iso/10303/smrl/v11/tech/smrlv11.zip
 |===
 | Description | HTML file | ASCII file | Identifier
 
-{% assign selected = context.schemas | where: "selected" %}
+{% assign selected = null | sort %}
+{% for ordered_schema in schemas_order %}
+  {% assign selected_schema = context.schemas | where: "id", ordered_schema %}
+  {% assign selected = selected | concat: selected_schema %}
+{% endfor %}
+
 {% for schema in selected %}
 
 {% liquid

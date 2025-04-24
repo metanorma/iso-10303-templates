@@ -1,6 +1,11 @@
 [lutaml_express, schemas, context, config_yaml=schemas.yaml]
 ----
-{% assign selected = context.schemas | where: "selected" %}
+{% assign selected = null | sort %}
+{% for ordered_schema in schemas_order %}
+  {% assign selected_schema = context.schemas | where: "id", ordered_schema %}
+  {% assign selected = selected | concat: selected_schema %}
+{% endfor %}
+
 {% for schema in selected %}
 * {{ schema.id }}{% if forloop.last == true %}.{% else %};{% endif %}
 {% endfor %}
