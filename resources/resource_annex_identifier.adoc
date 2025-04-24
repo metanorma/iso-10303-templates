@@ -18,7 +18,12 @@ ISO/IEC 8824-1, and shall be as described in ISO 10303-1.
 
 [lutaml_express, schemas, context,config_yaml=schemas.yaml]
 ----
-{% assign selected = context.schemas | where: "selected" %}
+{% assign selected = null | sort %}
+{% for ordered_schema in schemas_order %}
+  {% assign selected_schema = context.schemas | where: "id", ordered_schema %}
+  {% assign selected = selected | concat: selected_schema %}
+{% endfor %}
+
 {% for schema in selected %}
 {% assign schemaname = schema.id | downcase %}
 
