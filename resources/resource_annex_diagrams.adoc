@@ -10,10 +10,6 @@ defined in ISO 10303-11.
 
 [lutaml_express, schemas, repo,config_yaml=schemas.yaml]
 ---
-{% assign all_schemas = repo.schemas  %}
-
-// ordered_schemas is a built-in variable that contains
-// the selected schemas listed in schemas.yaml.
 {% for schema in ordered_schemas %}
 
 {% assign schema_id = schema.id %}
