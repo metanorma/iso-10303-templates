@@ -23,8 +23,4 @@ Once that is fixed the following IF statement should be removed and just use {{ 
 
 {% render "templates/common_files/source_code", source: thing.source %}
 
-{% comment %} Encode NOTE 1 {% endcomment %}
-{% render "templates/common_files/referenced_schemas_note", schema: thing, all_schemas: all_schemas %}
-
-{% comment %} Encode NOTE 2 {% endcomment %}
 NOTE: See <<expg.{{ thing.id }}>> for a graphical representation of this schema.
