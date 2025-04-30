@@ -21,6 +21,6 @@ Once that is fixed the following IF statement should be removed and just use {{ 
 
 {% render "templates/common_files/body_remarks", remark_items: thing.remark_items %}
 
-{% render "templates/common_files/source_code", source: thing.source %}
+{% render "templates/common_files/source_code", schema: thing, all_schemas: all_schemas %}
 
 NOTE: See <<expg.{{ thing.id }}>> for a graphical representation of this schema.
