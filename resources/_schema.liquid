@@ -5,7 +5,7 @@
 == {{ schema.id }}
 
 {% comment %}
-Encode schema introductory content
+Introductory content
 {% endcomment %}
 
 {% render "templates/resources/intro", thing: schema, schema_description: true, all_schemas: all_schemas %}
@@ -14,7 +14,7 @@ Encode schema introductory content
 
 
 {% comment %}
-Encode schema definitions
+Schema definitions
 {% endcomment %}
 
 {% render "templates/resources/constants", schema_id: schema.id, things: schema.constants, thing_prefix: root_thing_prefix, depth: 2 %}
