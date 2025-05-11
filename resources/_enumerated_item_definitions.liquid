@@ -16,7 +16,10 @@
 [type=express]
 {% for item in definition.underlying_type.items %}
 
-[[{{thing_prefix}}.{{item.id}}]]**{{ item.id }}**:: {{ item.remarks }}
+[[{{thing_prefix}}.{{item.id}}]]**{{ item.id }}**: {{ item.remarks }}
+
+{% render "templates/common_files/body_remarks", remark_items: item.remark_items %}
+
 {% endfor %}
 
 {% endif %}
