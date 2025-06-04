@@ -173,16 +173,10 @@ version of the application modules. However, use of predefined templates
 
 {% raw %}
 
-[yaml2text,mapping.yaml,data]
------
-
-[yaml2text,schemas.yaml,context]
----
 {% for schema in context.schemas %}
 {% assign schema = schema[0] %}
 {% break %}
 {% endfor %}
----
 
 {% for item in data.ae %}
 
@@ -227,5 +221,4 @@ Reference path::
 
 {% endfor %}
 
------
 {% endraw %}
