@@ -13,7 +13,7 @@ Short names: http://standards.iso.org/iso/10303/tech/short_names/short-names.txt
 
 EXPRESS: http://standards.iso.org/iso/10303/smrl/v11/tech/smrlv11.zip
 
-[yaml2text,schemas.yaml,data]
+[data2text,data=schemas.yaml]
 ----
 [[table_listing]]
 [cols="a,a",options="header"]
