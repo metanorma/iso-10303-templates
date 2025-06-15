@@ -5,7 +5,7 @@
 // schemas attachments in "Computer interpretable listings" section (usually Annex C).
 // See https://www.metanorma.org/author/topics/collections/cross-referencing/ for more information.
 
-[yaml2text,schemas.yaml,context]
+[data2text,context=schemas.yaml]
 ----
 {% for schema in context.schemas %}
 

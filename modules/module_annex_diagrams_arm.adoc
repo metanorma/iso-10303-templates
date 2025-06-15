@@ -23,7 +23,7 @@ Both these representations are partial. The schema level representation does not
 
 The EXPRESS-G graphical notation is defined in ISO 10303-11.
 
-[yaml2text,express-g-diagrams-arm.yaml,diagrams]
+[data2text,diagrams=express-g-diagrams-arm.yaml]
 ----
 {% assign namespace = "arm" %}
 include::../common_files/diagrams.liquid[]
