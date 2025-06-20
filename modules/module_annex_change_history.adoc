@@ -9,66 +9,56 @@
 This annex documents the history of technical modifications made to
 ISO/TS {docnumber}-{partnumber}.
 
-[yaml2text,schemas.yaml,context]
-------
+[data2text,context=schemas.yaml]
+----
+
+{% comment %} Determine file paths {% endcomment %}
+
 {% liquid
 assign path_prefix  = "../../schemas/modules/"
 assign schema_name  = context.schemas.first[1].path | remove: path_prefix | split: "/" | first
 assign changes_path = "changes.yaml"
-assign mapping_path = schema_name | prepend: path_prefix | append: "/mapping.changes.yaml"
-assign arm_path     = schema_name | prepend: path_prefix | append: "/arm.changes.yaml"
-assign mim_path     = schema_name | prepend: path_prefix | append: "/mim.changes.yaml"
+assign mapping_path = schema_name | prepend: path_prefix | append: "/mapping.changes.yaml" | remove: "../../"
+assign arm_path     = schema_name | prepend: path_prefix | append: "/arm.changes.yaml"     | remove: "../../"
+assign mim_path     = schema_name | prepend: path_prefix | append: "/mim.changes.yaml"     | remove: "../../"
 
 assign ordinal_numbers = "zero, " | append: "first, " | append: "second, " | append: "third, " | append: "fourth, " | append: "fifth, " | append: "sixth, " | append: "seventh, " | append: "eighth, " | append: "ninth, " | append: "tenth, " | append: "eleventh, " | append: "twelfth, " | append: "thirteenth, " | append: "fourteenth, " | append: "fifteenth, " | append: "sixteenth, " | append: "sixteenth, " | append: "seventeenth, " | append: "eighteenth, " | append: "nineteenth, " | append: "twentieth"
 
 assign ordinal_numbers = ordinal_numbers | split: ", "
 %}
 
-{% capture arm_end_par %}
-In addition, modifications have been made to the mapping specification, the MIM schema and the EXPRESS-G diagrams to reflect and be consistent with the modifications of the ARM.
-{% endcapture %}
+{% comment %} Determine max_version {% endcomment %}
 
-{% assign max_version = 2 %}
-
-[yaml2text,{{changes_path}},data]
----
 {% liquid
-assign max_changes_ver = data.change_edition.last.version | plus: 0
+assign max_version = 2
+
+assign changes_data = changes_path | loadfile: "."
+assign max_changes_ver = changes_data.change_edition.last.version | plus: 0
 if max_changes_ver > max_version
 assign max_version = max_changes_ver
 endif
-%}
----
 
-[yaml2text,{{mapping_path}},data]
----
-{% liquid
-assign max_mapping_ver = data.change_edition.last.version | plus: 0
+assign arm_data = arm_path | loadfile: "."
+assign max_arm_ver = arm_data.change_edition.last.version | plus: 0
+if max_arm_ver > max_version
+assign max_version = max_arm_ver
+endif
+
+assign mim_data = mim_path | loadfile: "."
+assign max_mim_ver = mim_data.change_edition.last.version | plus: 0
+if max_mim_ver > max_version
+assign max_version = max_mim_ver
+endif
+
+assign mapping_data = mapping_path | loadfile: "."
+assign max_mapping_ver = mapping_data.change_edition.last.version | plus: 0
 if max_mapping_ver > max_version
 assign max_version = max_mapping_ver
 endif
 %}
----
 
-[yaml2text,{{arm_path}},data]
----
-{% liquid
-assign max_arm_ver = data.change_edition.last.version | plus: 0
-if max_arm_ver > max_version
-assign max_version = max_arm_ver
-endif
-%}
----
 
-[yaml2text,{{mim_path}},data]
----
-{% liquid
-assign max_mim_ver = data.change_edition.last.version | plus: 0
-if max_mim_ver > max_version
-assign max_version = max_mim_ver
-endif
-%}
----
+{% comment %} Generate changes {% endcomment %}
 
 {% for ver in (2..max_version) %}
 
@@ -82,33 +72,34 @@ endif
 
 The {{ ordinal_numbers[ver] }} edition of this document incorporated the modifications to the {{ ordinal_numbers[ver_before] }} edition listed below.
 
-// changes from changes.yaml
+{% comment %} Changes from changes.yaml {% endcomment %}
 
 {% if max_changes_ver %}
-[yaml2text,{{changes_path}},data]
----
+
+{% comment %} Convert version number to string {% endcomment %}
 {% assign ver_str = ver | append: "" %}
 
-// find version
-{% for ed in data.change_edition %}
+{% comment %} Find version {% endcomment %}
+{% for ed in changes_data.change_edition %}
 {% if ed.version == ver_str %}
 {{ ed.description }}
 {% endif %}
 {% endfor %}
----
+
 {% endif %}
 
-// ARM schema changes
+{% comment %} Changes from ARM {% endcomment %}
 
 {% if max_arm_ver %}
-[yaml2text,{{arm_path}},data]
-----
+
+{% comment %} Convert version number to string {% endcomment %}
 {% assign ver_str = ver | append: "" %}
 
-{% for ed in data.change_edition %}
+{% for ed in arm_data.change_edition %}
 
-// find version
 {% if ed.version == ver_str %}
+{% if ed.additions or ed.modifications or ed.deletions %}
+{% assign changes_arm_exist = true %}
 
 [[arm.changes{{ver}}]]
 ==== Changes made to the ARM
@@ -158,55 +149,64 @@ The following ARM EXPRESS declarations and interface specifications have been de
 {% endif %}
 
 {% endif %}
+{% endif %}
 
 {% endfor %}
 
-----
+{% if changes_arm_exist and max_mapping_ver %}
 
-{{ arm_end_par }}
+In addition, modifications have been made to the mapping specification, the MIM schema and the EXPRESS-G diagrams to reflect and be consistent with the modifications of the ARM.
+
+{% assign changes_arm_exist = false %}
+{% endif %}
 
 {% endif %}
 
 
-// mapping changes
+{% comment %} Changes from Mapping {% endcomment %}
 
 {% if max_mapping_ver %}
-[yaml2text,{{mapping_path}},data]
-----
+
 {% assign ver_str = ver | append: "" %}
 
-{% for ed in data.change_edition %}
+{% for ed in mapping_data.change_edition %}
 
-// find version
+{% comment %} Find version {% endcomment %}
 {% if ed.version == ver_str %}
 
 [[mapping.changes{{ver}}]]
 ==== Changes made to the mapping
 
+{% if ed.changes.size == 1 %}
+
+{{ ed.changes[0].description }}
+
+{% else %}
+
 The following changes have been made to the ARM to MIM mapping:
 
-{% for change in ed.changes %}
-
-* {{ change.change }}
-
+{% for item in ed.changes %}
+* {{ item.change }}
 {% endfor %}
 
 {% endif %}
+
+{% endif %}
 {% endfor %}
-----
+
 {% endif %}
 
-// MIM schema changes
+
+{% comment %} Changes from MIM {% endcomment %}
 
 {% if max_mim_ver %}
-[yaml2text,{{mim_path}},data]
-----
 {% assign ver_str = ver | append: "" %}
 
-{% for ed in data.change_edition %}
+{% for ed in mim_data.change_edition %}
 
-// find version
+{% comment %} Find version {% endcomment %}
 {% if ed.version == ver_str %}
+{% if ed.additions or ed.modifications or ed.deletions %}
 
 [[mim.changes{{ver}}]]
 ==== Changes made to the MIM
@@ -256,10 +256,11 @@ The following MIM EXPRESS declarations and interface specifications have been de
 {% endif %}
 
 {% endif %}
-
-{% endfor %}
-----
 {% endif %}
 
 {% endfor %}
-------
+
+{% endif %}
+
+{% endfor %}
+----
