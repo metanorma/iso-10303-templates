@@ -9,9 +9,8 @@
 This annex documents the history of technical modifications made to
 ISO/TS {docnumber}-{partnumber}.
 
-[data2text,context=schemas.yaml]
+[data2text,context=schemas.yaml,changes_data=changes.yaml]
 ----
-
 {% comment %} Determine file paths {% endcomment %}
 
 {% liquid
@@ -32,7 +31,6 @@ assign ordinal_numbers = ordinal_numbers | split: ", "
 {% liquid
 assign max_version = 2
 
-assign changes_data = changes_path | loadfile: "."
 assign max_changes_ver = changes_data.change_edition.last.version | plus: 0
 if max_changes_ver > max_version
 assign max_version = max_changes_ver
