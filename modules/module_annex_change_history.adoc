@@ -262,3 +262,63 @@ The following MIM EXPRESS declarations and interface specifications have been de
 
 {% endfor %}
 ----
+
+////
+
+# Considerations on the design of this Change history template
+
+Changes are tracked from edition 2 forward. Every edition change is conformed by:
+
+- "General" changes from changes.yaml file located at document folder, if it exists.
+- ARM changes, if there are.
+- MIM changes, if there are.
+- Mapping changes, if there are.
+
+On every edition change, there is a "Summary of changes" sub-section, no matter what.
+
+
+## "General" changes from changes.yaml
+
+NOTE: It is said "General" changes to differentiate from the other type of changes (ARM, MIM, and Mapping).
+
+Changes specified in changes.yaml goes after "Summary of changes" first paragraph which is a boilerplate.
+
+Access to changes.yaml is done in the heading of `data2text` block.
+
+
+## ARM changes
+
+ARM changes must be included if `version` item contains: additions, modifications or deletions.
+
+If there are subsequent Mapping changes, this boilerplate should be added at the end:
+
+"In addition, modifications have been made to the mapping specification, the MIM schema and the EXPRESS-G diagrams to reflect and be consistent with the modifications of the ARM."
+
+
+## MIM changes
+
+MIM changes must be included if `version` item contains: additions, `modifications` or deletions.
+
+
+## Mapping changes
+
+If a `mapping.changes.yaml` file exist, changes should be added.
+
+If `changes` array contains more than one item named `change` this boilerplate should be added:
+
+"The following changes have been made to the ARM to MIM mapping:"
+
+* {{ change 1}}
+...
+* {{ change N }}
+
+If `changes` array contains only one item tagged as `description`. No boilerplate should be added.
+
+
+## Sample documents
+1047: contains only "general" changes (i.e. from `changes.yaml`)
+1061: contains ARM, MIM, Mapping, and "general" changes
+1068: contains "general", ARM and MIM changes
+1707: contains ARM, MIM and Mapping changes
+
+////
