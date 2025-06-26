@@ -31,27 +31,39 @@ assign ordinal_numbers = ordinal_numbers | split: ", "
 {% liquid
 assign max_version = 2
 
+if changes_data.change_edition
 assign max_changes_ver = changes_data.change_edition.last.version | plus: 0
 if max_changes_ver > max_version
 assign max_version = max_changes_ver
 endif
+endif
 
+assign arm_path_exist     = arm_path     | file_exist
+assign mim_path_exist     = mim_path     | file_exist
+assign mapping_path_exist = mapping_path | file_exist
+
+if arm_path_exist
 assign arm_data = arm_path | loadfile: "."
 assign max_arm_ver = arm_data.change_edition.last.version | plus: 0
 if max_arm_ver > max_version
 assign max_version = max_arm_ver
 endif
+endif
 
+if mim_path_exist
 assign mim_data = mim_path | loadfile: "."
 assign max_mim_ver = mim_data.change_edition.last.version | plus: 0
 if max_mim_ver > max_version
 assign max_version = max_mim_ver
 endif
+endif
 
+if mapping_path_exist
 assign mapping_data = mapping_path | loadfile: "."
 assign max_mapping_ver = mapping_data.change_edition.last.version | plus: 0
 if max_mapping_ver > max_version
 assign max_version = max_mapping_ver
+endif
 endif
 %}
 
