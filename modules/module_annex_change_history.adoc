@@ -100,7 +100,7 @@ The {{ ordinal_numbers[ver] }} edition of this document incorporated the modific
 
 {% comment %} Changes from ARM {% endcomment %}
 
-{% if max_arm_ver %}
+{% if max_arm_ver and arm_data != changes_data %}
 
 {% comment %} Convert version number to string {% endcomment %}
 {% assign ver_str = ver | append: "" %}
@@ -108,11 +108,12 @@ The {{ ordinal_numbers[ver] }} edition of this document incorporated the modific
 {% for ed in arm_data.change_edition %}
 
 {% if ed.version == ver_str %}
-{% if ed.additions or ed.modifications or ed.deletions %}
 {% assign changes_arm_exist = true %}
 
 [[arm.changes{{ver}}]]
 ==== Changes made to the ARM
+
+{% if ed.additions or ed.modifications or ed.deletions %}
 
 {% if ed.additions %}
 The following ARM EXPRESS declarations and interface specifications have been added:
@@ -158,6 +159,10 @@ The following ARM EXPRESS declarations and interface specifications have been de
 {% endfor %}
 {% endif %}
 
+{% elsif ed.description %}
+
+{{ ed.description }}
+
 {% endif %}
 {% endif %}
 
@@ -187,7 +192,7 @@ In addition, modifications have been made to the mapping specification, the MIM 
 [[mapping.changes{{ver}}]]
 ==== Changes made to the mapping
 
-{% if ed.changes.size == 1 %}
+{% if ed.changes[0].description  %}
 
 {{ ed.changes[0].description }}
 
@@ -330,6 +335,7 @@ If `changes` array contains only one item tagged as `description`. No boilerplat
 ## Sample documents
 1047: contains only "general" changes (i.e. from `changes.yaml`)
 1061: contains ARM, MIM, Mapping, and "general" changes
+1064: contains ARM and Mapping changes
 1068: contains "general", ARM and MIM changes
 1707: contains ARM, MIM and Mapping changes
 
