@@ -20,7 +20,7 @@ In a Metanorma document it is used like this:
 :publish-date: 2022
 :edition: 7
 :title-intro-en: Industrial automation systems and integration
-:title-intro-fr: Systèmes d’automatisation industrielle et intégration
+:title-intro-fr: Systèmes d'automatisation industrielle et intégration
 :mn-document-class: iso
 :lutaml-express-index: schemas; schemas.yaml;
 
