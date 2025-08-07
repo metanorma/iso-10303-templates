@@ -2,7 +2,6 @@
 [appendix,obligation=normative]
 == Information object registration
 
-
 === Document identification
 
 To provide for unambiguous identification of an information object in an open
@@ -10,8 +9,8 @@ system, the object identifier
 
 { iso standard {docnumber} part({partnumber}) version({iso-10303-doc-version}) }
 
-is assigned to this document. The meaning of this value is defined in
-ISO/IEC 8824-1, and shall be as described in ISO 10303-1.
+is assigned to this document. The meaning of this value shall be as specified in
+ISO 10303-1 which extends ISO/IEC 8824-1.
 
 
 === Schema identification
@@ -22,17 +21,17 @@ ISO/IEC 8824-1, and shall be as described in ISO 10303-1.
 {% assign schemaname = schema.id | downcase %}
 
 {% if selected.size > 1 %}
-==== {{ schemaname }} identification
+==== {{ schemaname }} schema identification
 {% endif %}
 
-To provide for unambiguous identification of the **{{ schemaname  | replace: "_", "-" }}** schema in
-an open information system, the object identifier
+To provide for unambiguous identification of the schema specifications given in
+this document in an open information system, the object identifier is assigned
+as follows:
 
 {{ schema.version.value }}
 
-is assigned to the **{{ schemaname }}** schema (see <<{{ schema.id }}>>).
-The meaning of this value is defined in ISO/IEC 8824-1, and shall be as described in ISO
-10303-1.
+is assigned to the {{ schemaname }} schema. The meaning of this value shall be
+as specified in ISO 10303-1 which extends ISO/IEC 8824-1.
 
 {% endfor %}
 ----
